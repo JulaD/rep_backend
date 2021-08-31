@@ -1,0 +1,1 @@
+Aca van las interfaces, acordarse de como nombrarlas, esta en el documento en Teams
