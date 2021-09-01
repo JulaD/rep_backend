@@ -41,6 +41,6 @@ router.get("/", (req:Request, res:Response):void => {
  *                              excelParsed:
  *                                  type: string
  */
-router.post("/excelParser", parseExcel);
+router.get("/excelParser", parseExcel);
 
 module.exports = router;
