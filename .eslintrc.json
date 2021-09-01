@@ -5,6 +5,7 @@
     },
     "extends": [
         "airbnb-base",
+        "airbnb-typescript/base",
         "plugin:react/recommended"
     ],
     "parserOptions": {
