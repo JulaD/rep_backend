@@ -14,9 +14,15 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          }
+        }
+    },
     "rules": {
         "linebreak-style": [
             "error",
