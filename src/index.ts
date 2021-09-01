@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 import express, { Application } from "express";
 
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
-const app: Application = express();
+const app:Application = express();
 const PORT = process.env.PORT || 8000;
 
 // swagger init
@@ -23,12 +24,8 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 // middlewares
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-function q() {
-  return undefined;
-}
-
 app.use(require("./routes.ts"));
 
-app.listen(PORT, (): void => {
+app.listen(PORT, ():void => {
   console.log(`REPP Backend running here 👉 https://localhost:${PORT}`);
 });
