@@ -1,5 +1,9 @@
+import * as XLSX from "xlsx";
 
+const parseExcel = (excelFile) => {
+  XLSX.readFile(excelFile);
+};
 
-const parseExcel = () => {
-
-}
+module.exports = {
+  parseExcel,
+};
