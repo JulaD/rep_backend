@@ -1,4 +1,4 @@
-import express, {Request,Response,Application} from 'express';
+import {Request,Response,Application} from 'express';
 
 const {parseExcel} = require('./Controllers/ExcelController')
 const { Router } = require('express');

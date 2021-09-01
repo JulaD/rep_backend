@@ -1,4 +1,4 @@
-import express, {Request,Response,Application} from 'express';
+import express, {Application} from 'express';
 
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
@@ -19,12 +19,15 @@ const swaggerOptions = {
     },
     apis: ['src/routes.ts']
   }
-  const swaggerDocs = swaggerJsDoc(swaggerOptions)
+const swaggerDocs = swaggerJsDoc(swaggerOptions)
 
 
 // middlewares
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
+function q(){
+    return undefined
+}
 
 app.use(require('./routes.ts'))
 
