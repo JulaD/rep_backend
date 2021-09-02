@@ -29,7 +29,3 @@ app.use(require('./routes.ts'));
 app.listen(PORT, (): void => {
   console.log(`REPP Backend running here 👉 https://localhost:${PORT}`);
 });
-
-function q() {
-  return NaN;
-}
