@@ -1,0 +1,33 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb-typescript/base",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parserOptions": {
+      "project": "./tsconfig.json",
+      "ecmaVersion": 2021
+     },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          }
+        }
+    },
+    "rules": {
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "import/prefer-default-export":"off",
+        "@typescript-eslint/camelcase":"off",
+        "@typescript-eslint/no-var-requires":"off"
+    }
+  }
+  
