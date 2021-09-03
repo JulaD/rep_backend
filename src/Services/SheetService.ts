@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
-/* eslint-disable import/prefer-default-export */
 /* eslint-disable no-console */
 import * as XLSX from "xlsx";
 
@@ -18,19 +17,29 @@ const deleteRow = (ws:any, rowIndex:any) => {
 };
 
 /* EXPORT FUNCTIONS */
-export const parseExcelService = () => {
-  const workbook = XLSX.readFile("src\\Services\\test.xlsx");
-  // TODO: need definition of sheet
+
+const parseSheetService = (data:Buffer) =>{
+  const workbook:XLSX.WorkBook = XLSX.read(data);
+  let parsed;
+
   workbook.SheetNames.forEach((sheetName) => {
-    const worksheet = workbook.Sheets[sheetName];
+    const worksheet:XLSX.WorkSheet = workbook.Sheets[sheetName];
     const ref = worksheet["!ref"]!;
     const range = XLSX.utils.decode_range(ref);
     range.s.c = 0; // 0 == XLSX.utils.decode_col("A")
     range.e.c = 1; // 6 == XLSX.utils.decode_col("B")
     const newRange = XLSX.utils.encode_range(range);
     deleteRow(worksheet, 0);
-    const parsed = XLSX.utils.sheet_to_json(worksheet, { range: newRange });
+    parsed = XLSX.utils.sheet_to_json(worksheet, { range: newRange });
     console.log(parsed);
-    return parsed;
   });
-};
+  return parsed;
+  // TODO: depends on sheet layout what to do
+  // let parsed:JSON;
+
+  // return parsed;
+}
+
+export default {
+  parseSheetService,
+}

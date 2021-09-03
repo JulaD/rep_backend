@@ -1,20 +1,23 @@
 /* eslint-disable no-console */
-import express, { Application } from 'express';
+import express, { Application } from "express";
+import 'dotenv/config'
+import cors from 'cors';
+import swaggerJsDoc, { Options } from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import Routes from "./routes";
 
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
-
-const app: Application = express();
+const app:Application = express();
 const PORT = process.env.PORT || 8000;
 
 // swagger init
-const swaggerOptions = {
+const swaggerOptions:Options = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'REPP Rest API',
-      description: '',
-      servers: ['http://localhost:3000'],
+      title: "REPP Rest API",
+      version: "1.0.0",
+      description: "",
+      servers: ["http://localhost:3000"],
     },
   },
   apis: ['src/routes.ts'],
@@ -24,8 +27,27 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 // middlewares
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use(require('./routes.ts'));
+app.use(express.json({
+  limit: '50mb'
+}));
+app.use(express.urlencoded({extended: false}));
+app.use(cors({
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}));
 
-app.listen(PORT, (): void => {
+function o (){
+  return NaN
+}
+
+app.use(express.raw({
+  limit: '50mb'
+}));
+
+app.use(Routes);
+
+app.listen(PORT, ():void => {
   console.log(`REPP Backend running here 👉 https://localhost:${PORT}`);
 });
