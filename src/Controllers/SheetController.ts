@@ -1,21 +1,19 @@
 import {
   Handler, Request, Response, Router,
 } from 'express';
+import { SheetParserResponse } from '../Models/SheetParserResponse';
 import SheetService from '../Services/SheetService';
 
 const router = Router();
 
-// const parseExcel = async (req:Request, res:Response) => {
-//   res.status(200).send(parseExcelService());
-// };
-
 const parseSheet: Handler = async (req: Request, res: Response) => {
   const sheet: Buffer = req.body;
   try {
-    const parsedSheet: JSON = SheetService.parseSheetService(sheet);
+    const parsedSheet: SheetParserResponse = SheetService.parseSheetService(sheet);
     return res.status(200).send(parsedSheet);
   } catch (error) {
-    return res.status(400).send({ error });
+    const e = error as Error;
+    return res.status(400).json({ error: e.message });
   }
 };
 
