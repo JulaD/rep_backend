@@ -1,4 +1,5 @@
 import * as XLSX from 'xlsx';
+import { SheetNames } from '../Config/Constants';
 import {
   SheetParserResponse, Menores, Mayores, MenoresSheet, MayoresSheet,
 } from '../Models/SheetParserResponse';
@@ -19,7 +20,7 @@ import {
 //   return work;
 // };
 
-const parseMen = (worksheet: XLSX.WorkSheet): Mayores[] => {
+const parseAdults = (worksheet: XLSX.WorkSheet): Mayores[] => {
   const res: Mayores[] = [];
   const ref = worksheet['!ref'];
   if (ref === undefined) throw new Error('An error ocurred');
@@ -42,43 +43,7 @@ const parseMen = (worksheet: XLSX.WorkSheet): Mayores[] => {
   return res;
 };
 
-const parseWomen = (worksheet: XLSX.WorkSheet): Mayores[] => {
-  const res: Mayores[] = [];
-  const ref = worksheet['!ref'];
-  if (ref === undefined) throw new Error('An error ocurred');
-  const range = XLSX.utils.decode_range(ref);
-  range.s.c = 0;
-  range.e.c = 2;
-  const newRange = XLSX.utils.encode_range(range);
-
-  const aux = XLSX.utils.sheet_to_json(worksheet, { range: newRange }) as unknown as MayoresSheet[];
-  aux.forEach((element: MayoresSheet) => {
-    res.push(
-      {
-        edad: element['Edad (años)'],
-        peso: element['Peso (Kg)'],
-        talla: element['Talla (cm)'],
-      },
-    );
-  });
-  return res;
-};
-
-const parseMenLessThanAYear = (worksheet: XLSX.WorkSheet): Menores[] => {
-  const res: Menores[] = [];
-  const aux = XLSX.utils.sheet_to_json(worksheet) as unknown as MenoresSheet[];
-  aux.forEach((element: MenoresSheet) => {
-    res.push(
-      {
-        edad: element['Edad (meses)'],
-        peso: element['Peso (Kg)'],
-      },
-    );
-  });
-  return res;
-};
-
-const parseWomenLessThanAYear = (worksheet: XLSX.WorkSheet): Menores[] => {
+const parseBabies = (worksheet: XLSX.WorkSheet): Menores[] => {
   const res: Menores[] = [];
   const aux = XLSX.utils.sheet_to_json(worksheet) as unknown as MenoresSheet[];
   aux.forEach((element: MenoresSheet) => {
@@ -110,17 +75,17 @@ const parseSheetService = (data: Buffer): SheetParserResponse => {
   sheetNames.forEach((name) => {
     const worksheet: XLSX.WorkSheet = workbook.Sheets[name];
     switch (name) {
-      case 'Hombres<1':
-        hombresMenores = parseMenLessThanAYear(worksheet);
+      case SheetNames.HOMBRES_MENORES:
+        hombresMenores = parseBabies(worksheet);
         break;
-      case 'Hombres':
-        hombres = parseMen(worksheet);
+      case SheetNames.HOMBRES:
+        hombres = parseAdults(worksheet);
         break;
-      case 'Mujeres<1':
-        mujeresMenores = parseWomenLessThanAYear(worksheet);
+      case SheetNames.MUJERES_MENORES:
+        mujeresMenores = parseBabies(worksheet);
         break;
-      case 'Mujeres':
-        mujeres = parseWomen(worksheet);
+      case SheetNames.MUJERES:
+        mujeres = parseAdults(worksheet);
         break;
 
       default:
