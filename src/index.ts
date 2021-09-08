@@ -4,11 +4,12 @@ import 'dotenv/config';
 import cors from 'cors';
 import swaggerJsDoc, { Options } from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import helmet from 'helmet';
 import Routes from './routes';
 
 const app: Application = express();
 const PORT = process.env.PORT || 8000;
-
+app.use(helmet.hidePoweredBy());
 // swagger init
 const swaggerOptions: Options = {
   swaggerDefinition: {
