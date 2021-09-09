@@ -3,7 +3,7 @@ import {
 } from 'express';
 import { SheetParserResponse } from '../Models/SheetParserResponse';
 import SheetService from '../Services/SheetService';
-
+// import SwaggerSchemas from './Controllers/SwaggerSchemas';
 const router = Router();
 
 const parseSheet: Handler = async (req: Request, res: Response) => {
@@ -17,36 +17,6 @@ const parseSheet: Handler = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * @swagger
- * /excelParser:
- *  post:
- *      tags:
- *          -   parser
- *      description: Sheet Parser
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      required:
- *                          -   email
- *                          -   password
- *                      properties:
- *                          excel:
- *                              type: string
- *      responses:
- *          '200':
- *              description: returns the parsed JSON of the excel file provided
- *              content:
- *                  application/json:
- *                      schema:
- *                          type: object
- *                          properties:
- *                              excelParsed:
- *                                  type: string
- */
 router.post('/', parseSheet);
 
 export default router;

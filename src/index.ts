@@ -21,7 +21,7 @@ const swaggerOptions: Options = {
       servers: ['http://localhost:3000'],
     },
   },
-  apis: ['src/routes.ts'],
+  apis: ['src/Controllers/*'],
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
