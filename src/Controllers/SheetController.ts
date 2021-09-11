@@ -3,7 +3,8 @@ import {
 } from 'express';
 import { SheetParserResponse } from '../Models/SheetParserResponse';
 import SheetService from '../Services/SheetService';
-// import SwaggerSchemas from './Controllers/SwaggerSchemas';
+import logger from '../Logger/logger';
+
 const router = Router();
 
 const parseSheet: Handler = async (req: Request, res: Response) => {
@@ -13,6 +14,7 @@ const parseSheet: Handler = async (req: Request, res: Response) => {
     return res.status(200).send(parsedSheet);
   } catch (error) {
     const e = error as Error;
+    logger.info(e.message);
     return res.status(400).json({ error: e.message });
   }
 };

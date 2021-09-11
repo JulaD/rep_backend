@@ -6,6 +6,7 @@ import swaggerJsDoc, { Options } from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import helmet from 'helmet';
 import Routes from './routes';
+import logger from './Logger/logger';
 
 const app: Application = express();
 const PORT = process.env.PORT || 8000;
@@ -47,4 +48,5 @@ app.use(Routes);
 
 app.listen(PORT, (): void => {
   console.log(`REPP Backend running here 👉 https://localhost:${PORT}`);
+  logger.info('Server initiated');
 });
