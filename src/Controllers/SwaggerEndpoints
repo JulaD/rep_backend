@@ -1,37 +1,3 @@
-# /**
-#  * @swagger
-#  * components:
-#  *  schemas:
-#  *      Menores:
-#  *          type: object
-#  *          properties:
-#  *              edad:
-#  *                  type: integer
-#  *              peso:
-#  *                  type: integer
-#  *      Mayores:
-#  *          type: object
-#  *          properties:
-#  *              edad:
-#  *                  type: integer
-#  *              peso:
-#  *                  type: integer
-#  *              talla:
-#  *                  type: integer
-#  *      SheetParserResponse:
-#  *          type: object
-#  *          properties:
-#  *              hombresMenores:
-#  *                  type: Menores [] 
-#  *                      
-#  *
-#  *              mujeresMenores:
-#  *                  type: Menores []
-#  *              hombres:
-#  *                  type: Mayores []
-#  *              mujeres:
-#  *                  type: Mayores []
-#  */
 /**
  * @swagger
  * /excelParser:
