@@ -1,7 +1,7 @@
 import {
   Handler, Request, Response, Router,
 } from 'express';
-import AgeGroup from '../Models/AgeGroup';
+import AgeGroup from '../DTOs/AgeGroupDTO';
 import CalculatorService from '../Services/CalculatorService';
 import CalculatorResponse from '../DTOs/CalculatorResponseDTO';
 

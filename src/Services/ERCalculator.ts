@@ -1,8 +1,8 @@
-import AgeGroup from '../Models/AgeGroup';
-import EnergeticRequirement from '../Models/EnergeticRequirement';
-import CalculatorResponseDTO from '../DTOs/CalculatorResponseDTO';
+import AgeGroup from '../DTOs/AgeGroupDTO';
+import EnergeticRequirement from '../DTOs/EnergeticRequirementDTO';
+import CalculatorResponse from '../DTOs/CalculatorResponseDTO';
 
-const calculateER = (groupParameters: Map<number[], AgeGroup>): CalculatorResponseDTO => {
+const calculateER = (groupParameters: Map<number[], AgeGroup>): CalculatorResponse => {
   let totalOfPeople = 0;
   let totalRequirement = 0;
 
@@ -30,7 +30,7 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>): CalculatorRespon
     requerimientoEnergeticoTotal: totalOfPeople,
   };
 
-  const result: CalculatorResponseDTO = {
+  const result: CalculatorResponse = {
     requerimientosPorGrupo: requirements,
     requerimientoTotal: totalER,
   };

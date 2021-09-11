@@ -1,10 +1,9 @@
-import exp from 'constants';
-import AgeGroup from '../Models/AgeGroup';
-import EnergeticRequirement from '../Models/EnergeticRequirement';
+import AgeGroup from './AgeGroupDTO';
+import EnergeticRequirement from './EnergeticRequirementDTO';
 
-type CalculatorResponseDTO = {
+type CalculatorResponse = {
   requerimientosPorGrupo: Map<AgeGroup, EnergeticRequirement>;
   requerimientoTotal: EnergeticRequirement;
 };
 
-export default CalculatorResponseDTO;
+export default CalculatorResponse;
