@@ -9,18 +9,18 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>): CalculatorRespon
   const requirements = new Map();
 
   groupParameters.forEach((group: AgeGroup, parameters: number[]) => {
-    totalOfPeople = +group.cantidad;
+    totalOfPeople += group.cantidad;
 
     const requirement = parameters[0]
     + (parameters[1] * group.pesoMediano)
-    + (parameters[2] * group.pesoMediano);
+    + (parameters[2] * (group.pesoMediano ** 2));
 
     const groupRequirement: EnergeticRequirement = {
       requerimientoEnergeticoPerCapita: requirement,
       requerimientoEnergeticoTotal: requirement * group.cantidad,
     };
 
-    totalRequirement = +groupRequirement.requerimientoEnergeticoTotal;
+    totalRequirement += groupRequirement.requerimientoEnergeticoTotal;
 
     requirements.set(group, groupRequirement);
   });
