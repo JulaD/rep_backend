@@ -1,14 +1,19 @@
 import ERCalculator from './ERCalculator';
+import ParameterService from './ParameterService';
+import ParserService from './ParserService';
 import AgeGroup from '../DTOs/AgeGroupDTO';
 import CalculatorResponse from '../DTOs/CalculatorResponseDTO';
+import AgeGroupJSON from '../DTOs/AgeGroupJSON';
 
-const calculateEnergeticRequirement = (ageGroups: AgeGroup[]): CalculatorResponse => {
+const calculateEnergeticRequirement = (data: AgeGroupJSON[]): CalculatorResponse => {
   const parametros = new Map<number[], AgeGroup>();
-  const params: number[] = [0, 0, 0];
+  const ageGroups = ParserService.parseGroups(data);
   ageGroups.forEach((group: AgeGroup) => {
-    parametros.set(params, group);
+    parametros.set(ParameterService.getEquationValues(group.edad, group.sexo), group);
   });
+
   const res: CalculatorResponse = ERCalculator.calculateER(parametros);
+
   return res;
 };
 
