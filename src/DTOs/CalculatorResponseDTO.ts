@@ -1,8 +1,8 @@
-import AgeGroup from './AgeGroupDTO';
 import EnergeticRequirement from './EnergeticRequirementDTO';
+import GroupEnergeticRequirement from './GroupEnergeticRequirementDTO';
 
 type CalculatorResponse = {
-  requerimientosPorGrupo: Map<AgeGroup, EnergeticRequirement>;
+  requerimientosPorGrupo: GroupEnergeticRequirement[];
   requerimientoTotal: EnergeticRequirement;
 };
 
