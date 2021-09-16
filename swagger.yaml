@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: REPP Backend
+  description: ''
+security:
+  - BearerAuth: []
+tags:
+  - name: Auth
+  - name: Parser
+  - name: Calculation
+paths:
+
+  /login:
+    post:
+      tags:
+        - Auth
+      summary: Login to get an access token
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCredentials'
+               
+      responses:
+        '200':
+           description: Ok.
+      security: []
+    
+  /sheetParser:
+    post:
+      tags:
+        - Parser
+      summary: Given a sheet returns SheetParserResponse
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              format: binary
+        required: true
+      responses:
+        '200':
+          description: Ok.
+      security:
+        - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Menores:
+      properties:
+        edad:
+          type: integer
+        peso:
+          type: integer
+    Mayores:
+      properties:
+        edad:
+          type: integer
+        peso:
+          type: integer
+        talla:
+          type: integer
+    SheetParserResponse:
+      properties:
+        hombresMenores:
+          type: array
+          items:
+            $ref: '#/components/schemas/Menores'
+        mujeresMenores:
+          type: array
+          items:
+            $ref: '#/components/schemas/Menores'
+        hombres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Mayores'
+        mujeres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Mayores'
+    UserCredentials:
+      properties:
+        user:
+          type: string
+        pass:
+          type: string
