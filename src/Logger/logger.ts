@@ -3,7 +3,7 @@ import {
 } from 'winston';
 
 const {
-  combine, timestamp, label, printf,
+  combine, timestamp,
 } = format;
 
 const logger: Logger = createLogger({
