@@ -1,8 +1,8 @@
 type AgeGroupJSON = {
   edad: string;
   sexo: string;
-  pesoMediano: number;
-  cantidad: number;
+  pesoMediano: string;
+  cantidad: string;
 };
 
 export default AgeGroupJSON;

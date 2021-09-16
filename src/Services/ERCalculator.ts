@@ -76,6 +76,7 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>): CalculatorRespon
   const totalER: EnergeticRequirement = {
     requerimientoEnergeticoPerCapita: totalRequirement / totalOfPeople,
     requerimientoEnergeticoTotal: totalRequirement,
+    poblacionTotal: totalOfPeople,
   };
 
   const result: CalculatorResponse = {
