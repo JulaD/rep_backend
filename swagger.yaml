@@ -44,6 +44,23 @@ paths:
           description: Ok.
       security:
         - BearerAuth: []
+
+  /repCalculator:
+      post:
+        tags:
+          - Calculation
+      summary: Given population data calculates its energetic requirement
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgeGroupJSON'
+        required: true
+      responses:
+        '200':
+          description: Ok.
+      security:
+        - BearerAuth: []
 components:
   securitySchemes:
     BearerAuth:
@@ -87,4 +104,14 @@ components:
         user:
           type: string
         pass:
+          type: string
+    AgeGroupJSON:
+      properties:
+        edad:
+          type: string
+        sexo:
+          type: string
+        pesoMediano:
+          type: string
+        cantidad:
           type: string
