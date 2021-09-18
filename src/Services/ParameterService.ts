@@ -176,6 +176,154 @@ const getEquationValues = (ageBracket: AgeBracket, sex: Sex): number[] => {
       }
       break;
     }
+    case (AgeBracket.a6): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 11
+        res = [310.2, 63.3, -0.263, 12];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 10
+        res = [263.4, 65.3, -0.454, 13];
+      }
+      break;
+    }
+    case (AgeBracket.a7): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 14
+        res = [310.2, 63.3, -0.263, 14];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 17
+        res = [263.4, 65.3, -0.454, 17];
+      }
+      break;
+    }
+    case (AgeBracket.a8): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 16
+        res = [310.2, 63.3, -0.263, 16];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 20
+        res = [263.4, 65.3, -0.454, 20];
+      }
+      break;
+    }
+    case (AgeBracket.a9): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 19
+        res = [310.2, 63.3, -0.263, 19];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 23
+        res = [263.4, 65.3, -0.454, 23];
+      }
+      break;
+    }
+    case (AgeBracket.a10): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 22
+        res = [310.2, 63.3, -0.263, 22];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 25
+        res = [263.4, 65.3, -0.454, 25];
+      }
+      break;
+    }
+    case (AgeBracket.a11): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 25
+        res = [310.2, 63.3, -0.263, 25];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 25
+        res = [263.4, 65.3, -0.454, 25];
+      }
+      break;
+    }
+    case (AgeBracket.a12): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 29
+        res = [310.2, 63.3, -0.263, 29];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 26
+        res = [263.4, 65.3, -0.454, 26];
+      }
+      break;
+    }
+    case (AgeBracket.a13): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 33
+        res = [310.2, 63.3, -0.263, 33];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 24
+        res = [263.4, 65.3, -0.454, 24];
+      }
+      break;
+    }
+    case (AgeBracket.a14): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 33
+        res = [310.2, 63.3, -0.263, 33];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 19
+        res = [263.4, 65.3, -0.454, 19];
+      }
+      break;
+    }
+    case (AgeBracket.a15): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 31
+        res = [310.2, 63.3, -0.263, 31];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 13
+        res = [263.4, 65.3, -0.454, 13];
+      }
+      break;
+    }
+    case (AgeBracket.a16): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 24
+        res = [310.2, 63.3, -0.263, 24];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 5
+        res = [263.4, 65.3, -0.454, 5];
+      }
+      break;
+    }
+    case (AgeBracket.a17): {
+      if (sex === Sex.Masculino) {
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 14
+        res = [310.2, 63.3, -0.263, 14];
+      } else if (sex === Sex.Femenino) {
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 0
+        res = [263.4, 65.3, -0.454, 0];
+      }
+      break;
+    }
+    case (AgeBracket.a18_29): {
+      if (sex === Sex.Masculino) {
+        // (15.057*MP + 692.2) * NAF
+        res = [15.057, 692.2, 1.95, 1.65, 1.85, 1.55];
+      } else if (sex === Sex.Femenino) {
+        // TODO: Parámetros para el cálculo de mujeres 18-29
+      }
+      break;
+    }
+    case (AgeBracket.a30_59): {
+      if (sex === Sex.Masculino) {
+        // (11.472*MP + 863.1) * NAF
+        res = [11.472, 863.1, 1.95, 1.65, 1.85, 1.55];
+      } else if (sex === Sex.Femenino) {
+        // TODO: Parámetros para el cálculo de mujeres 30-59
+      }
+      break;
+    }
+    case (AgeBracket.a60): {
+      if (sex === Sex.Masculino) {
+        // (11.711*MP + 587.7) * NAF
+        res = [11.711, 587.7, 1.95, 1.65, 1.85, 1.55];
+      } else if (sex === Sex.Femenino) {
+        // TODO: Parámetros para el cálculo de mujeres +60
+      }
+      break;
+    }
+
     default: {
       throw new Error('Parsing error, attribute edad does not respect format');
     }
