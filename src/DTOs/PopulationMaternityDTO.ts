@@ -1,6 +1,6 @@
 type PopulationMaternity = {
-  tasaNatalidadPais: number;
-  poblacionPais: number;
+  countryBirthRate: number;
+  countryPpulation: number;
 };
 
 export default PopulationMaternity;

@@ -2,8 +2,8 @@ import EnergeticRequirement from './EnergeticRequirementDTO';
 import GroupEnergeticRequirement from './GroupEnergeticRequirementDTO';
 
 type CalculatorResponse = {
-  requerimientosPorGrupo: GroupEnergeticRequirement[];
-  requerimientoTotal: EnergeticRequirement;
+  groupsRequirements: GroupEnergeticRequirement[];
+  totalRequirement: EnergeticRequirement;
 };
 
 export default CalculatorResponse;

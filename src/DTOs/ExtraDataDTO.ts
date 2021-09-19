@@ -4,9 +4,9 @@ import MinorPAL from './MinorPALDTO';
 import PopulationMaternity from './PopulationMaternityDTO';
 
 type ExtraData = {
-  prevalenciaAFMenores: MinorPAL | undefined;
-  prevalenciaAFAdultos: AdultPAL | undefined;
-  datosEmbarazoLactancia: IndividualMaternity | PopulationMaternity | undefined;
+  minorPAL: MinorPAL | undefined;
+  adultPAL: AdultPAL | undefined;
+  maternity: IndividualMaternity | PopulationMaternity | undefined;
 };
 
 export default ExtraData;

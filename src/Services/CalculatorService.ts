@@ -8,13 +8,13 @@ import extraData from '../DTOs/ExtraDataDTO';
 
 // eslint-disable-next-line max-len
 const calculateEnergeticRequirement = (groups: AgeGroupJSON[], data: extraData): CalculatorResponse => {
-  const parametros = new Map<number[], AgeGroup>();
+  const parameters = new Map<number[], AgeGroup>();
   const ageGroups = ParserService.parseGroups(groups);
   ageGroups.forEach((group: AgeGroup) => {
-    parametros.set(ParameterService.getEquationValues(group.edad, group.sexo), group);
+    parameters.set(ParameterService.getEquationValues(group.age, group.sex), group);
   });
 
-  const res: CalculatorResponse = ERCalculator.calculateER(parametros, data);
+  const res: CalculatorResponse = ERCalculator.calculateER(parameters, data);
 
   return res;
 };

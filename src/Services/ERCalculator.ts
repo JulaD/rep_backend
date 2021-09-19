@@ -3,32 +3,32 @@ import EnergeticRequirement from '../DTOs/EnergeticRequirementDTO';
 import CalculatorResponse from '../DTOs/CalculatorResponseDTO';
 import GroupEnergeticRequirement from '../DTOs/GroupEnergeticRequirementDTO';
 import extraData from '../DTOs/ExtraDataDTO';
-import prevalenciaAFMenores from '../DTOs/MinorPALDTO';
+import MinorPALDTO from '../DTOs/MinorPALDTO';
 import ParserService from './ParserService';
 import AgeBracket from '../Enum/AgeBracket';
 
-const calculateGET = (group: AgeGroup, params: number[], preval: prevalenciaAFMenores): number => {
-  const getModerado: number = params[0]
-  + (params[1] * group.pesoMediano)
-  - params[2] * (group.pesoMediano * group.pesoMediano);
+const calculateGET = (group: AgeGroup, params: number[], preval: MinorPALDTO): number => {
+  const getModerate: number = params[0]
+  + (params[1] * group.medianWeight)
+  - params[2] * (group.medianWeight * group.medianWeight);
 
-  const getLiviano: number = getModerado - (getModerado * params[4]) / 100;
-  const getIntenso: number = getModerado + (getModerado * params[5]) / 100;
+  const getLow: number = getModerate - (getModerate * params[4]) / 100;
+  const getIntense: number = getModerate + (getModerate * params[5]) / 100;
 
-  const ret: number = (getLiviano * preval.NAFLiviano) / 100
-  + (getModerado * preval.NAFModerado) / 100
-  + (getIntenso * preval.NAFIntenso) / 100;
+  const ret: number = (getLow * preval.lowPalPrevalence) / 100
+  + (getModerate * preval.moderatePALPrevalence) / 100
+  + (getIntense * preval.intensePALPrevalence) / 100;
 
   return ret;
 };
 
 const calculateLessThanAYear = (group: AgeGroup, params: number[]): GroupEnergeticRequirement => {
-  const requirement = params[0] + (params[1] * group.pesoMediano) + params[2];
+  const requirement = params[0] + (params[1] * group.medianWeight) + params[2];
 
   const groupRequirement: GroupEnergeticRequirement = {
-    grupoEtario: ParserService.unparseGroup(group),
-    requerimientoEnergeticoPerCapita: requirement,
-    requerimientoEnergeticoTotal: requirement * group.cantidad,
+    group: ParserService.unparseGroup(group),
+    perCapita: requirement,
+    total: requirement * group.population,
   };
 
   return groupRequirement;
@@ -36,14 +36,14 @@ const calculateLessThanAYear = (group: AgeGroup, params: number[]): GroupEnerget
 
 const calculateOneToFiveYears = (group: AgeGroup, params: number[]): GroupEnergeticRequirement => {
   const requirement = params[0]
-  + (params[1] * group.pesoMediano)
-  + (params[2] * (group.pesoMediano ** 2))
+  + (params[1] * group.medianWeight)
+  + (params[2] * (group.medianWeight ** 2))
   + params[3];
 
   const groupRequirement: GroupEnergeticRequirement = {
-    grupoEtario: ParserService.unparseGroup(group),
-    requerimientoEnergeticoPerCapita: requirement,
-    requerimientoEnergeticoTotal: requirement * group.cantidad,
+    group: ParserService.unparseGroup(group),
+    perCapita: requirement,
+    total: requirement * group.population,
   };
 
   return groupRequirement;
@@ -52,18 +52,18 @@ const calculateOneToFiveYears = (group: AgeGroup, params: number[]): GroupEnerge
 // eslint-disable-next-line max-len
 const calculateSixToSeventeenYears = (group: AgeGroup, params: number[], data: extraData): GroupEnergeticRequirement => {
   let get: number;
-  if (typeof (data.prevalenciaAFMenores) === 'undefined') {
+  if (typeof (data.minorPAL) === 'undefined') {
     throw new Error('Data missing');
   } else {
-    get = calculateGET(group, params, data.prevalenciaAFMenores);
+    get = calculateGET(group, params, data.minorPAL);
   }
 
   const requirement = get + params[3];
 
   const groupRequirement: GroupEnergeticRequirement = {
-    grupoEtario: ParserService.unparseGroup(group),
-    requerimientoEnergeticoPerCapita: requirement,
-    requerimientoEnergeticoTotal: requirement * group.cantidad,
+    group: ParserService.unparseGroup(group),
+    perCapita: requirement,
+    total: requirement * group.population,
   };
 
   return groupRequirement;
@@ -77,9 +77,9 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: extraData):
   const requirements: GroupEnergeticRequirement[] = [];
 
   groupParameters.forEach((group: AgeGroup, params: number[]) => {
-    totalOfPeople += group.cantidad;
+    totalOfPeople += group.population;
     let groupRequirement: GroupEnergeticRequirement;
-    switch (group.edad) {
+    switch (group.age) {
       case AgeBracket.m0:
       case AgeBracket.m1:
       case AgeBracket.m2:
@@ -122,19 +122,19 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: extraData):
         throw new Error('Parsing error, attribute edad does not respect format');
       }
     }
-    totalRequirement += groupRequirement.requerimientoEnergeticoTotal;
+    totalRequirement += groupRequirement.total;
     requirements.push(groupRequirement);
   });
 
   const totalER: EnergeticRequirement = {
-    requerimientoEnergeticoPerCapita: totalRequirement / totalOfPeople,
-    requerimientoEnergeticoTotal: totalRequirement,
-    poblacionTotal: totalOfPeople,
+    perCapita: totalRequirement / totalOfPeople,
+    total: totalRequirement,
+    totalPopulation: totalOfPeople,
   };
 
   const result: CalculatorResponse = {
-    requerimientosPorGrupo: requirements,
-    requerimientoTotal: totalER,
+    groupsRequirements: requirements,
+    totalRequirement: totalER,
   };
 
   return result;

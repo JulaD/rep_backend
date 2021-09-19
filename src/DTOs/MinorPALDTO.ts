@@ -1,7 +1,7 @@
 type MinorPAL = {
-  NAFLiviano: number;
-  NAFModerado: number;
-  NAFIntenso: number;
+  lowPalPrevalence: number;
+  moderatePALPrevalence: number;
+  intensePALPrevalence: number;
 };
 
 export default MinorPAL;

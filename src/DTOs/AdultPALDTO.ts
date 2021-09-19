@@ -1,10 +1,10 @@
 type AdultPAL = {
-  porcentajeUrbano: number;
-  NAFActivosUrbano: number;
-  NAFLivianaUrbano: number;
-  porcentajeRural: number;
-  NAFActivosRural: number;
-  NAFLivianaRural: number;
+  urbanPercentage: number;
+  activeUrbanPAL: number;
+  lowUrbanPAL: number;
+  ruralPercentage: number;
+  activeRuralPAL: number;
+  lowRuralPAL: number;
 };
 
 export default AdultPAL;
