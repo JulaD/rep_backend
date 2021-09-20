@@ -178,148 +178,151 @@ const getEquationValues = (ageBracket: AgeBracket, sex: Sex): number[] => {
     }
     case (AgeBracket.a6): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 11, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 11, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 12, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 10, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 10, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 13, 15, 15];
       }
       break;
     }
     case (AgeBracket.a7): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 14, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 14, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 14, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 17, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 17, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 17, 15, 15];
       }
       break;
     }
     case (AgeBracket.a8): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 16, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 16, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 16, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 20, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 20, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 20, 15, 15];
       }
       break;
     }
     case (AgeBracket.a9): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 19, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 19, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 19, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 23, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 23, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 23, 15, 15];
       }
       break;
     }
     case (AgeBracket.a10): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 22, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 22, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 22, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 25, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 25, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 25, 15, 15];
       }
       break;
     }
     case (AgeBracket.a11): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 25, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 25, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 25, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 25, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 25, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 25, 15, 15];
       }
       break;
     }
     case (AgeBracket.a12): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 29, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 29, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 29, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 26, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 26, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 26, 15, 15];
       }
       break;
     }
     case (AgeBracket.a13): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 33, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 33, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 33, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 24, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 24, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 24, 15, 15];
       }
       break;
     }
     case (AgeBracket.a14): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 33, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 33, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 33, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 19, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 19, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 19, 15, 15];
       }
       break;
     }
     case (AgeBracket.a15): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 31, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 31, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 31, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 13, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 13, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 13, 15, 15];
       }
       break;
     }
     case (AgeBracket.a16): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 24, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 24, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 24, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 5, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 5, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 5, 15, 15];
       }
       break;
     }
     case (AgeBracket.a17): {
       if (sex === Sex.Male) {
-        // 310.2 + (63.3*MP) - 0.263*MP^2 + 14, -15%/+15% para GET liviano/intenso
+        // 310.2 + (63.3*MP) - 0.263*MP^2 + 14, -15%/+15% for light/intense TEE
         res = [310.2, 63.3, -0.263, 14, 15, 15];
       } else if (sex === Sex.Female) {
-        // 263.4 + (65.3*MP) - 0.454*MP^2 + 0, -15%/+15% para GET liviano/intenso
+        // 263.4 + (65.3*MP) - 0.454*MP^2 + 0, -15%/+15% for light/intense TEE
         res = [263.4, 65.3, -0.454, 0, 15, 15];
       }
       break;
     }
     case (AgeBracket.a18_29): {
       if (sex === Sex.Male) {
-        // (15.057*MP + 692.2) * NAF
-        res = [15.057, 692.2, 1.95, 1.65, 1.85, 1.55, 208, 251];
+        // (15.057*MP + 692.2) * PAL
+        res = [15.057, 692.2, 1.95, 1.65, 1.85, 1.55];
       } else if (sex === Sex.Female) {
-        // TODO: Parámetros para el cálculo de mujeres 18-29
+        // (14.818*MP + 486.6) * PAL, 208 and 251 extra energy for pregnant and lactating women
+        res = [14.818, 486.6, 1.95, 1.65, 1.85, 1.55, 208, 251];
       }
       break;
     }
     case (AgeBracket.a30_59): {
       if (sex === Sex.Male) {
-        // (11.472*MP + 863.1) * NAF
-        res = [11.472, 863.1, 1.95, 1.65, 1.85, 1.55, 208, 251];
+        // (11.472*MP + 873.1) * PAL
+        res = [11.472, 873.1, 1.95, 1.65, 1.85, 1.55];
       } else if (sex === Sex.Female) {
-        // TODO: Parámetros para el cálculo de mujeres 30-59
+        // (8.126*MP + 845.6) * PAL, 208 and 251 extra energy for pregnant and lactating women
+        res = [8.126, 845.6, 1.95, 1.65, 1.85, 1.55, 208, 251];
       }
       break;
     }
     case (AgeBracket.a60): {
       if (sex === Sex.Male) {
-        // (11.711*MP + 587.7) * NAF
+        // (11.711*MP + 587.7) * PAL
         res = [11.711, 587.7, 1.95, 1.65, 1.85, 1.55];
       } else if (sex === Sex.Female) {
-        // TODO: Parámetros para el cálculo de mujeres +60
+        // (9.082*MP + 658.5) * PAL
+        res = [9.082, 658.5, 1.95, 1.65, 1.85, 1.55];
       }
       break;
     }

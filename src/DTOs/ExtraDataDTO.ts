@@ -6,7 +6,8 @@ import PopulationMaternity from './PopulationMaternityDTO';
 type ExtraData = {
   minorPAL: MinorPAL | undefined;
   adultPAL: AdultPAL | undefined;
-  maternity: IndividualMaternity | PopulationMaternity | undefined;
+  maternity18To29: IndividualMaternity | PopulationMaternity | undefined;
+  maternity30To59: IndividualMaternity | PopulationMaternity | undefined;
 };
 
 export default ExtraData;

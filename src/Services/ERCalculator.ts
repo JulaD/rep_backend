@@ -11,27 +11,38 @@ import Sex from '../Enum/Sex';
 import AgeBracket from '../Enum/AgeBracket';
 import ParserService from './ParserService';
 
-const calculateGET = (group: AgeGroup, params: number[], preval: MinorPAL): number => {
-  const getModerate: number = params[0]
+// eslint-disable-next-line max-len
+const isIndividualMaternity = (obj: IndividualMaternity | PopulationMaternity): obj is IndividualMaternity => {
+  if ((obj as IndividualMaternity).pregnantWomen) {
+    return true;
+  }
+  return false;
+};
+
+// TEE (Total Energetic Expenditure) = GET (Gasto Energetico Total)
+const calculateTEE = (group: AgeGroup, params: number[], preval: MinorPAL): number => {
+  const teeModerate: number = params[0]
   + (params[1] * group.medianWeight)
   - params[2] * (group.medianWeight * group.medianWeight);
 
-  const getLow: number = getModerate - (getModerate * params[4]) / 100;
-  const getIntense: number = getModerate + (getModerate * params[5]) / 100;
+  const teeLow: number = teeModerate - (teeModerate * params[4]) / 100;
+  const teeIntense: number = teeModerate + (teeModerate * params[5]) / 100;
 
-  const ret: number = (getLow * preval.lowPalPrevalence) / 100
-  + (getModerate * preval.moderatePALPrevalence) / 100
-  + (getIntense * preval.intensePALPrevalence) / 100;
+  const ret: number = (teeLow * preval.lowPalPrevalence) / 100
+  + (teeModerate * preval.moderatePALPrevalence) / 100
+  + (teeIntense * preval.intensePALPrevalence) / 100;
 
   return ret;
 };
 
-const calculateTMB = (group: AgeGroup, params: number[]): number => {
+// BMR (Basal Metabolic Rate) = TMB (Tasa Metabolica Basal)
+const calculateBMR = (group: AgeGroup, params: number[]): number => {
   const ret: number = params[0] * group.medianWeight + params[1];
   return ret;
 };
 
-const calculatePAL = (group: AgeGroup, params: number[], popData: AdultPAL): number => {
+// PAL (Physical activity level) = NAF (Nivel de Actividad Fisica)
+const calculatePAL = (params: number[], popData: AdultPAL): number => {
   const ruralPAL: number = (popData.activeRuralPAL * params[2]) / 100
   + (popData.lowRuralPAL * params[3]) / 100;
   const urbanPAL: number = (popData.activeUrbanPAL * params[4]) / 100
@@ -97,14 +108,14 @@ const calculate1To5Years = (group: AgeGroup, params: number[]): GroupEnergeticRe
 
 // eslint-disable-next-line max-len
 const calculate6To17Years = (group: AgeGroup, params: number[], data: ExtraData): GroupEnergeticRequirement => {
-  let get: number;
+  let tee: number;
   if (typeof (data.minorPAL) === 'undefined') {
     throw new Error('Missing data');
   } else {
-    get = calculateGET(group, params, data.minorPAL);
+    tee = calculateTEE(group, params, data.minorPAL);
   }
 
-  const requirement = get + params[3];
+  const requirement = tee + params[3];
 
   const groupRequirement: GroupEnergeticRequirement = {
     group: ParserService.unparseGroup(group),
@@ -117,24 +128,26 @@ const calculate6To17Years = (group: AgeGroup, params: number[], data: ExtraData)
 
 // eslint-disable-next-line max-len
 const calculate18To29Years = (group: AgeGroup, params: number[], data: ExtraData): GroupEnergeticRequirement => {
-  let tmb: number;
+  let bmr: number;
   let pal: number;
   if (typeof (data.adultPAL) === 'undefined') {
     throw new Error('Missing data');
   } else {
-    tmb = calculateTMB(group, params);
-    pal = calculatePAL(group, params, data.adultPAL);
+    bmr = calculateBMR(group, params);
+    pal = calculatePAL(params, data.adultPAL);
   }
 
-  let requirement: number = tmb * pal;
+  let requirement: number = bmr * pal;
 
+  // If the group's sex is Female, then you have to take into account
+  // the extra energy required by women that are pregnant or lactating
   if (group.sex === Sex.Female) {
-    if (typeof (data.maternity) === 'undefined') {
+    if (data.maternity18To29 === undefined) {
       throw new Error('Missing data');
-    } else if (typeof (data.maternity) === 'IndividualMaternity') {
-      requirement = calculateERWomenIndividual(group, params, data.maternity, requirement);
-    } else if (typeof (data.maternity) === 'PopulationMaternity') {
-      requirement = calculateERWomenPopulation(group, params, data.maternity, requirement);
+    } else if (isIndividualMaternity(data.maternity18To29)) {
+      requirement = calculateERWomenIndividual(group, params, data.maternity18To29, requirement);
+    } else {
+      requirement = calculateERWomenPopulation(group, params, data.maternity18To29, requirement);
     }
   }
 
@@ -149,24 +162,26 @@ const calculate18To29Years = (group: AgeGroup, params: number[], data: ExtraData
 
 // eslint-disable-next-line max-len
 const calculate30To59Years = (group: AgeGroup, params: number[], data: ExtraData): GroupEnergeticRequirement => {
-  let tmb: number;
+  let bmr: number;
   let pal: number;
   if (typeof (data.adultPAL) === 'undefined') {
     throw new Error('Missing data');
   } else {
-    tmb = calculateTMB(group, params);
-    pal = calculatePAL(group, params, data.adultPAL);
+    bmr = calculateBMR(group, params);
+    pal = calculatePAL(params, data.adultPAL);
   }
 
-  let requirement: number = tmb * pal;
+  let requirement: number = bmr * pal;
 
+  // If the group's sex is Female, then you have to take into account
+  // the extra energy required by women that are pregnant or lactating
   if (group.sex === Sex.Female) {
-    if (typeof (data.maternity) === 'undefined') {
+    if (typeof (data.maternity30To59) === 'undefined') {
       throw new Error('Missing data');
-    } else if (typeof (data.maternity) === 'IndividualMaternity') {
-      requirement = calculateERWomenIndividual(group, params, data.maternity, requirement);
-    } else if (typeof (data.maternity) === 'PopulationMaternity') {
-      requirement = calculateERWomenPopulation(group, params, data.maternity, requirement);
+    } else if (isIndividualMaternity(data.maternity30To59)) {
+      requirement = calculateERWomenIndividual(group, params, data.maternity30To59, requirement);
+    } else {
+      requirement = calculateERWomenPopulation(group, params, data.maternity30To59, requirement);
     }
   }
 
@@ -181,16 +196,16 @@ const calculate30To59Years = (group: AgeGroup, params: number[], data: ExtraData
 
 // eslint-disable-next-line max-len
 const calculate60PlusYears = (group: AgeGroup, params: number[], data: ExtraData): GroupEnergeticRequirement => {
-  let tmb: number;
+  let bmr: number;
   let pal: number;
   if (typeof (data.adultPAL) === 'undefined') {
     throw new Error('Missing data');
   } else {
-    tmb = calculateTMB(group, params);
-    pal = calculatePAL(group, params, data.adultPAL);
+    bmr = calculateBMR(group, params);
+    pal = calculatePAL(params, data.adultPAL);
   }
 
-  const requirement: number = tmb * pal;
+  const requirement: number = bmr * pal;
 
   const groupRequirement: GroupEnergeticRequirement = {
     group: ParserService.unparseGroup(group),
