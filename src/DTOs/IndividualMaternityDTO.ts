@@ -1,6 +1,6 @@
 type IndividualMaternity = {
-  pregnants: number;
-  lactating: number;
+  pregnantWomen: number;
+  lactatingWomen: number;
 };
 
 export default IndividualMaternity;

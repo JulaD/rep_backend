@@ -2,12 +2,16 @@ import AgeGroup from '../DTOs/AgeGroupDTO';
 import EnergeticRequirement from '../DTOs/EnergeticRequirementDTO';
 import CalculatorResponse from '../DTOs/CalculatorResponseDTO';
 import GroupEnergeticRequirement from '../DTOs/GroupEnergeticRequirementDTO';
-import extraData from '../DTOs/ExtraDataDTO';
-import MinorPALDTO from '../DTOs/MinorPALDTO';
-import ParserService from './ParserService';
+import ExtraData from '../DTOs/ExtraDataDTO';
+import MinorPAL from '../DTOs/MinorPALDTO';
+import AdultPAL from '../DTOs/AdultPALDTO';
+import IndividualMaternity from '../DTOs/IndividualMaternityDTO';
+import PopulationMaternity from '../DTOs/PopulationMaternityDTO';
+import Sex from '../Enum/Sex';
 import AgeBracket from '../Enum/AgeBracket';
+import ParserService from './ParserService';
 
-const calculateGET = (group: AgeGroup, params: number[], preval: MinorPALDTO): number => {
+const calculateGET = (group: AgeGroup, params: number[], preval: MinorPAL): number => {
   const getModerate: number = params[0]
   + (params[1] * group.medianWeight)
   - params[2] * (group.medianWeight * group.medianWeight);
@@ -22,6 +26,48 @@ const calculateGET = (group: AgeGroup, params: number[], preval: MinorPALDTO): n
   return ret;
 };
 
+const calculateTMB = (group: AgeGroup, params: number[]): number => {
+  const ret: number = params[0] * group.medianWeight + params[1];
+  return ret;
+};
+
+const calculatePAL = (group: AgeGroup, params: number[], popData: AdultPAL): number => {
+  const ruralPAL: number = (popData.activeRuralPAL * params[2]) / 100
+  + (popData.lowRuralPAL * params[3]) / 100;
+  const urbanPAL: number = (popData.activeUrbanPAL * params[4]) / 100
+  + (popData.lowUrbanPAL * params[5]) / 100;
+
+  const ret = (ruralPAL * popData.ruralPercentage) / 100
+  + (urbanPAL * popData.urbanPercentage) / 100;
+  return ret;
+};
+
+// eslint-disable-next-line max-len
+const calculateERWomenIndividual = (group: AgeGroup, params: number[], popData: IndividualMaternity, req: number): number => {
+  const percentPregnantWomen = (popData.pregnantWomen * 100) / group.population;
+  const percentLactatingWomen = (popData.lactatingWomen * 100) / group.population;
+
+  const reqPregnantWomen = (percentPregnantWomen * (req + params[6])) / 100;
+  const reqLactatingWomen = (percentLactatingWomen * (req + params[7])) / 100;
+  const reqRestOfWomen = ((100 - percentPregnantWomen - percentLactatingWomen) * req) / 100;
+
+  return reqPregnantWomen + reqLactatingWomen + reqRestOfWomen;
+};
+
+// eslint-disable-next-line max-len
+const calculateERWomenPopulation = (group: AgeGroup, params: number[], popData: PopulationMaternity, req: number): number => {
+  const annualBirths = popData.countryBirthRate * popData.countryPopulation;
+
+  const percentPregnantWomen = (annualBirths * 75) / group.population;
+  const percentLactatingWomen = (annualBirths * 50) / group.population;
+
+  const reqPregnantWomen = (percentPregnantWomen * (req + params[6])) / 100;
+  const reqLactatingWomen = (percentLactatingWomen * (req + params[7])) / 100;
+  const reqRestOfWomen = ((100 - percentPregnantWomen - percentLactatingWomen) * req) / 100;
+
+  return reqPregnantWomen + reqLactatingWomen + reqRestOfWomen;
+};
+
 const calculateLessThanAYear = (group: AgeGroup, params: number[]): GroupEnergeticRequirement => {
   const requirement = params[0] + (params[1] * group.medianWeight) + params[2];
 
@@ -34,7 +80,7 @@ const calculateLessThanAYear = (group: AgeGroup, params: number[]): GroupEnerget
   return groupRequirement;
 };
 
-const calculateOneToFiveYears = (group: AgeGroup, params: number[]): GroupEnergeticRequirement => {
+const calculate1To5Years = (group: AgeGroup, params: number[]): GroupEnergeticRequirement => {
   const requirement = params[0]
   + (params[1] * group.medianWeight)
   + (params[2] * (group.medianWeight ** 2))
@@ -50,10 +96,10 @@ const calculateOneToFiveYears = (group: AgeGroup, params: number[]): GroupEnerge
 };
 
 // eslint-disable-next-line max-len
-const calculateSixToSeventeenYears = (group: AgeGroup, params: number[], data: extraData): GroupEnergeticRequirement => {
+const calculate6To17Years = (group: AgeGroup, params: number[], data: ExtraData): GroupEnergeticRequirement => {
   let get: number;
   if (typeof (data.minorPAL) === 'undefined') {
-    throw new Error('Data missing');
+    throw new Error('Missing data');
   } else {
     get = calculateGET(group, params, data.minorPAL);
   }
@@ -70,7 +116,93 @@ const calculateSixToSeventeenYears = (group: AgeGroup, params: number[], data: e
 };
 
 // eslint-disable-next-line max-len
-const calculateER = (groupParameters: Map<number[], AgeGroup>, data: extraData): CalculatorResponse => {
+const calculate18To29Years = (group: AgeGroup, params: number[], data: ExtraData): GroupEnergeticRequirement => {
+  let tmb: number;
+  let pal: number;
+  if (typeof (data.adultPAL) === 'undefined') {
+    throw new Error('Missing data');
+  } else {
+    tmb = calculateTMB(group, params);
+    pal = calculatePAL(group, params, data.adultPAL);
+  }
+
+  let requirement: number = tmb * pal;
+
+  if (group.sex === Sex.Female) {
+    if (typeof (data.maternity) === 'undefined') {
+      throw new Error('Missing data');
+    } else if (typeof (data.maternity) === 'IndividualMaternity') {
+      requirement = calculateERWomenIndividual(group, params, data.maternity, requirement);
+    } else if (typeof (data.maternity) === 'PopulationMaternity') {
+      requirement = calculateERWomenPopulation(group, params, data.maternity, requirement);
+    }
+  }
+
+  const groupRequirement: GroupEnergeticRequirement = {
+    group: ParserService.unparseGroup(group),
+    perCapita: requirement,
+    total: requirement * group.population,
+  };
+
+  return groupRequirement;
+};
+
+// eslint-disable-next-line max-len
+const calculate30To59Years = (group: AgeGroup, params: number[], data: ExtraData): GroupEnergeticRequirement => {
+  let tmb: number;
+  let pal: number;
+  if (typeof (data.adultPAL) === 'undefined') {
+    throw new Error('Missing data');
+  } else {
+    tmb = calculateTMB(group, params);
+    pal = calculatePAL(group, params, data.adultPAL);
+  }
+
+  let requirement: number = tmb * pal;
+
+  if (group.sex === Sex.Female) {
+    if (typeof (data.maternity) === 'undefined') {
+      throw new Error('Missing data');
+    } else if (typeof (data.maternity) === 'IndividualMaternity') {
+      requirement = calculateERWomenIndividual(group, params, data.maternity, requirement);
+    } else if (typeof (data.maternity) === 'PopulationMaternity') {
+      requirement = calculateERWomenPopulation(group, params, data.maternity, requirement);
+    }
+  }
+
+  const groupRequirement: GroupEnergeticRequirement = {
+    group: ParserService.unparseGroup(group),
+    perCapita: requirement,
+    total: requirement * group.population,
+  };
+
+  return groupRequirement;
+};
+
+// eslint-disable-next-line max-len
+const calculate60PlusYears = (group: AgeGroup, params: number[], data: ExtraData): GroupEnergeticRequirement => {
+  let tmb: number;
+  let pal: number;
+  if (typeof (data.adultPAL) === 'undefined') {
+    throw new Error('Missing data');
+  } else {
+    tmb = calculateTMB(group, params);
+    pal = calculatePAL(group, params, data.adultPAL);
+  }
+
+  const requirement: number = tmb * pal;
+
+  const groupRequirement: GroupEnergeticRequirement = {
+    group: ParserService.unparseGroup(group),
+    perCapita: requirement,
+    total: requirement * group.population,
+  };
+
+  return groupRequirement;
+};
+
+// eslint-disable-next-line max-len
+const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData): CalculatorResponse => {
   let totalOfPeople = 0;
   let totalRequirement = 0;
 
@@ -100,7 +232,7 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: extraData):
       case AgeBracket.a3:
       case AgeBracket.a4:
       case AgeBracket.a5: {
-        groupRequirement = calculateOneToFiveYears(group, params);
+        groupRequirement = calculate1To5Years(group, params);
         break;
       }
       case AgeBracket.a6:
@@ -115,7 +247,19 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: extraData):
       case AgeBracket.a15:
       case AgeBracket.a16:
       case AgeBracket.a17: {
-        groupRequirement = calculateSixToSeventeenYears(group, params, data);
+        groupRequirement = calculate6To17Years(group, params, data);
+        break;
+      }
+      case AgeBracket.a18_29: {
+        groupRequirement = calculate18To29Years(group, params, data);
+        break;
+      }
+      case AgeBracket.a30_59: {
+        groupRequirement = calculate30To59Years(group, params, data);
+        break;
+      }
+      case AgeBracket.a60: {
+        groupRequirement = calculate60PlusYears(group, params, data);
         break;
       }
       default: {
