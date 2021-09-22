@@ -169,8 +169,8 @@ const parseGroups = (groups: AgeGroupJSON[]): AgeGroup[] => {
     const group: AgeGroup = {
       age: ageGroup.age as AgeBracket,
       sex: ageGroup.sex as Sex,
-      medianWeight: parseFloat(ageGroup.medianWeight),
-      population: parseFloat(ageGroup.population),
+      medianWeight: ageGroup.medianWeight,
+      population: ageGroup.population,
     };
     retGroups.push(group);
   });
@@ -181,8 +181,8 @@ const unparseGroup = (group: AgeGroup): AgeGroupJSON => {
   const retGroup: AgeGroupJSON = {
     age: group.age as string,
     sex: group.sex as string,
-    medianWeight: String(group.medianWeight),
-    population: String(group.population),
+    medianWeight: group.medianWeight,
+    population: group.population,
   };
   return retGroup;
 };

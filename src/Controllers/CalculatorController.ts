@@ -1,17 +1,14 @@
 import {
   Handler, Request, Response, Router,
 } from 'express';
-import AgeGroupJSON from '../DTOs/AgeGroupJSON';
 import CalculatorService from '../Services/CalculatorService';
 import CalculatorResponse from '../DTOs/CalculatorResponseDTO';
 import logger from '../Logger/logger';
-import ExtraData from '../DTOs/ExtraDataDTO';
 
 const router = Router();
 
 const getREP: Handler = async (req: Request, res: Response) => {
-  const { groups } = req.body;
-  const { extraData } = req.body;
+  const { groups, extraData } = req.body;
   try {
     const EnergyReq:
     CalculatorResponse = CalculatorService.calculateEnergeticRequirement(groups, extraData);

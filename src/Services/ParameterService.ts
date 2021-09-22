@@ -328,7 +328,7 @@ const getEquationValues = (ageBracket: AgeBracket, sex: Sex): number[] => {
     }
 
     default: {
-      throw new Error('Parsing error, attribute edad does not respect format');
+      throw new Error(`Parsing error, attribute edad does not respect format ${ageBracket}`);
     }
   }
   return res;
