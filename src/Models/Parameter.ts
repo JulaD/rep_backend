@@ -1,6 +1,6 @@
 import ParameterType from '../Enum/ParameterType';
 
-class Parameter {
+class ParameterModel {
   name: string;
 
   value: number;
@@ -14,4 +14,4 @@ class Parameter {
   }
 }
 
-export default Parameter;
+export default ParameterModel;
