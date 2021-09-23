@@ -114,7 +114,7 @@ const calculate6To17Years = (group: AgeGroup, params: number[], data: ExtraData)
   } else {
     tee = calculateTEE(group, params, data.minorPAL);
   }
-  console.log(tee);
+
   const requirement = tee + params[3];
 
   const groupRequirement: GroupEnergeticRequirement = {
