@@ -161,16 +161,16 @@ import Sex from '../Enum/Sex';
 
 const parseGroups = (groups: AgeGroupJSON[]): AgeGroup[] => {
   const retGroups: AgeGroup[] = [];
-  groups.forEach((obj: AgeGroupJSON) => {
+  groups.forEach((ageGroup: AgeGroupJSON) => {
     // if (typeof (obj.pesoMediano) !== 'number' || typeof (obj.cantidad) !== 'number') {
     //  console.log('Estas haciendo cualquiera flaco');
     //  throw new Error('Parsing error, attributes do not respect format');
     // }
     const group: AgeGroup = {
-      edad: obj.edad as AgeBracket,
-      sexo: obj.sexo as Sex,
-      pesoMediano: parseFloat(obj.pesoMediano),
-      cantidad: parseFloat(obj.cantidad),
+      age: ageGroup.age as AgeBracket,
+      sex: ageGroup.sex as Sex,
+      medianWeight: ageGroup.medianWeight,
+      population: ageGroup.population,
     };
     retGroups.push(group);
   });
@@ -179,10 +179,10 @@ const parseGroups = (groups: AgeGroupJSON[]): AgeGroup[] => {
 
 const unparseGroup = (group: AgeGroup): AgeGroupJSON => {
   const retGroup: AgeGroupJSON = {
-    edad: group.edad as string,
-    sexo: group.sexo as string,
-    pesoMediano: String(group.pesoMediano),
-    cantidad: String(group.cantidad),
+    age: group.age as string,
+    sex: group.sex as string,
+    medianWeight: group.medianWeight,
+    population: group.population,
   };
   return retGroup;
 };

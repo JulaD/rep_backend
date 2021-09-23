@@ -1,9 +1,9 @@
 import AgeGroupJSON from './AgeGroupJSON';
 
 type GroupEnergeticRequirement = {
-  grupoEtario: AgeGroupJSON;
-  requerimientoEnergeticoPerCapita: number;
-  requerimientoEnergeticoTotal: number;
+  group: AgeGroupJSON;
+  perCapita: number;
+  total: number;
 };
 
 export default GroupEnergeticRequirement;

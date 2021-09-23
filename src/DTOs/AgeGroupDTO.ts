@@ -2,10 +2,10 @@ import AgeBracket from '../Enum/AgeBracket';
 import Sex from '../Enum/Sex';
 
 type AgeGroup = {
-  edad: AgeBracket;
-  sexo: Sex;
-  pesoMediano: number;
-  cantidad: number;
+  age: AgeBracket;
+  sex: Sex;
+  medianWeight: number;
+  population: number;
 };
 
 export default AgeGroup;

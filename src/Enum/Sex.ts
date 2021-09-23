@@ -1,6 +1,6 @@
 enum Sex {
-  Masculino = 'Masculino',
-  Femenino = 'Femenino',
+  Male = 'Masculino',
+  Female = 'Femenino',
 }
 
 export default Sex;
