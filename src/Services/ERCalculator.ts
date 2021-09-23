@@ -25,7 +25,7 @@ const calculateTEE = (group: AgeGroup, params: number[], preval: MinorPAL): numb
   + (params[1] * group.medianWeight)
   + params[2] * (group.medianWeight * group.medianWeight);
 
-  const teeLow: number = teeModerate - (teeModerate * params[4]) / 100;
+  const teeLow: number = teeModerate + (teeModerate * params[4]) / 100;
   const teeIntense: number = teeModerate + (teeModerate * params[5]) / 100;
 
   const ret: number = (teeLow * preval.lowPALPrevalence) / 100
