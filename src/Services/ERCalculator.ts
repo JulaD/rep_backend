@@ -23,7 +23,7 @@ const isIndividualMaternity = (obj: IndividualMaternity | PopulationMaternity): 
 const calculateTEE = (group: AgeGroup, params: number[], preval: MinorPAL): number => {
   const teeModerate: number = params[0]
   + (params[1] * group.medianWeight)
-  - params[2] * (group.medianWeight * group.medianWeight);
+  + params[2] * (group.medianWeight * group.medianWeight);
 
   const teeLow: number = teeModerate - (teeModerate * params[4]) / 100;
   const teeIntense: number = teeModerate + (teeModerate * params[5]) / 100;
@@ -114,7 +114,7 @@ const calculate6To17Years = (group: AgeGroup, params: number[], data: ExtraData)
   } else {
     tee = calculateTEE(group, params, data.minorPAL);
   }
-
+  console.log(tee);
   const requirement = tee + params[3];
 
   const groupRequirement: GroupEnergeticRequirement = {
