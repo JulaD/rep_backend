@@ -13,7 +13,7 @@ import ParserService from './ParserService';
 
 // eslint-disable-next-line max-len
 const isIndividualMaternity = (obj: IndividualMaternity | PopulationMaternity): obj is IndividualMaternity => {
-  if ((obj as IndividualMaternity).pregnantWomen) {
+  if ((obj as IndividualMaternity).pregnantWomen !== undefined) {
     return true;
   }
   return false;
