@@ -1,5 +1,6 @@
 type PopulationMaternity = {
   countryBirthRate: number;
+  countryWomenInAgeGroup: number;
   countryPopulation: number;
 };
 
