@@ -11,7 +11,7 @@ enum AgeBracket {
   m9 = '9 meses',
   m10 = '10 meses',
   m11 = '11 meses',
-  a1 = '1 año',
+  a1 = '1 años',
   a2 = '2 años',
   a3 = '3 años',
   a4 = '4 años',

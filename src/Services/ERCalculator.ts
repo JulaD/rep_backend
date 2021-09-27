@@ -13,7 +13,7 @@ import ParserService from './ParserService';
 
 // eslint-disable-next-line max-len
 const isIndividualMaternity = (obj: IndividualMaternity | PopulationMaternity): obj is IndividualMaternity => {
-  if ((obj as IndividualMaternity).pregnantWomen) {
+  if ((obj as IndividualMaternity).pregnantWomen !== undefined) {
     return true;
   }
   return false;
@@ -23,9 +23,9 @@ const isIndividualMaternity = (obj: IndividualMaternity | PopulationMaternity): 
 const calculateTEE = (group: AgeGroup, params: number[], preval: MinorPAL): number => {
   const teeModerate: number = params[0]
   + (params[1] * group.medianWeight)
-  - params[2] * (group.medianWeight * group.medianWeight);
+  + params[2] * (group.medianWeight * group.medianWeight);
 
-  const teeLow: number = teeModerate - (teeModerate * params[4]) / 100;
+  const teeLow: number = teeModerate + (teeModerate * params[4]) / 100;
   const teeIntense: number = teeModerate + (teeModerate * params[5]) / 100;
 
   const ret: number = (teeLow * preval.lowPALPrevalence) / 100
@@ -66,11 +66,11 @@ const calculateERWomenIndividual = (group: AgeGroup, params: number[], popData: 
 };
 
 // eslint-disable-next-line max-len
-const calculateERWomenPopulation = (group: AgeGroup, params: number[], popData: PopulationMaternity, req: number): number => {
-  const annualBirths = popData.countryBirthRate * popData.countryPopulation;
+const calculateERWomenPopulation = (params: number[], popData: PopulationMaternity, req: number): number => {
+  const annualBirths = (popData.countryBirthRate * popData.countryPopulation) / 1000;
 
-  const percentPregnantWomen = (annualBirths * 75) / group.population;
-  const percentLactatingWomen = (annualBirths * 50) / group.population;
+  const percentPregnantWomen = (annualBirths * 75) / popData.countryWomenInAgeGroup;
+  const percentLactatingWomen = (annualBirths * 50) / popData.countryWomenInAgeGroup;
 
   const reqPregnantWomen = (percentPregnantWomen * (req + params[6])) / 100;
   const reqLactatingWomen = (percentLactatingWomen * (req + params[7])) / 100;
@@ -147,7 +147,7 @@ const calculate18To29Years = (group: AgeGroup, params: number[], data: ExtraData
     } else if (isIndividualMaternity(data.maternity18To29)) {
       requirement = calculateERWomenIndividual(group, params, data.maternity18To29, requirement);
     } else {
-      requirement = calculateERWomenPopulation(group, params, data.maternity18To29, requirement);
+      requirement = calculateERWomenPopulation(params, data.maternity18To29, requirement);
     }
   }
 
@@ -181,7 +181,7 @@ const calculate30To59Years = (group: AgeGroup, params: number[], data: ExtraData
     } else if (isIndividualMaternity(data.maternity30To59)) {
       requirement = calculateERWomenIndividual(group, params, data.maternity30To59, requirement);
     } else {
-      requirement = calculateERWomenPopulation(group, params, data.maternity30To59, requirement);
+      requirement = calculateERWomenPopulation(params, data.maternity30To59, requirement);
     }
   }
 
