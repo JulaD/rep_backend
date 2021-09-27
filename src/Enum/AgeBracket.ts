@@ -1,6 +1,6 @@
 enum AgeBracket {
   m0 = '0 meses',
-  m1 = '1 mes',
+  m1 = '1 meses',
   m2 = '2 meses',
   m3 = '3 meses',
   m4 = '4 meses',
