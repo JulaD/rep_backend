@@ -1,17 +1,31 @@
+import { Model, DataTypes } from 'sequelize';
 import ParameterType from '../Enum/ParameterType';
+import ParameterAttributes from '../Interfaces/ParameterAttributes';
+import ParameterCreationAttributes from '../Interfaces/ParameterCreationAttributes';
+import sequelize from '../Loaders/ParameterDataBase';
 
-class ParameterModel {
-  name: string;
+class Parameter extends Model<ParameterAttributes, ParameterCreationAttributes>
+  implements ParameterAttributes {
+  id!: string;
 
-  value: number;
+  value!: number;
 
-  parameterType: ParameterType;
-
-  constructor(name: string, value: number, parameterType: ParameterType) {
-    this.name = name;
-    this.value = value;
-    this.parameterType = parameterType;
-  }
+  parameterType!: ParameterType;
 }
 
-export default ParameterModel;
+Parameter.init(
+  {
+    id: {
+      type: DataTypes.STRING,
+      primaryKey: true,
+    },
+    value: DataTypes.NUMBER,
+    parameterType: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
+  },
+  { sequelize, modelName: 'Parameter' },
+);
+
+export default Parameter;

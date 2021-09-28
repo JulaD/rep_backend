@@ -1,6 +1,9 @@
+import ParameterDTO from '../DTOs/ParameterDTO';
 import AgeBracket from '../Enum/AgeBracket';
 import ParameterType from '../Enum/ParameterType';
 import Sex from '../Enum/Sex';
+import ParameterMapper from '../Mappers/ParameterMapper';
+import Parameter from '../Models/Parameter';
 // import Parameter from '../Models/Parameter';
 
 const getEquationValues = (ageBracket: AgeBracket, sex: Sex): number[] => {
@@ -334,4 +337,20 @@ const getEquationValues = (ageBracket: AgeBracket, sex: Sex): number[] => {
   return res;
 };
 
-export default { getEquationValues };
+const getParametersOfType = (paramType: ParameterType): ParameterDTO[] => {
+  const res: ParameterDTO[] = [];
+  const params: Promise<Parameter[]> = Parameter.findAll({
+    where: {
+      parameterType: paramType,
+    },
+  });
+  params.then((parameters) => parameters.forEach((param: Parameter) => {
+    res.push(ParameterMapper.parameterToData(param));
+  }))
+    .catch((err) => {
+      throw new Error(err);
+    });
+  return res;
+};
+
+export default { getEquationValues, getParametersOfType };

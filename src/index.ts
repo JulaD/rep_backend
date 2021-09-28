@@ -7,7 +7,7 @@ import helmet from 'helmet';
 import YAML from 'yamljs';
 import Routes from './routes';
 import logger from './Logger/logger';
-import DataBase from './Loaders/DataBase';
+import ParameterDataBaseLoader from './Loaders/ParameterDataBaseLoader';
 
 const app: Application = express();
 const PORT = process.env.PORT || 8000;
@@ -34,7 +34,7 @@ app.use(express.raw({
 
 app.use(Routes);
 
-const sequelize = DataBase.initDataBase();
+ParameterDataBaseLoader.initParameterDataBase();
 
 app.listen(PORT, (): void => {
   console.log(`REPP Backend running here 👉 https://localhost:${PORT}`);

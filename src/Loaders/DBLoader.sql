@@ -1,5 +1,5 @@
 CREATE TABLE Parameters (
-  id STRING NOT NULL,
+  id VARCHAR(100) NOT NULL,
   value INT NOT NULL,
   parameterType INT NOT NULL,
   PRIMARY KEY (id)

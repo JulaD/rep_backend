@@ -2,6 +2,6 @@ export const DBConfig = {
   HOST: 'localhost',
   USER: 'root',
   PASSWORD: 'password',
-  DB: 'testdb',
+  DB: 'parameter_database',
   dialect: 'mysql',
 };
