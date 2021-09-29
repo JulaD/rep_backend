@@ -299,4 +299,20 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
   return result;
 };
 
+module.exports = {
+  calculateER,
+  calculate60PlusYears,
+  calculate30To59Years,
+  calculate18To29Years,
+  calculate6To17Years,
+  calculate1To5Years,
+  calculateLessThanAYear,
+  calculateERWomenPopulation,
+  calculateERWomenIndividual,
+  calculatePAL,
+  calculateBMR,
+  calculateTEE,
+  isIndividualMaternity,
+};
+
 export default { calculateER };
