@@ -4,7 +4,7 @@ import sex from '../src/Enum/Sex';
 const ERCalculator = require('../src/Services/ERCalculator');
 
 describe('Check', () => {
-  it("Probar si se devuelve 'true' cuando el tipo es IndividualMaternity", () => { expect(ERCalculator.isIndividualMaternity({ pregnantWoman: 5, lactatingWomen: 2 })).toBe(true); });
+  it("Probar si se devuelve 'true' cuando el tipo es IndividualMaternity", () => { expect(ERCalculator.isIndividualMaternity({ pregnantWomen: 5, lactatingWomen: 2 })).toBe(true); });
   it("Probar si se devuelve 'false' cuando el tipo NO es IndividualMaternity", () => { expect(ERCalculator.isIndividualMaternity({ countryBirthRate: 3, countryWomenInAgeGroup: 2, countryPopulation: 1239 })).toBe(false); });
 });
 
