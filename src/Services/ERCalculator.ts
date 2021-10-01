@@ -84,8 +84,8 @@ const calculateLessThanAYear = (group: AgeGroup, params: number[]): GroupEnerget
 
   const groupRequirement: GroupEnergeticRequirement = {
     group: ParserService.unparseGroup(group),
-    perCapita: requirement,
-    total: requirement * group.population,
+    perCapita: Math.round(requirement),
+    total: Math.round(requirement * group.population),
   };
 
   return groupRequirement;
@@ -99,8 +99,8 @@ const calculate1To5Years = (group: AgeGroup, params: number[]): GroupEnergeticRe
 
   const groupRequirement: GroupEnergeticRequirement = {
     group: ParserService.unparseGroup(group),
-    perCapita: requirement,
-    total: requirement * group.population,
+    perCapita: Math.round(requirement),
+    total: Math.round(requirement * group.population),
   };
 
   return groupRequirement;
@@ -119,8 +119,8 @@ const calculate6To17Years = (group: AgeGroup, params: number[], data: ExtraData)
 
   const groupRequirement: GroupEnergeticRequirement = {
     group: ParserService.unparseGroup(group),
-    perCapita: requirement,
-    total: requirement * group.population,
+    perCapita: Math.round(requirement),
+    total: Math.round(requirement * group.population),
   };
 
   return groupRequirement;
@@ -153,8 +153,8 @@ const calculate18To29Years = (group: AgeGroup, params: number[], data: ExtraData
 
   const groupRequirement: GroupEnergeticRequirement = {
     group: ParserService.unparseGroup(group),
-    perCapita: requirement,
-    total: requirement * group.population,
+    perCapita: Math.round(requirement),
+    total: Math.round(requirement * group.population),
   };
 
   return groupRequirement;
@@ -187,8 +187,8 @@ const calculate30To59Years = (group: AgeGroup, params: number[], data: ExtraData
 
   const groupRequirement: GroupEnergeticRequirement = {
     group: ParserService.unparseGroup(group),
-    perCapita: requirement,
-    total: requirement * group.population,
+    perCapita: Math.round(requirement),
+    total: Math.round(requirement * group.population),
   };
 
   return groupRequirement;
@@ -209,8 +209,8 @@ const calculate60PlusYears = (group: AgeGroup, params: number[], data: ExtraData
 
   const groupRequirement: GroupEnergeticRequirement = {
     group: ParserService.unparseGroup(group),
-    perCapita: requirement,
-    total: requirement * group.population,
+    perCapita: Math.round(requirement),
+    total: Math.round(requirement * group.population),
   };
 
   return groupRequirement;
@@ -299,7 +299,7 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
   return result;
 };
 
-module.exports = {
+export default {
   calculateER,
   calculate60PlusYears,
   calculate30To59Years,
@@ -314,5 +314,3 @@ module.exports = {
   calculateTEE,
   isIndividualMaternity,
 };
-
-export default { calculateER };

@@ -162,10 +162,6 @@ import Sex from '../Enum/Sex';
 const parseGroups = (groups: AgeGroupJSON[]): AgeGroup[] => {
   const retGroups: AgeGroup[] = [];
   groups.forEach((ageGroup: AgeGroupJSON) => {
-    // if (typeof (obj.pesoMediano) !== 'number' || typeof (obj.cantidad) !== 'number') {
-    //  console.log('Estas haciendo cualquiera flaco');
-    //  throw new Error('Parsing error, attributes do not respect format');
-    // }
     const group: AgeGroup = {
       age: ageGroup.age as AgeBracket,
       sex: ageGroup.sex as Sex,

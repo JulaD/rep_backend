@@ -1,7 +1,5 @@
 import AgeBracket from '../Enum/AgeBracket';
-import ParameterType from '../Enum/ParameterType';
 import Sex from '../Enum/Sex';
-// import Parameter from '../Models/Parameter';
 
 const getEquationValues = (ageBracket: AgeBracket, sex: Sex): number[] => {
   let res: number[] = [];
