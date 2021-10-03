@@ -337,16 +337,12 @@ const getEquationValues = (ageBracket: AgeBracket, sex: Sex): number[] => {
   return res;
 };
 
-const getParametersOfType = (paramType: ParameterType): ParameterDTO[] => {
+const getParametersOfType = async (paramType: ParameterType): Promise<ParameterDTO[]> => {
   const res: ParameterDTO[] = [];
-  const params: Promise<Parameter[]> = Parameter.findAll({
-    where: {
-      parameterType: paramType,
-    },
-  });
-  params.then((parameters) => parameters.forEach((param: Parameter) => {
-    res.push(ParameterMapper.parameterToData(param));
-  }))
+  const estaChota = Parameter.findAll()
+    .then((parameters) => parameters.forEach((param: Parameter) => {
+      res.push(ParameterMapper.parameterToData(param));
+    }))
     .catch((err) => {
       throw new Error(err);
     });

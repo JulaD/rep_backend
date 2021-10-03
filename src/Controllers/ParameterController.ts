@@ -8,7 +8,7 @@ import ParameterService from '../Services/ParameterService';
 const router = Router();
 
 const getParametersOfType: Handler = async (req: Request, res: Response) => {
-  const paramType: string = req.body;
+  const { paramType } = req.body;
   try {
     const parameters = await ParameterService.getParametersOfType(paramType as ParameterType);
     return res.status(200).send(parameters);

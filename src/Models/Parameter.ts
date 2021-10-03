@@ -1,11 +1,8 @@
 import { Model, DataTypes } from 'sequelize';
 import ParameterType from '../Enum/ParameterType';
-import ParameterAttributes from '../Interfaces/ParameterAttributes';
-import ParameterCreationAttributes from '../Interfaces/ParameterCreationAttributes';
 import sequelize from '../Loaders/ParameterDataBase';
 
-class Parameter extends Model<ParameterAttributes, ParameterCreationAttributes>
-  implements ParameterAttributes {
+class Parameter extends Model {
   id!: string;
 
   value!: number;
@@ -19,13 +16,17 @@ Parameter.init(
       type: DataTypes.STRING,
       primaryKey: true,
     },
-    value: DataTypes.NUMBER,
+    value: DataTypes.FLOAT,
     parameterType: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
     },
   },
-  { sequelize, modelName: 'Parameter' },
+  {
+    sequelize,
+    modelName: 'Parameter',
+    timestamps: false,
+  },
 );
 
 export default Parameter;

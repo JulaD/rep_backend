@@ -3,7 +3,7 @@ import ParameterType from '../Enum/ParameterType';
 
 function csvToParameters(csv: string): ParameterDTO[] {
   const parameters: ParameterDTO[] = [];
-  const lines: string[] = csv.split('\n');
+  const lines: string[] = csv.split('\r\n');
   lines.forEach((parameter: string) => {
     const fields = parameter.split(',');
     parameters.push({
@@ -12,6 +12,8 @@ function csvToParameters(csv: string): ParameterDTO[] {
       parameterType: fields[2] as ParameterType,
     });
   });
+  parameters.shift();
+  parameters.pop();
   return parameters;
 }
 

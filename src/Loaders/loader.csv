@@ -1,20 +1,170 @@
 id,value,parameterType
-0Month,3.3,1
-1Month,4.5,1
-2Month,5.6,1
-3Month,6.4,1
-4Month,7,1
-5Month,7.5,1
-6Month,7.9,1
-7Month,8.3,1
-8Month,8.6,1
-9Month,8.9,1
-10Month,9.2,1
-11Month,9.4,1
-1Year,10.9,1
-2Year,13.3,1
-3Year,15.3,1
-4Year,17.3,1
-5Year,19.5,1
-6Year,21.8,1
-7Year,24.2,1
+0Month-Male,3.3,Peso por defecto
+1Month-Male,4.5,Peso por defecto
+2Month-Male,5.6,Peso por defecto
+3Month-Male,6.4,Peso por defecto
+4Month-Male,7.0 ,Peso por defecto
+5Month-Male,7.5,Peso por defecto
+6Month-Male,7.9,Peso por defecto
+7Month-Male,8.3,Peso por defecto
+8Month-Male,8.6,Peso por defecto
+9Month-Male,8.9,Peso por defecto
+10Month-Male,9.2,Peso por defecto
+11Month-Male,9.4,Peso por defecto
+1Year-Male,10.9,Peso por defecto
+2Year-Male,13.3,Peso por defecto
+3Year-Male,15.3,Peso por defecto
+4Year-Male,17.3,Peso por defecto
+5Year-Male,19.5,Peso por defecto
+6Year-Male,21.8,Peso por defecto
+7Year-Male,24.2,Peso por defecto
+8Year-Male,26.8,Peso por defecto
+9Year-Male,29.6,Peso por defecto
+10Year-Male,32.9,Peso por defecto
+11Year-Male,36.7,Peso por defecto
+12Year-Male,41.6,Peso por defecto
+13Year-Male,47.4,Peso por defecto
+14Year-Male,53.7,Peso por defecto
+15Year-Male,58.8,Peso por defecto
+16Year-Male,63.1,Peso por defecto
+17Year-Male,66.1,Peso por defecto
+18-29Year-Male,67.4,Peso por defecto
+30-59Year-Male,66.6,Peso por defecto
+60+Year-Male,64.3,Peso por defecto
+0Month-Female,3.2,Peso por defecto
+1Month-Female,4.2,Peso por defecto
+2Month-Female,5.1,Peso por defecto
+3Month-Female,5.8,Peso por defecto
+4Month-Female,6.4,Peso por defecto
+5Month-Female,6.9,Peso por defecto
+6Month-Female,7.3,Peso por defecto
+7Month-Female,7.6,Peso por defecto
+8Month-Female,7.9,Peso por defecto
+9Month-Female,8.2,Peso por defecto
+10Month-Female,8.5,Peso por defecto
+11Month-Female,8.7,Peso por defecto
+1Year-Female,10.2,Peso por defecto
+2Year-Female,12.7,Peso por defecto
+3Year-Female,15.0 ,Peso por defecto
+4Year-Female,17.2,Peso por defecto
+5Year-Female,19.1,Peso por defecto
+6Year-Female,21.3,Peso por defecto
+7Year-Female,23.7,Peso por defecto
+8Year-Female,26.7,Peso por defecto
+9Year-Female,29.9,Peso por defecto
+10Year-Female,34.0 ,Peso por defecto
+11Year-Female,38.7,Peso por defecto
+12Year-Female,43.6,Peso por defecto
+13Year-Female,48.1,Peso por defecto
+14Year-Female,51.5,Peso por defecto
+15Year-Female,53.9,Peso por defecto
+16Year-Female,55.3,Peso por defecto
+17Year-Female,56.3,Peso por defecto
+18-29Year-Female,57.7,Peso por defecto
+30-59Year-Female,56.3,Peso por defecto
+60+Year-Female,54.2,Peso por defecto
+minorLowPrevalence,0,NAF
+minorModeratePrevalence,100,NAF
+minorIntensePrevalence,0,NAF
+lowPercentageDifference,-15,NAF
+intensePercentageDifference,15,NAF
+urbanPopulation,94.7,NAF
+urbanActivePALValue,1.85,NAF
+urbanLowPALValue,1.55,NAF
+urbanActivePALPercentage,10,NAF
+urbanLowPALPercentage,90,NAF
+ruralPopulation,5.3,NAF
+ruralActivePALValue,1.95,NAF
+ruralLowPALValue,1.65,NAF
+ruralActivePALPercentage,50,NAF
+ruralLowPALPercentage,50,NAF
+countryPopulation,3453691,Embarazo y lactancia
+18-29FemaleCountryPopulation,315790,Embarazo y lactancia
+30-59FemaleCountryPopulation,660601,Embarazo y lactancia
+birthRate,14,Embarazo y lactancia
+pregnancyExtraEnergy,208,Embarazo y lactancia
+lactationExtraEnergy,251,Embarazo y lactancia
+GET-0to5Month-Male-A,,Constante de ecuacion
+GET-0to5Month-Male-B,,Constante de ecuacion
+GET-6to11Month-Male-A,,Constante de ecuacion
+GET-6to11Month-Male-A,,Constante de ecuacion
+GET-1to17Year-Male-A,,Constante de ecuacion
+GET-1to17Year-Male-B,,Constante de ecuacion
+GET-1to17Year-Male-C,,Constante de ecuacion
+GrowthEnergy-0Month-Male,,Constante de ecuacion
+GrowthEnergy-1Month-Male,,Constante de ecuacion
+GrowthEnergy-2Month-Male,,Constante de ecuacion
+GrowthEnergy-3Month-Male,,Constante de ecuacion
+GrowthEnergy-4Month-Male,,Constante de ecuacion
+GrowthEnergy-5Month-Male,,Constante de ecuacion
+GrowthEnergy-6Month-Male,,Constante de ecuacion
+GrowthEnergy-7Month-Male,,Constante de ecuacion
+GrowthEnergy-8Month-Male,,Constante de ecuacion
+GrowthEnergy-9Month-Male,,Constante de ecuacion
+GrowthEnergy-10Month-Male,,Constante de ecuacion
+GrowthEnergy-11Month-Male,,Constante de ecuacion
+GrowthEnergy-1Year-Male,,Constante de ecuacion
+GrowthEnergy-2Year-Male,,Constante de ecuacion
+GrowthEnergy-3Year-Male,,Constante de ecuacion
+GrowthEnergy-4Year-Male,,Constante de ecuacion
+GrowthEnergy-5Year-Male,,Constante de ecuacion
+GrowthEnergy-6Year-Male,,Constante de ecuacion
+GrowthEnergy-7Year-Male,,Constante de ecuacion
+GrowthEnergy-8Year-Male,,Constante de ecuacion
+GrowthEnergy-9Year-Male,,Constante de ecuacion
+GrowthEnergy-10Year-Male,,Constante de ecuacion
+GrowthEnergy-11Year-Male,,Constante de ecuacion
+GrowthEnergy-12Year-Male,,Constante de ecuacion
+GrowthEnergy-13Year-Male,,Constante de ecuacion
+GrowthEnergy-14Year-Male,,Constante de ecuacion
+GrowthEnergy-15Year-Male,,Constante de ecuacion
+GrowthEnergy-16Year-Male,,Constante de ecuacion
+GrowthEnergy-17Year-Male,,Constante de ecuacion
+TMB-18to29Year-Male-A,,Constante de ecuacion
+TMB-18to29Year-Male-B,,Constante de ecuacion
+TMB-30to59Year-Male-A,,Constante de ecuacion
+TMB-30to59Year-Male-B,,Constante de ecuacion
+TMB-60+Year-Male-A,,Constante de ecuacion
+TMB-60+Year-Male-B,,Constante de ecuacion
+GET-0to5Month-Female-A,,Constante de ecuacion
+GET-0to5Month-Female-B,,Constante de ecuacion
+GET-6to11Month-Female-A,,Constante de ecuacion
+GET-6to11Month-Female-A,,Constante de ecuacion
+GET-1to17Year-Female-A,,Constante de ecuacion
+GET-1to17Year-Female-B,,Constante de ecuacion
+GET-1to17Year-Female-C,,Constante de ecuacion
+GrowthEnergy-0Month-Female,,Constante de ecuacion
+GrowthEnergy-1Month-Female,,Constante de ecuacion
+GrowthEnergy-2Month-Female,,Constante de ecuacion
+GrowthEnergy-3Month-Female,,Constante de ecuacion
+GrowthEnergy-4Month-Female,,Constante de ecuacion
+GrowthEnergy-5Month-Female,,Constante de ecuacion
+GrowthEnergy-6Month-Female,,Constante de ecuacion
+GrowthEnergy-7Month-Female,,Constante de ecuacion
+GrowthEnergy-8Month-Female,,Constante de ecuacion
+GrowthEnergy-9Month-Female,,Constante de ecuacion
+GrowthEnergy-10Month-Female,,Constante de ecuacion
+GrowthEnergy-11Month-Female,,Constante de ecuacion
+GrowthEnergy-1Year-Female,,Constante de ecuacion
+GrowthEnergy-2Year-Female,,Constante de ecuacion
+GrowthEnergy-3Year-Female,,Constante de ecuacion
+GrowthEnergy-4Year-Female,,Constante de ecuacion
+GrowthEnergy-5Year-Female,,Constante de ecuacion
+GrowthEnergy-6Year-Female,,Constante de ecuacion
+GrowthEnergy-7Year-Female,,Constante de ecuacion
+GrowthEnergy-8Year-Female,,Constante de ecuacion
+GrowthEnergy-9Year-Female,,Constante de ecuacion
+GrowthEnergy-10Year-Female,,Constante de ecuacion
+GrowthEnergy-11Year-Female,,Constante de ecuacion
+GrowthEnergy-12Year-Female,,Constante de ecuacion
+GrowthEnergy-13Year-Female,,Constante de ecuacion
+GrowthEnergy-14Year-Female,,Constante de ecuacion
+GrowthEnergy-15Year-Female,,Constante de ecuacion
+GrowthEnergy-16Year-Female,,Constante de ecuacion
+GrowthEnergy-17Year-Female,,Constante de ecuacion
+TMB-18to29Year-Female-A,,Constante de ecuacion
+TMB-18to29Year-Female-B,,Constante de ecuacion
+TMB-30to59Year-Female-A,,Constante de ecuacion
+TMB-30to59Year-Female-B,,Constante de ecuacion
+TMB-60+Year-Female-A,,Constante de ecuacion
+TMB-60+Year-Female-B,,Constante de ecuacion
