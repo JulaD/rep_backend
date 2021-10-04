@@ -1,0 +1,200 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: REPP Backend
+  description: ''
+security:
+  - BearerAuth: []
+tags:
+  - name: Auth
+  - name: Parser
+  - name: Calculation
+paths:
+
+  /login:
+    post:
+      tags:
+        - Auth
+      summary: Login to get an access token
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCredentials'
+               
+      responses:
+        '200':
+           description: Ok.
+      security: []
+    
+  /sheetParser:
+    post:
+      tags:
+        - Parser
+      summary: Given a sheet returns SheetParserResponse
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              format: binary
+        required: true
+      responses:
+        '200':
+          description: Ok.
+      security:
+        - BearerAuth: []
+
+  /repCalculator:
+    post:
+      tags:
+        - Calculation
+      summary: Given population data calculates its energetic requirement
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqCalculation'
+        required: true
+      responses:
+        '200':
+          description: Ok.
+        '400':
+          description: Bad request.
+      security:
+        - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Menores:
+      properties:
+        edad:
+          type: integer
+        peso:
+          type: integer
+    Mayores:
+      properties:
+        edad:
+          type: integer
+        peso:
+          type: integer
+        talla:
+          type: integer
+    SheetParserResponse:
+      properties:
+        hombresMenores:
+          type: array
+          items:
+            $ref: '#/components/schemas/Menores'
+        mujeresMenores:
+          type: array
+          items:
+            $ref: '#/components/schemas/Menores'
+        hombres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Mayores'
+        mujeres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Mayores'
+    UserCredentials:
+      properties:
+        user:
+          type: string
+        pass:
+          type: string
+    AgeGroupJSON:
+      properties:
+        age:
+          type: string
+        sex:
+          type: string
+        medianWeight:
+          type: string
+        population:
+          type: string
+      required:
+        - age
+        - sex
+        - medianWeight
+        - population
+    MinorPAL:
+      properties:
+        lowPALPrevalence:
+          type: number
+        moderatePALPrevalence:
+          type: number
+        intensePALPrevalence:
+          type: number
+      required:
+        - lowPALPrevalence
+        - moderatePALPrevalence
+        - intensePALPrevalence
+    AdultPAL:
+      properties:
+        urbanPercentage:
+          type: number
+        activeUrbanPAL:
+          type: number
+        lowUrbanPAL:
+          type: number
+        ruralPercentage:
+          type: number
+        activeRuralPAL:
+          type: number
+        lowRuralPAL:
+          type: number
+      required:
+        - urbanPercentage
+        - activeUrbanPAL
+        - lowUrbanPAL
+        - ruralPercentage
+        - activeRuralPAL
+        - lowRuralPAL
+    IndividualMaternity:
+      properties:
+        pregnantWomen:
+          type: number
+        lactatingWomen:
+          type: number
+      required:
+        - pregnantWomen
+        - lactatingWomen
+    PopulationMaternity:
+      properties:
+        countryBirthRate:
+          type: number
+        countryPopulation:
+          type: number
+      required:
+        - countryBirthRate
+        - countryPopulation
+    ExtraData:
+      properties:
+        minorPAL:
+          $ref: '#/components/schemas/MinorPAL'
+        adultPAL:
+          $ref: '#/components/schemas/AdultPAL'
+        maternity18to29:
+          oneOf:
+            - $ref: '#/components/schemas/IndividualMaternity'
+            - $ref: '#/components/schemas/PopulationMaternity'
+        maternity30to59:
+          oneOf:
+            - $ref: '#/components/schemas/IndividualMaternity'
+            - $ref: '#/components/schemas/PopulationMaternity'
+    ReqCalculation:
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgeGroupJSON'
+        extraData:
+          $ref: '#/components/schemas/ExtraData'
+      required:
+        - groups
+        - extraData
