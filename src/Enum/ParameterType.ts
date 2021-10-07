@@ -1,8 +1,10 @@
 enum ParameterType {
-  PAL = 'NAF',
-  DefaultWeight = 'Peso por defecto',
+  AdultPAL = 'NAF Adultos',
+  MinorPAL = 'NAF Menores',
   Maternity = 'Embarazo y lactancia',
-  EquationConstant = 'Constante de ecuacion',
+  TEE = 'GET',
+  BMR = 'TMB',
+  GrowthEnergy = 'Energia para crecimiento'
 }
 
 export default ParameterType;

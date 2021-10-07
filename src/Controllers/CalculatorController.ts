@@ -1,11 +1,9 @@
 import {
   Handler, Request, Response, Router,
 } from 'express';
-import AgeGroupJSON from '../DTOs/AgeGroupJSON';
 import CalculatorService from '../Services/CalculatorService';
 import CalculatorResponse from '../DTOs/CalculatorResponseDTO';
 import logger from '../Logger/logger';
-import ExtraData from '../DTOs/ExtraDataDTO';
 
 const router = Router();
 

@@ -1,9 +1,11 @@
 import ParameterType from '../Enum/ParameterType';
 
-type ParameterDTO = {
+type DefaultExtraDataDTO = {
   id: string;
   value: number;
   parameterType: ParameterType;
+  order: number;
+  description: string;
 };
 
-export default ParameterDTO;
+export default DefaultExtraDataDTO;

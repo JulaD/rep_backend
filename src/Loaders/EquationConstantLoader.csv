@@ -1,0 +1,221 @@
+age,value,parameterType,sex,order,description
+18to29Year,15.057,TMB,Male,0,a
+18to29Year,692.2,TMB,Male,1,a
+30to59Year,11.472,TMB,Male,0,a
+30to59Year,873.1,TMB,Male,1,a
+60+Year,11.711,TMB,Male,0,a
+60+Year,587.7,TMB,Male,1,a
+18to29Year,14.818,TMB,Female,0,a
+18to29Year,486.6,TMB,Female,1,a
+30to59Year,8.126,TMB,Female,0,a
+30to59Year,845.6,TMB,Female,1,a
+60+Year,9.082,TMB,Female,0,a
+60+Year,658.5,TMB,Female,1,a
+0Month,211,Energia para crecimiento,Male,2,a
+1Month,183,Energia para crecimiento,Male,2,a
+2Month,139,Energia para crecimiento,Male,2,a
+3Month,53,Energia para crecimiento,Male,2,a
+4Month,46,Energia para crecimiento,Male,2,a
+5Month,36,Energia para crecimiento,Male,2,a
+6Month,17,Energia para crecimiento,Male,2,a
+7Month,16,Energia para crecimiento,Male,2,a
+8Month,14,Energia para crecimiento,Male,2,a
+9Month,21,Energia para crecimiento,Male,2,a
+10Month,21,Energia para crecimiento,Male,2,a
+11Month,22,Energia para crecimiento,Male,2,a
+1Year,13,Energia para crecimiento,Male,3,a
+2Year,12,Energia para crecimiento,Male,3,a
+3Year,12,Energia para crecimiento,Male,3,a
+4Year,11,Energia para crecimiento,Male,3,a
+5Year,11,Energia para crecimiento,Male,3,a
+6Year,12,Energia para crecimiento,Male,3,a
+7Year,14,Energia para crecimiento,Male,3,a
+8Year,16,Energia para crecimiento,Male,3,a
+9Year,19,Energia para crecimiento,Male,3,a
+10Year,22,Energia para crecimiento,Male,3,a
+11Year,25,Energia para crecimiento,Male,3,a
+12Year,29,Energia para crecimiento,Male,3,a
+13Year,33,Energia para crecimiento,Male,3,a
+14Year,33,Energia para crecimiento,Male,3,a
+15Year,31,Energia para crecimiento,Male,3,a
+16Year,24,Energia para crecimiento,Male,3,a
+17Year,14,Energia para crecimiento,Male,3,a
+0Month,178,Energia para crecimiento,Female,2,a
+1Month,161,Energia para crecimiento,Female,2,a
+2Month,134,Energia para crecimiento,Female,2,a
+3Month,68,Energia para crecimiento,Female,2,a
+4Month,57,Energia para crecimiento,Female,2,a
+5Month,47,Energia para crecimiento,Female,2,a
+6Month,20,Energia para crecimiento,Female,2,a
+7Month,17,Energia para crecimiento,Female,2,a
+8Month,15,Energia para crecimiento,Female,2,a
+9Month,18,Energia para crecimiento,Female,2,a
+10Month,15,Energia para crecimiento,Female,2,a
+11Month,14,Energia para crecimiento,Female,2,a
+1Year,13,Energia para crecimiento,Female,3,a
+2Year,13,Energia para crecimiento,Female,3,a
+3Year,11,Energia para crecimiento,Female,3,a
+4Year,10,Energia para crecimiento,Female,3,a
+5Year,10,Energia para crecimiento,Female,3,a
+6Year,13,Energia para crecimiento,Female,3,a
+7Year,17,Energia para crecimiento,Female,3,a
+8Year,20,Energia para crecimiento,Female,3,a
+9Year,23,Energia para crecimiento,Female,3,a
+10Year,25,Energia para crecimiento,Female,3,a
+11Year,25,Energia para crecimiento,Female,3,a
+12Year,26,Energia para crecimiento,Female,3,a
+13Year,24,Energia para crecimiento,Female,3,a
+14Year,19,Energia para crecimiento,Female,3,a
+15Year,13,Energia para crecimiento,Female,3,a
+16Year,5,Energia para crecimiento,Female,3,a
+17Year,0,Energia para crecimiento,Female,3,a
+0Month,-152,GET,Male,0,a
+0Month,92.8,GET,Male,1,a
+1Month,-152,GET,Male,0,a
+1Month,92.8,GET,Male,1,a
+2Month,-152,GET,Male,0,a
+2Month,92.8,GET,Male,1,a
+3Month,-152,GET,Male,0,a
+3Month,92.8,GET,Male,1,a
+4Month,-152,GET,Male,0,a
+4Month,92.8,GET,Male,1,a
+5Month,-152,GET,Male,0,a
+5Month,92.8,GET,Male,1,a
+0Month,-152,GET,Female,0,a
+0Month,92.8,GET,Female,1,a
+1Month,-152,GET,Female,0,a
+1Month,92.8,GET,Female,1,a
+2Month,-152,GET,Female,0,a
+2Month,92.8,GET,Female,1,a
+3Month,-152,GET,Female,0,a
+3Month,92.8,GET,Female,1,a
+4Month,-152,GET,Female,0,a
+4Month,92.8,GET,Female,1,a
+5Month,-152,GET,Female,0,a
+5Month,92.8,GET,Female,1,a
+6Month,-99.4,GET,Male,0,a
+6Month,88.6,GET,Male,1,a
+7Month,-99.4,GET,Male,0,a
+7Month,88.6,GET,Male,1,a
+8Month,-99.4,GET,Male,0,a
+8Month,88.6,GET,Male,1,a
+9Month,-99.4,GET,Male,0,a
+9Month,88.6,GET,Male,1,a
+10Month,-99.4,GET,Male,0,a
+10Month,88.6,GET,Male,1,a
+11Month,-99.4,GET,Male,0,a
+11Month,88.6,GET,Male,1,a
+6Month,-99.4,GET,Female,0,a
+6Month,88.6,GET,Female,1,a
+7Month,-99.4,GET,Female,0,a
+7Month,88.6,GET,Female,1,a
+8Month,-99.4,GET,Female,0,a
+8Month,88.6,GET,Female,1,a
+9Month,-99.4,GET,Female,0,a
+9Month,88.6,GET,Female,1,a
+10Month,-99.4,GET,Female,0,a
+10Month,88.6,GET,Female,1,a
+11Month,-99.4,GET,Female,0,a
+11Month,88.6,GET,Female,1,a
+1Year,310.2,GET,Male,0,a
+1Year,63.3,GET,Male,1,a
+1Year,-0.263,GET,Male,2,a
+2Year,310.2,GET,Male,0,a
+2Year,63.3,GET,Male,1,a
+2Year,-0.263,GET,Male,2,a
+3Year,310.2,GET,Male,0,a
+3Year,63.3,GET,Male,1,a
+3Year,-0.263,GET,Male,2,a
+4Year,310.2,GET,Male,0,a
+4Year,63.3,GET,Male,1,a
+4Year,-0.263,GET,Male,2,a
+5Year,310.2,GET,Male,0,a
+5Year,63.3,GET,Male,1,a
+5Year,-0.263,GET,Male,2,a
+6Year,310.2,GET,Male,0,a
+6Year,63.3,GET,Male,1,a
+6Year,-0.263,GET,Male,2,a
+7Year,310.2,GET,Male,0,a
+7Year,63.3,GET,Male,1,a
+7Year,-0.263,GET,Male,2,a
+8Year,310.2,GET,Male,0,a
+8Year,63.3,GET,Male,1,a
+8Year,-0.263,GET,Male,2,a
+9Year,310.2,GET,Male,0,a
+9Year,63.3,GET,Male,1,a
+9Year,-0.263,GET,Male,2,a
+10Year,310.2,GET,Male,0,a
+10Year,63.3,GET,Male,1,a
+10Year,-0.263,GET,Male,2,a
+11Year,310.2,GET,Male,0,a
+11Year,63.3,GET,Male,1,a
+11Year,-0.263,GET,Male,2,a
+12Year,310.2,GET,Male,0,a
+12Year,63.3,GET,Male,1,a
+12Year,-0.263,GET,Male,2,a
+13Year,310.2,GET,Male,0,a
+13Year,63.3,GET,Male,1,a
+13Year,-0.263,GET,Male,2,a
+14Year,310.2,GET,Male,0,a
+14Year,63.3,GET,Male,1,a
+14Year,-0.263,GET,Male,2,a
+15Year,310.2,GET,Male,0,a
+15Year,63.3,GET,Male,1,a
+15Year,-0.263,GET,Male,2,a
+16Year,310.2,GET,Male,0,a
+16Year,63.3,GET,Male,1,a
+16Year,-0.263,GET,Male,2,a
+17Year,310.2,GET,Male,0,a
+17Year,63.3,GET,Male,1,a
+17Year,-0.263,GET,Male,2,a
+1Year,263.4,GET,Female,0,a
+1Year,65.3,GET,Female,1,a
+1Year,-0.454,GET,Female,2,a
+2Year,263.4,GET,Female,0,a
+2Year,65.3,GET,Female,1,a
+2Year,-0.454,GET,Female,2,a
+3Year,263.4,GET,Female,0,a
+3Year,65.3,GET,Female,1,a
+3Year,-0.454,GET,Female,2,a
+4Year,263.4,GET,Female,0,a
+4Year,65.3,GET,Female,1,a
+4Year,-0.454,GET,Female,2,a
+5Year,263.4,GET,Female,0,a
+5Year,65.3,GET,Female,1,a
+5Year,-0.454,GET,Female,2,a
+6Year,263.4,GET,Female,0,a
+6Year,65.3,GET,Female,1,a
+6Year,-0.454,GET,Female,2,a
+7Year,263.4,GET,Female,0,a
+7Year,65.3,GET,Female,1,a
+7Year,-0.454,GET,Female,2,a
+8Year,263.4,GET,Female,0,a
+8Year,65.3,GET,Female,1,a
+8Year,-0.454,GET,Female,2,a
+9Year,263.4,GET,Female,0,a
+9Year,65.3,GET,Female,1,a
+9Year,-0.454,GET,Female,2,a
+10Year,263.4,GET,Female,0,a
+10Year,65.3,GET,Female,1,a
+10Year,-0.454,GET,Female,2,a
+11Year,263.4,GET,Female,0,a
+11Year,65.3,GET,Female,1,a
+11Year,-0.454,GET,Female,2,a
+12Year,263.4,GET,Female,0,a
+12Year,65.3,GET,Female,1,a
+12Year,-0.454,GET,Female,2,a
+13Year,263.4,GET,Female,0,a
+13Year,65.3,GET,Female,1,a
+13Year,-0.454,GET,Female,2,a
+14Year,263.4,GET,Female,0,a
+14Year,65.3,GET,Female,1,a
+14Year,-0.454,GET,Female,2,a
+15Year,263.4,GET,Female,0,a
+15Year,65.3,GET,Female,1,a
+15Year,-0.454,GET,Female,2,a
+16Year,263.4,GET,Female,0,a
+16Year,65.3,GET,Female,1,a
+16Year,-0.454,GET,Female,2,a
+17Year,263.4,GET,Female,0,a
+17Year,65.3,GET,Female,1,a
+17Year,-0.454,GET,Female,2,a

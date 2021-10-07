@@ -1,9 +1,8 @@
-import ParameterDTO from '../DTOs/ParameterDTO';
+import ParameterDTO from '../DTOs/EquationConstantDTO';
 import AgeBracket from '../Enum/AgeBracket';
 import Sex from '../Enum/Sex';
 import ParameterMapper from '../Mappers/ParameterMapper';
 import Parameter from '../Models/Parameter';
-// import Parameter from '../Models/Parameter';
 
 const getEquationValues = (ageBracket: AgeBracket, sex: Sex): number[] => {
   let res: number[] = [];
@@ -336,32 +335,20 @@ const getEquationValues = (ageBracket: AgeBracket, sex: Sex): number[] => {
   return res;
 };
 
-const getParameters = async (): Promise<ParameterDTO[]> => {
-  const res: ParameterDTO[] = [];
-  await Parameter.findAll().then((parameters: Parameter[]) => {
-    parameters.forEach((param: Parameter) => {
-      res.push(ParameterMapper.parameterToData(param));
-    });
-  });
-  return res;
-};
+// const getParametersOfType = async (paramType: ParameterType): Promise<ParameterDTO[]> => {
+//   const res: ParameterDTO[] = [];
+//   const estaChota = await Parameter.findAll({
+//     where: {
+//       parameterType: paramType,
+//     },
+//   })
+//     .then((parameters) => parameters.forEach((param: Parameter) => {
+//       res.push(ParameterMapper.parameterToData(param));
+//     }))
+//     .catch((err) => {
+//       throw new Error(err);
+//     });
+//   return res;
+// };
 
-const getParametersOfType = async (paramType: string): Promise<ParameterDTO[]> => {
-  const res: ParameterDTO[] = [];
-  await Parameter.findAll({
-    where: {
-      parameterType: paramType,
-    },
-  })
-    .then((parameters: Parameter[]) => {
-      parameters.forEach((param: Parameter) => {
-        res.push(ParameterMapper.parameterToData(param));
-      });
-    })
-    .catch((err) => {
-      throw new Error(err);
-    });
-  return res;
-};
-
-export default { getEquationValues, getParameters, getParametersOfType };
+export default { getEquationValues, getParameters };

@@ -19,15 +19,15 @@ const getParameters: Handler = async (req: Request, res: Response) => {
 };
 
 const getParametersOfType: Handler = async (req: Request, res: Response) => {
-  const { paramType } = req.body;
-  try {
-    const parameters = await ParameterService.getParametersOfType(paramType as ParameterType);
-    return res.status(200).send(parameters);
-  } catch (error) {
-    const e = error as Error;
-    logger.info(e.message);
-    return res.status(400).json({ error: e.message });
-  }
+  // const { paramType } = req.body;
+  // try {
+  //   const parameters = await ParameterService.getParametersOfType(paramType as ParameterType);
+  //   return res.status(200).send(parameters);
+  // } catch (error) {
+  //   const e = error as Error;
+  //   logger.info(e.message);
+  //   return res.status(400).json({ error: e.message });
+  // }
 };
 
 router.post('/', getParameters);

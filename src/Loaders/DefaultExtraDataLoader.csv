@@ -1,0 +1,24 @@
+id,value,parameterType,order,description
+minorLowPrevalence,0,NAF Menores,0,a
+minorModeratePrevalence,100,NAF Menores,0,a
+minorIntensePrevalence,0,NAF Menores,0,a
+lowPercentageDifference,-15,NAF Menores,1,a
+intensePercentageDifference,15,NAF Menores,2,a
+urbanPopulation,94.7,NAF Adultos,0,a
+urbanActivePALPercentage,10,NAF Adultos,0,a
+urbanLowPALPercentage,90,NAF Adultos,0,a
+ruralPopulation,5.3,NAF Adultos,0,a
+ruralActivePALPercentage,50,NAF Adultos,0,a
+ruralLowPALPercentage,50,NAF Adultos,0,a
+urbanActivePALValue,1.85,NAF Adultos,1,a
+urbanLowPALValue,1.55,NAF Adultos,2,a
+ruralActivePALValue,1.95,NAF Adultos,3,a
+ruralLowPALValue,1.65,NAF Adultos,4,a
+countryPopulation,3453691,Embarazo y lactancia,0,a
+18-29FemaleCountryPopulation,315790,Embarazo y lactancia,0,a
+30-59FemaleCountryPopulation,660601,Embarazo y lactancia,0,a
+birthRate,14,Embarazo y lactancia,0,a
+pregnancyExtraEnergy18to29,208,Embarazo y lactancia,1,a
+lactationExtraEnergy18to29,251,Embarazo y lactancia,2,a
+pregnancyExtraEnergy30to59,208,Embarazo y lactancia,1,a
+lactationExtraEnergy30to59,251,Embarazo y lactancia,2,a
