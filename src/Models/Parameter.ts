@@ -1,17 +1,7 @@
-import ParameterType from '../Enum/ParameterType';
+import { Model } from 'sequelize';
 
-class Parameter {
-  name: string;
-
-  value: number;
-
-  parameterType: ParameterType;
-
-  constructor(name: string, value: number, parameterType: ParameterType) {
-    this.name = name;
-    this.value = value;
-    this.parameterType = parameterType;
-  }
+class Parameter extends Model {
+  value!: number;
 }
 
 export default Parameter;

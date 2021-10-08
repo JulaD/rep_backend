@@ -10,8 +10,9 @@ const router = Router();
 const getREP: Handler = async (req: Request, res: Response) => {
   const { groups, extraData } = req.body;
   try {
-    const EnergyReq:
-    CalculatorResponse = CalculatorService.calculateEnergeticRequirement(groups, extraData);
+    // sry pero no sabia como sacarle un caracter a esa linea :(
+    // eslint-disable-next-line max-len
+    const EnergyReq: CalculatorResponse = await CalculatorService.calculateEnergeticRequirement(groups, extraData);
     return res.status(200).send(EnergyReq);
   } catch (error) {
     const e = error as Error;
