@@ -7,13 +7,14 @@ import AgeGroupJSON from '../DTOs/AgeGroupJSON';
 import ExtraData from '../DTOs/ExtraDataDTO';
 
 // eslint-disable-next-line max-len
-const calculateEnergeticRequirement = (groups: AgeGroupJSON[], data: ExtraData): CalculatorResponse => {
+const calculateEnergeticRequirement = async (groups: AgeGroupJSON[], data: ExtraData): Promise<CalculatorResponse> => {
   const parameters = new Map<number[], AgeGroup>();
   const ageGroups = ParserService.parseGroups(groups);
-  ageGroups.forEach((group: AgeGroup) => {
-    parameters.set(ParameterService.getEquationValues(group.age, group.sex), group);
-  });
 
+  await Promise.all(ageGroups.map(async (group: AgeGroup) => {
+    const arr: number[] = await ParameterService.getEquationValues(group.age, group.sex);
+    parameters.set(arr, group);
+  }));
   const res: CalculatorResponse = ERCalculator.calculateER(parameters, data);
 
   return res;

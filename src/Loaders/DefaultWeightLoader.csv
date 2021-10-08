@@ -1,65 +1,65 @@
 age,value,sex
-0Month,3.3,Male
-1Month,4.5,Male
-2Month,5.6,Male
-3Month,6.4,Male
-4Month,7,Male
-5Month,7.5,Male
-6Month,7.9,Male
-7Month,8.3,Male
-8Month,8.6,Male
-9Month,8.9,Male
-10Month,9.2,Male
-11Month,9.4,Male
-1Year,10.9,Male
-2Year,13.3,Male
-3Year,15.3,Male
-4Year,17.3,Male
-5Year,19.5,Male
-6Year,21.8,Male
-7Year,24.2,Male
-8Year,26.8,Male
-9Year,29.6,Male
-10Year,32.9,Male
-11Year,36.7,Male
-12Year,41.6,Male
-13Year,47.4,Male
-14Year,53.7,Male
-15Year,58.8,Male
-16Year,63.1,Male
-17Year,66.1,Male
-18to29Year,67.4,Male
-30to59Year,66.6,Male
-60+Year,64.3,Male
-0Month,3.2,Female
-1Month,4.2,Female
-2Month,5.1,Female
-3Month,5.8,Female
-4Month,6.4,Female
-5Month,6.9,Female
-6Month,7.3,Female
-7Month,7.6,Female
-8Month,7.9,Female
-9Month,8.2,Female
-10Month,8.5,Female
-11Month,8.7,Female
-1Year,10.2,Female
-2Year,12.7,Female
-3Year,15,Female
-4Year,17.2,Female
-5Year,19.1,Female
-6Year,21.3,Female
-7Year,23.7,Female
-8Year,26.7,Female
-9Year,29.9,Female
-10Year,34,Female
-11Year,38.7,Female
-12Year,43.6,Female
-13Year,48.1,Female
-14Year,51.5,Female
-15Year,53.9,Female
-16Year,55.3,Female
-17Year,56.3,Female
-18to29Year,57.7,Female
-30to59Year,56.3,Female
-60+Year,54.2,Female
+0 meses,3.3,Masculino
+1 mes,4.5,Masculino
+2 meses,5.6,Masculino
+3 meses,6.4,Masculino
+4 meses,7,Masculino
+5 meses,7.5,Masculino
+6 meses,7.9,Masculino
+7 meses,8.3,Masculino
+8 meses,8.6,Masculino
+9 meses,8.9,Masculino
+10 meses,9.2,Masculino
+11 mes,9.4,Masculino
+1 año,10.9,Masculino
+2 años,13.3,Masculino
+3 años,15.3,Masculino
+4 años,17.3,Masculino
+5 años,19.5,Masculino
+6 años,21.8,Masculino
+7 años,24.2,Masculino
+8 años,26.8,Masculino
+9 años,29.6,Masculino
+10 años,32.9,Masculino
+11 año,36.7,Masculino
+12 años,41.6,Masculino
+13 años,47.4,Masculino
+14 años,53.7,Masculino
+15 años,58.8,Masculino
+16 años,63.1,Masculino
+17 años,66.1,Masculino
+18-29 años,67.4,Masculino
+30-59 años,66.6,Masculino
+60+ años,64.3,Masculino
+0 meses,3.2,Femenino
+1 mes,4.2,Femenino
+2 meses,5.1,Femenino
+3 meses,5.8,Femenino
+4 meses,6.4,Femenino
+5 meses,6.9,Femenino
+6 meses,7.3,Femenino
+7 meses,7.6,Femenino
+8 meses,7.9,Femenino
+9 meses,8.2,Femenino
+10 meses,8.5,Femenino
+11 mes,8.7,Femenino
+1 año,10.2,Femenino
+2 años,12.7,Femenino
+3 años,15,Femenino
+4 años,17.2,Femenino
+5 años,19.1,Femenino
+6 años,21.3,Femenino
+7 años,23.7,Femenino
+8 años,26.7,Femenino
+9 años,29.9,Femenino
+10 años,34,Femenino
+11 año,38.7,Femenino
+12 años,43.6,Femenino
+13 años,48.1,Femenino
+14 años,51.5,Femenino
+15 años,53.9,Femenino
+16 años,55.3,Femenino
+17 años,56.3,Femenino
+18-29 años,57.7,Femenino
+30-59 años,56.3,Femenino
+60+ años,54.2,Femenino

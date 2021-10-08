@@ -1,5 +1,5 @@
 type MinorPAL = {
-  lowPalPrevalence: number;
+  lowPALPrevalence: number;
   moderatePALPrevalence: number;
   intensePALPrevalence: number;
 };

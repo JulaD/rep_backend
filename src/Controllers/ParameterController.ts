@@ -8,14 +8,14 @@ import ParameterService from '../Services/ParameterService';
 const router = Router();
 
 const getParameters: Handler = async (req: Request, res: Response) => {
-  try {
-    const parameters = await ParameterService.getParameters();
-    return res.status(200).send(parameters);
-  } catch (error) {
-    const e = error as Error;
-    logger.info(e.message);
-    return res.status(400).json({ error: e.message });
-  }
+  // try {
+  //   const parameters = await ParameterService.getParameters();
+  //   return res.status(200).send(parameters);
+  // } catch (error) {
+  //   const e = error as Error;
+  //   logger.info(e.message);
+  //   return res.status(400).json({ error: e.message });
+  // }
 };
 
 const getParametersOfType: Handler = async (req: Request, res: Response) => {
