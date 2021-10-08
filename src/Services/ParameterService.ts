@@ -72,7 +72,6 @@ const getEquationValues = async (ageBracket: AgeBracket, sex: Sex): Promise<numb
               res.push(constant.value);
             });
           });
-        console.log(res);
       } else {
         await DefaultExtraData.findAll({
           where: {
@@ -114,7 +113,6 @@ const getEquationValues = async (ageBracket: AgeBracket, sex: Sex): Promise<numb
               res.push(constant.value);
             });
           });
-        console.log(res);
       } else {
         await DefaultExtraData.findAll({
           where: {
