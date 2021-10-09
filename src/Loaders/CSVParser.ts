@@ -14,6 +14,7 @@ function csvToDefaultWeight(csv: string): DefaultWeightDTO[] {
       ageRange: fields[0] as AgeBracket,
       value: parseFloat(fields[1]),
       sex: fields[2] as Sex,
+      parameterType: fields[3] as ParameterType,
     });
   });
   parameters.shift();

@@ -6,6 +6,9 @@ import Sex from '../Enum/Sex';
 import ParameterMapper from '../Mappers/ParameterMapper';
 import DefaultExtraData from '../Models/DefaultExtraData';
 import EquationConstant from '../Models/EquationConstant';
+import DefaultWeight from '../Models/DefaultWeight';
+import DefaultWeightDTO from '../DTOs/DefaultWeightDTO';
+import ParameterWrapperDTO from '../DTOs/ParameterWrapperDTO';
 
 const getEquationValues = async (ageBracket: AgeBracket, sex: Sex): Promise<number[]> => {
   const res: number[] = [];
@@ -159,17 +162,104 @@ const getEquationValues = async (ageBracket: AgeBracket, sex: Sex): Promise<numb
   return res;
 };
 
-// const getParameters = async (): Promise<ParameterDTO[]> => {
-// const res: ParameterDTO[] = [];
-// await Parameter.findAll().then((parameters: Parameter[]) => {
-// parameters.forEach((param: Parameter) => {
-// res.push(ParameterMapper.parameterToData(param));
-// });
-//   });
-// return res;
-// };
+const getDefaultWeights = async (): Promise<DefaultWeightDTO[]> => {
+  const res: DefaultWeightDTO[] = [];
+  await DefaultWeight.findAll().then((parameters: DefaultWeight[]) => {
+    parameters.forEach((param: DefaultWeight) => {
+      res.push(ParameterMapper.defaultWeightToDTO(param));
+    });
+  });
+  return res;
+};
 
-export default { getEquationValues /* , getParameters */ };
+const getDefaultExtraData = async (): Promise<DefaultExtraDataDTO[]> => {
+  const res: DefaultExtraDataDTO[] = [];
+  await DefaultExtraData.findAll({
+    where: {
+      order: 0,
+    },
+  }).then((parameters: DefaultExtraData[]) => {
+    parameters.forEach((param: DefaultExtraData) => {
+      res.push(ParameterMapper.defaultExtraDataToDTO(param));
+    });
+  });
+  return res;
+};
+
+const getParameters = async (): Promise<ParameterWrapperDTO> => {
+  const extraData: DefaultExtraDataDTO[] = [];
+  await DefaultExtraData.findAll().then((parameters: DefaultExtraData[]) => {
+    parameters.forEach((param: DefaultExtraData) => {
+      extraData.push(ParameterMapper.defaultExtraDataToDTO(param));
+    });
+  });
+  const equationConstant: EquationConstantDTO[] = [];
+  await EquationConstant.findAll().then((parameters: EquationConstant[]) => {
+    parameters.forEach((param: EquationConstant) => {
+      equationConstant.push(ParameterMapper.equationConstantToDTO(param));
+    });
+  });
+  const defaultWeight: DefaultWeightDTO[] = await getDefaultWeights();
+  const res: ParameterWrapperDTO = {
+    equationConstants: equationConstant,
+    defaultWeights: defaultWeight,
+    defaultExtraData: extraData,
+  };
+  return res;
+};
+
+const updateEquationConstant = async (age: AgeBracket, s: Sex, ord: number, val: number):
+Promise<void> => {
+  EquationConstant.update(
+    { value: val },
+    {
+      where: {
+        ageRange: age,
+        sex: s,
+        order: ord,
+      },
+    },
+  ).catch((err) => {
+    throw err;
+  });
+};
+
+const updateDefaultWeight = async (age: AgeBracket, s: Sex, val: number): Promise<void> => {
+  DefaultWeight.update(
+    { value: val },
+    {
+      where: {
+        ageRange: age,
+        sex: s,
+      },
+    },
+  ).catch((err) => {
+    throw err;
+  });
+};
+
+const updateExtraData = async (identifier: string, val: number): Promise<void> => {
+  DefaultExtraData.update(
+    { value: val },
+    {
+      where: {
+        id: identifier,
+      },
+    },
+  ).catch((err) => {
+    throw err;
+  });
+};
+
+export default {
+  getEquationValues,
+  getDefaultWeights,
+  getDefaultExtraData,
+  getParameters,
+  updateEquationConstant,
+  updateDefaultWeight,
+  updateExtraData,
+};
 
 // const getEquationValues = (ageBracket: AgeBracket, sex: Sex): number[] => {
 //   let res: number[] = [];

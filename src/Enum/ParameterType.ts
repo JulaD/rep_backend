@@ -4,7 +4,8 @@ enum ParameterType {
   Maternity = 'Embarazo y lactancia',
   TEE = 'GET',
   BMR = 'TMB',
-  GrowthEnergy = 'Energia para crecimiento'
+  GrowthEnergy = 'Energia para crecimiento',
+  DefaultWeight = 'Peso por defecto',
 }
 
 export default ParameterType;
