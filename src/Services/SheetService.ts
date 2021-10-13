@@ -1,8 +1,11 @@
 import * as XLSX from 'xlsx';
 import { SheetNames } from '../Config/Constants';
+import AgeGroupJSON from '../DTOs/AgeGroupJSON';
+import Sex from '../Enum/Sex';
 import {
   SheetParserResponse, Menores, Mayores, MenoresSheet, MayoresSheet,
 } from '../Models/SheetParserResponse';
+import ParameterService from './ParameterService';
 
 /* PRIVATE FUNCTIONS */
 // const ec = (r: number, c: number): string => XLSX.utils.encode_cell({ r, c });
@@ -56,12 +59,30 @@ const parseBabies = (worksheet: XLSX.WorkSheet): Menores[] => {
   });
   return res;
 };
+const getMedianFromArray = (arr: number[]): number => {
+  const arrSort = arr.sort((a, b) => a - b);
+  const len = arr.length;
+  const mid = Math.ceil(len / 2);
+  const median = len % 2 === 0 ? (arrSort[mid] + arrSort[mid - 1]) / 2 : arrSort[mid - 1];
+  return median;
+};
+
+const getLiteralGroup = (age: number): string => {
+  if (age >= 18 && age <= 29) {
+    return '18-29';
+  } if (age >= 30 && age <= 59) {
+    return '30-59';
+  } if (age >= 60) {
+    return '60+';
+  }
+  return `${age}`;
+};
 
 /* EXPORT FUNCTIONS */
 
-const parseSheetService = (data: Buffer): SheetParserResponse => {
+const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
   const workbook: XLSX.WorkBook = XLSX.read(data);
-  let parsed: SheetParserResponse = null;
+  const parsed: SheetParserResponse = null;
   let hombresMenores: Menores[] = [];
   let hombres: Mayores[] = [];
   let mujeresMenores: Menores[] = [];
@@ -92,14 +113,109 @@ const parseSheetService = (data: Buffer): SheetParserResponse => {
         throw new Error(`Sheet name ${name} is not part of the scheme `);
     }
   });
-  parsed = {
-    hombresMenores,
-    hombres,
-    mujeresMenores,
-    mujeres,
-  };
 
-  return parsed;
+  const res: AgeGroupJSON[] = [];
+
+  let auxObj: {[key: string]: number[]} = {};
+  // group HombresMenores
+  // Iterate on hombresMenores and put
+  // elemnts on auxObj
+  hombresMenores.forEach((item) => {
+    if (item === null) throw new Error('Item is null');
+    const bridge: string = (item.edad).toString();
+    auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
+    (auxObj[bridge]).push(item.peso);
+  });
+  // creates AgeGroup and insert into res
+  let auxObjKeys = Object.keys(auxObj);
+  auxObjKeys.forEach((key) => {
+    const toInsert: AgeGroupJSON = {
+      age: `${key} meses`,
+      sex: Sex.Male,
+      medianWeight: getMedianFromArray(auxObj[key]),
+      population: auxObj[key].length,
+    };
+    res.push(toInsert);
+  });
+
+  auxObj = {};
+
+  mujeresMenores.forEach((item) => {
+    if (item === null) throw new Error('Item is null');
+    const bridge: string = (item.edad).toString();
+    auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
+    (auxObj[bridge]).push(item.peso);
+  });
+
+  // creates AgeGroup for mujeresMenores and insert into res
+  auxObjKeys = Object.keys(auxObj);
+  auxObjKeys.forEach((key) => {
+    const toInsert: AgeGroupJSON = {
+      age: `${key} meses`,
+      sex: Sex.Female,
+      medianWeight: getMedianFromArray(auxObj[key]),
+      population: auxObj[key].length,
+    };
+    res.push(toInsert);
+  });
+
+  auxObj = {};
+  hombres.forEach((item) => {
+    if (item === null) throw new Error('Item is null');
+    const bridge: string = getLiteralGroup(item.edad);
+    auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
+    let peso;
+    if (!item.peso) {
+      if (!item.talla) { throw new Error('Talla and Peso not defined'); }
+      // ParameterService. TODO:
+      peso = 0;
+    } else {
+      peso = item.peso;
+    }
+    (auxObj[bridge]).push(peso);
+  });
+
+  // creates AgeGroup for hombres and insert into res
+  auxObjKeys = Object.keys(auxObj);
+  auxObjKeys.forEach((key) => {
+    const toInsert: AgeGroupJSON = {
+      age: `${key} años`,
+      sex: Sex.Male,
+      medianWeight: getMedianFromArray(auxObj[key]),
+      population: auxObj[key].length,
+    };
+    res.push(toInsert);
+  });
+
+  auxObj = {};
+  mujeres.forEach((item) => {
+    if (item === null) throw new Error('Item is null');
+    const bridge: string = getLiteralGroup(item.edad);
+    auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
+    let peso;
+    if (!item.peso) {
+      if (!item.talla) { throw new Error('Talla and Peso not defined'); }
+      // ParameterService. TODO:
+      peso = 0;
+    } else {
+      peso = item.peso;
+    }
+    (auxObj[bridge]).push(peso);
+  });
+
+  // creates AgeGroup for hombres and insert into res
+  auxObjKeys = Object.keys(auxObj);
+  auxObjKeys.forEach((key) => {
+    const toInsert: AgeGroupJSON = {
+      age: `${key} años`,
+      sex: Sex.Female,
+      medianWeight: getMedianFromArray(auxObj[key]),
+      population: auxObj[key].length,
+    };
+    res.push(toInsert);
+  });
+
+  return res;
   // TODO: depends on sheet layout what to do
 };
 

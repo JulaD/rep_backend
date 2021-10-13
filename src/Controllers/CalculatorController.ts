@@ -8,8 +8,7 @@ import logger from '../Logger/logger';
 const router = Router();
 
 const getREP: Handler = async (req: Request, res: Response) => {
-  const { groups } = req.body;
-  const { extraData } = req.body;
+  const { groups, extraData } = req.body;
   try {
     // sry pero no sabia como sacarle un caracter a esa linea :(
     // eslint-disable-next-line max-len

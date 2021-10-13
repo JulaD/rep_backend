@@ -46,19 +46,21 @@ paths:
         - BearerAuth: []
 
   /repCalculator:
-      post:
-        tags:
-          - Calculation
+    post:
+      tags:
+        - Calculation
       summary: Given population data calculates its energetic requirement
       requestBody:
         content: 
           application/json:
             schema:
-              $ref: '#/components/schemas/AgeGroupJSON'
+              $ref: '#/components/schemas/ReqCalculation'
         required: true
       responses:
         '200':
           description: Ok.
+        '400':
+          description: Bad request.
       security:
         - BearerAuth: []
 components:
@@ -107,11 +109,92 @@ components:
           type: string
     AgeGroupJSON:
       properties:
-        edad:
+        age:
           type: string
-        sexo:
+        sex:
           type: string
-        pesoMediano:
+        medianWeight:
           type: string
-        cantidad:
+        population:
           type: string
+      required:
+        - age
+        - sex
+        - medianWeight
+        - population
+    MinorPAL:
+      properties:
+        lowPALPrevalence:
+          type: number
+        moderatePALPrevalence:
+          type: number
+        intensePALPrevalence:
+          type: number
+      required:
+        - lowPALPrevalence
+        - moderatePALPrevalence
+        - intensePALPrevalence
+    AdultPAL:
+      properties:
+        urbanPercentage:
+          type: number
+        activeUrbanPAL:
+          type: number
+        lowUrbanPAL:
+          type: number
+        ruralPercentage:
+          type: number
+        activeRuralPAL:
+          type: number
+        lowRuralPAL:
+          type: number
+      required:
+        - urbanPercentage
+        - activeUrbanPAL
+        - lowUrbanPAL
+        - ruralPercentage
+        - activeRuralPAL
+        - lowRuralPAL
+    IndividualMaternity:
+      properties:
+        pregnantWomen:
+          type: number
+        lactatingWomen:
+          type: number
+      required:
+        - pregnantWomen
+        - lactatingWomen
+    PopulationMaternity:
+      properties:
+        countryBirthRate:
+          type: number
+        countryPopulation:
+          type: number
+      required:
+        - countryBirthRate
+        - countryPopulation
+    ExtraData:
+      properties:
+        minorPAL:
+          $ref: '#/components/schemas/MinorPAL'
+        adultPAL:
+          $ref: '#/components/schemas/AdultPAL'
+        maternity18to29:
+          oneOf:
+            - $ref: '#/components/schemas/IndividualMaternity'
+            - $ref: '#/components/schemas/PopulationMaternity'
+        maternity30to59:
+          oneOf:
+            - $ref: '#/components/schemas/IndividualMaternity'
+            - $ref: '#/components/schemas/PopulationMaternity'
+    ReqCalculation:
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgeGroupJSON'
+        extraData:
+          $ref: '#/components/schemas/ExtraData'
+      required:
+        - groups
+        - extraData
