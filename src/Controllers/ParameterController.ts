@@ -1,11 +1,15 @@
 import {
   Handler, Request, Response, Router,
 } from 'express';
+import { Validator } from 'express-json-validator-middleware';
 import ParameterType from '../Enum/ParameterType';
 import logger from '../Logger/logger';
+import updateParameterValueBody from '../Schemas/updateParameterValueBody';
 import ParameterService from '../Services/ParameterService';
 
 const router = Router();
+
+const { validate } = new Validator({});
 
 const getParameters: Handler = async (req: Request, res: Response) => {
   try {
@@ -74,6 +78,6 @@ const updateParameterValue: Handler = async (req: Request, res: Response) => {
 router.post('/', getParameters);
 router.post('/weights/', getDefaultWeights);
 router.post('/extraData/', getDefaultExtraData);
-router.put('/parameterUpdate/', updateParameterValue);
+router.put('/parameterUpdate/', validate({ body: updateParameterValueBody }), updateParameterValue);
 
 export default router;

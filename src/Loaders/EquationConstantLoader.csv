@@ -12,7 +12,7 @@ age,value,parameterType,sex,order,description
 60+ años,9.082,TMB,Femenino,0,a
 60+ años,658.5,TMB,Femenino,1,a
 0 meses,211,Energia para crecimiento,Masculino,2,a
-1 mes,183,Energia para crecimiento,Masculino,2,a
+1 meses,183,Energia para crecimiento,Masculino,2,a
 2 meses,139,Energia para crecimiento,Masculino,2,a
 3 meses,53,Energia para crecimiento,Masculino,2,a
 4 meses,46,Energia para crecimiento,Masculino,2,a
@@ -23,7 +23,7 @@ age,value,parameterType,sex,order,description
 9 meses,21,Energia para crecimiento,Masculino,2,a
 10 meses,21,Energia para crecimiento,Masculino,2,a
 11 meses,22,Energia para crecimiento,Masculino,2,a
-1 año,13,Energia para crecimiento,Masculino,3,a
+1 años,13,Energia para crecimiento,Masculino,3,a
 2 años,12,Energia para crecimiento,Masculino,3,a
 3 años,12,Energia para crecimiento,Masculino,3,a
 4 años,11,Energia para crecimiento,Masculino,3,a
@@ -33,7 +33,7 @@ age,value,parameterType,sex,order,description
 8 años,16,Energia para crecimiento,Masculino,3,a
 9 años,19,Energia para crecimiento,Masculino,3,a
 10 años,22,Energia para crecimiento,Masculino,3,a
-11 año,25,Energia para crecimiento,Masculino,3,a
+11 años,25,Energia para crecimiento,Masculino,3,a
 12 años,29,Energia para crecimiento,Masculino,3,a
 13 años,33,Energia para crecimiento,Masculino,3,a
 14 años,33,Energia para crecimiento,Masculino,3,a
@@ -41,7 +41,7 @@ age,value,parameterType,sex,order,description
 16 años,24,Energia para crecimiento,Masculino,3,a
 17 años,14,Energia para crecimiento,Masculino,3,a
 0 meses,178,Energia para crecimiento,Femenino,2,a
-1 mes,161,Energia para crecimiento,Femenino,2,a
+1 meses,161,Energia para crecimiento,Femenino,2,a
 2 meses,134,Energia para crecimiento,Femenino,2,a
 3 meses,68,Energia para crecimiento,Femenino,2,a
 4 meses,57,Energia para crecimiento,Femenino,2,a
@@ -52,7 +52,7 @@ age,value,parameterType,sex,order,description
 9 meses,18,Energia para crecimiento,Femenino,2,a
 10 meses,15,Energia para crecimiento,Femenino,2,a
 11 meses,14,Energia para crecimiento,Femenino,2,a
-1 año,13,Energia para crecimiento,Femenino,3,a
+1 años,13,Energia para crecimiento,Femenino,3,a
 2 años,13,Energia para crecimiento,Femenino,3,a
 3 años,11,Energia para crecimiento,Femenino,3,a
 4 años,10,Energia para crecimiento,Femenino,3,a
@@ -62,7 +62,7 @@ age,value,parameterType,sex,order,description
 8 años,20,Energia para crecimiento,Femenino,3,a
 9 años,23,Energia para crecimiento,Femenino,3,a
 10 años,25,Energia para crecimiento,Femenino,3,a
-11 año,25,Energia para crecimiento,Femenino,3,a
+11 años,25,Energia para crecimiento,Femenino,3,a
 12 años,26,Energia para crecimiento,Femenino,3,a
 13 años,24,Energia para crecimiento,Femenino,3,a
 14 años,19,Energia para crecimiento,Femenino,3,a
@@ -71,8 +71,8 @@ age,value,parameterType,sex,order,description
 17 años,0,Energia para crecimiento,Femenino,3,a
 0 meses,-152,GET,Masculino,0,a
 0 meses,92.8,GET,Masculino,1,a
-1 mes,-152,GET,Masculino,0,a
-1 mes,92.8,GET,Masculino,1,a
+1 meses,-152,GET,Masculino,0,a
+1 meses,92.8,GET,Masculino,1,a
 2 meses,-152,GET,Masculino,0,a
 2 meses,92.8,GET,Masculino,1,a
 3 meses,-152,GET,Masculino,0,a
@@ -83,8 +83,8 @@ age,value,parameterType,sex,order,description
 5 meses,92.8,GET,Masculino,1,a
 0 meses,-152,GET,Femenino,0,a
 0 meses,92.8,GET,Femenino,1,a
-1 mes,-152,GET,Femenino,0,a
-1 mes,92.8,GET,Femenino,1,a
+1 meses,-152,GET,Femenino,0,a
+1 meses,92.8,GET,Femenino,1,a
 2 meses,-152,GET,Femenino,0,a
 2 meses,92.8,GET,Femenino,1,a
 3 meses,-152,GET,Femenino,0,a
@@ -117,9 +117,9 @@ age,value,parameterType,sex,order,description
 10 meses,88.6,GET,Femenino,1,a
 11 meses,-99.4,GET,Femenino,0,a
 11 meses,88.6,GET,Femenino,1,a
-1 año,310.2,GET,Masculino,0,a
-1 año,63.3,GET,Masculino,1,a
-1 año,-0.263,GET,Masculino,2,a
+1 años,310.2,GET,Masculino,0,a
+1 años,63.3,GET,Masculino,1,a
+1 años,-0.263,GET,Masculino,2,a
 2 años,310.2,GET,Masculino,0,a
 2 años,63.3,GET,Masculino,1,a
 2 años,-0.263,GET,Masculino,2,a
@@ -147,9 +147,9 @@ age,value,parameterType,sex,order,description
 10 años,310.2,GET,Masculino,0,a
 10 años,63.3,GET,Masculino,1,a
 10 años,-0.263,GET,Masculino,2,a
-11 año,310.2,GET,Masculino,0,a
-11 año,63.3,GET,Masculino,1,a
-11 año,-0.263,GET,Masculino,2,a
+11 años,310.2,GET,Masculino,0,a
+11 años,63.3,GET,Masculino,1,a
+11 años,-0.263,GET,Masculino,2,a
 12 años,310.2,GET,Masculino,0,a
 12 años,63.3,GET,Masculino,1,a
 12 años,-0.263,GET,Masculino,2,a
@@ -168,9 +168,9 @@ age,value,parameterType,sex,order,description
 17 años,310.2,GET,Masculino,0,a
 17 años,63.3,GET,Masculino,1,a
 17 años,-0.263,GET,Masculino,2,a
-1 año,263.4,GET,Femenino,0,a
-1 año,65.3,GET,Femenino,1,a
-1 año,-0.454,GET,Femenino,2,a
+1 años,263.4,GET,Femenino,0,a
+1 años,65.3,GET,Femenino,1,a
+1 años,-0.454,GET,Femenino,2,a
 2 años,263.4,GET,Femenino,0,a
 2 años,65.3,GET,Femenino,1,a
 2 años,-0.454,GET,Femenino,2,a
@@ -198,9 +198,9 @@ age,value,parameterType,sex,order,description
 10 años,263.4,GET,Femenino,0,a
 10 años,65.3,GET,Femenino,1,a
 10 años,-0.454,GET,Femenino,2,a
-11 año,263.4,GET,Femenino,0,a
-11 año,65.3,GET,Femenino,1,a
-11 año,-0.454,GET,Femenino,2,a
+11 años,263.4,GET,Femenino,0,a
+11 años,65.3,GET,Femenino,1,a
+11 años,-0.454,GET,Femenino,2,a
 12 años,263.4,GET,Femenino,0,a
 12 años,65.3,GET,Femenino,1,a
 12 años,-0.454,GET,Femenino,2,a
