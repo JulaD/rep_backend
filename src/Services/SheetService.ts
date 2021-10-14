@@ -86,6 +86,22 @@ const getLiteralGroup = (age: number): string => {
   return `${age}`;
 };
 
+const validator = (instance: any) => {
+  if (typeof instance.edad !== 'number') {
+    throw new Error('Edad should be a number');
+  } else if (instance.peso !== undefined) {
+    if (typeof instance.peso !== 'number') {
+      throw new Error('Peso should be a number');
+    }
+  } else if (instance.talla !== undefined) {
+    if (typeof instance.talla !== 'number') {
+      throw new Error('Talla should be a number');
+    }
+  } else {
+    throw new Error('A row must have either Peso or Talla');
+  }
+};
+
 /* EXPORT FUNCTIONS */
 
 const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
@@ -129,6 +145,10 @@ const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
   // elemnts on auxObj
   hombresMenores.forEach((item) => {
     if (item === null) throw new Error('Item is null');
+    validator(item);
+    if (item.edad > 12) {
+      throw new Error('Edad should be less than 12 months');
+    }
     const bridge: string = (item.edad).toString();
     auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
     (auxObj[bridge]).push(item.peso);
@@ -149,6 +169,10 @@ const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
 
   mujeresMenores.forEach((item) => {
     if (item === null) throw new Error('Item is null');
+    validator(item);
+    if (item.edad > 12) {
+      throw new Error('Edad should be less than 12 months');
+    }
     const bridge: string = (item.edad).toString();
     auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
     (auxObj[bridge]).push(item.peso);
@@ -169,6 +193,8 @@ const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
   auxObj = {};
   hombres.forEach((item) => {
     if (item === null) throw new Error('Item is null');
+    validator(item);
+
     const bridge: string = getLiteralGroup(item.edad);
     auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
     let peso;
@@ -197,6 +223,8 @@ const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
   auxObj = {};
   mujeres.forEach((item) => {
     if (item === null) throw new Error('Item is null');
+    validator(item);
+
     const bridge: string = getLiteralGroup(item.edad);
     auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
     let peso;
