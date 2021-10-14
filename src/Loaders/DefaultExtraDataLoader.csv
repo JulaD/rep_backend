@@ -10,10 +10,10 @@ urbanLowPALPercentage,90,NAF Adultos,0,a
 ruralPopulation,5.3,NAF Adultos,0,a
 ruralActivePALPercentage,50,NAF Adultos,0,a
 ruralLowPALPercentage,50,NAF Adultos,0,a
-urbanActivePALValue,1.85,NAF Adultos,1,a
-urbanLowPALValue,1.55,NAF Adultos,2,a
-ruralActivePALValue,1.95,NAF Adultos,3,a
-ruralLowPALValue,1.65,NAF Adultos,4,a
+ruralActivePALValue,1.95,NAF Adultos,1,a
+ruralLowPALValue,1.65,NAF Adultos,2,a
+urbanActivePALValue,1.85,NAF Adultos,3,a
+urbanLowPALValue,1.55,NAF Adultos,4,a
 countryPopulation,3453691,Embarazo y lactancia,0,a
 18to29FemaleCountryPopulation,315790,Embarazo y lactancia,0,a
 30to59FemaleCountryPopulation,660601,Embarazo y lactancia,0,a
