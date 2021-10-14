@@ -75,7 +75,7 @@ const updateParameterValue: Handler = async (req: Request, res: Response) => {
   }
 };
 
-router.post('/', getParameters);
+router.get('/', getParameters);
 router.post('/weights/', getDefaultWeights);
 router.post('/extraData/', getDefaultExtraData);
 router.put('/parameterUpdate/', validate({ body: updateParameterValueBody }), updateParameterValue);

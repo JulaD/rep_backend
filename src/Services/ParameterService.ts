@@ -210,7 +210,7 @@ const getParameters = async (): Promise<ParameterWrapperDTO> => {
 
 const updateEquationConstant = async (age: AgeBracket, s: Sex, ord: number, val: number):
 Promise<void> => {
-  EquationConstant.update(
+  await EquationConstant.update(
     { value: val },
     {
       where: {
@@ -225,7 +225,7 @@ Promise<void> => {
 };
 
 const updateDefaultWeight = async (age: AgeBracket, s: Sex, val: number): Promise<void> => {
-  DefaultWeight.update(
+  await DefaultWeight.update(
     { value: val },
     {
       where: {
@@ -239,7 +239,7 @@ const updateDefaultWeight = async (age: AgeBracket, s: Sex, val: number): Promis
 };
 
 const updateExtraData = async (identifier: string, val: number): Promise<void> => {
-  DefaultExtraData.update(
+  await DefaultExtraData.update(
     { value: val },
     {
       where: {
