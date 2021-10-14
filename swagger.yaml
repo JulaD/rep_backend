@@ -65,7 +65,7 @@ paths:
       security:
         - BearerAuth: []
   /parameters:
-    post:
+    get:
       tags:
         - Parameters
       summary: Get all parameters
