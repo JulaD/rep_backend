@@ -4,8 +4,13 @@ const updateParameterValueBody = {
   properties: {
     parameter: {
       type: 'object' as const,
-      required: ['id', 'value', 'parameterType', 'order', 'description'],
       properties: {
+        ageRange: {
+          type: 'string' as const,
+        },
+        sex: {
+          type: 'string' as const,
+        },
         id: {
           type: 'string' as const,
         },
@@ -22,8 +27,18 @@ const updateParameterValueBody = {
           type: 'string' as const,
         },
       },
+      oneOf: [
+        {
+          required: ['parameterType', 'ageRange', 'sex', 'value'],
+        },
+        {
+          required: ['parameterType', 'id', 'value'],
+        },
+        {
+          required: ['parameterType', 'ageRange', 'sex', 'order', 'value'],
+        },
+      ],
     },
-
   },
 };
 

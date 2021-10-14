@@ -60,6 +60,7 @@ const updateParameterValue: Handler = async (req: Request, res: Response) => {
         break;
       case ParameterType.TEE:
       case ParameterType.BMR:
+      case ParameterType.GrowthEnergy:
         await ParameterService.updateEquationConstant(
           parameter.ageRange, parameter.sex, parameter.order, parameter.value,
         );
