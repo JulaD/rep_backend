@@ -5,7 +5,6 @@ import Sex from '../Enum/Sex';
 import {
   SheetParserResponse, Menores, Mayores, MenoresSheet, MayoresSheet,
 } from '../Models/SheetParserResponse';
-import ParameterService from './ParameterService';
 
 /* PRIVATE FUNCTIONS */
 // const ec = (r: number, c: number): string => XLSX.utils.encode_cell({ r, c });
@@ -32,7 +31,7 @@ const parseAdults = (worksheet: XLSX.WorkSheet): Mayores[] => {
   range.e.c = 2;
   const newRange = XLSX.utils.encode_range(range);
 
-  const aux = XLSX.utils.sheet_to_json(worksheet, { range: newRange }) as unknown as MayoresSheet[];
+  const aux = XLSX.utils.sheet_to_json(worksheet, { range: newRange, blankrows: false, defval: '' }) as unknown as MayoresSheet[];
 
   aux.forEach((element: MayoresSheet) => {
     res.push(
@@ -48,7 +47,16 @@ const parseAdults = (worksheet: XLSX.WorkSheet): Mayores[] => {
 
 const parseBabies = (worksheet: XLSX.WorkSheet): Menores[] => {
   const res: Menores[] = [];
-  const aux = XLSX.utils.sheet_to_json(worksheet) as unknown as MenoresSheet[];
+  const ref = worksheet['!ref'];
+  if (ref === undefined) throw new Error('An error ocurred');
+  const range = XLSX.utils.decode_range(ref);
+  range.s.c = 0;
+  range.e.c = 1;
+  const newRange = XLSX.utils.encode_range(range);
+  const aux = XLSX.utils.sheet_to_json(worksheet, {
+    range: newRange, blankrows: false,
+  }) as unknown as MenoresSheet[];
+
   aux.forEach((element: MenoresSheet) => {
     res.push(
       {
@@ -82,7 +90,6 @@ const getLiteralGroup = (age: number): string => {
 
 const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
   const workbook: XLSX.WorkBook = XLSX.read(data);
-  const parsed: SheetParserResponse = null;
   let hombresMenores: Menores[] = [];
   let hombres: Mayores[] = [];
   let mujeresMenores: Menores[] = [];

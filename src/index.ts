@@ -37,6 +37,6 @@ app.use(Routes);
 ParameterDataBaseLoader.initParameterDataBase();
 
 app.listen(PORT, (): void => {
-  console.log(`REPP Backend running here 👉 https://localhost:${PORT}`);
+  console.log(`REPP Backend running here 👉 http://localhost:${PORT}`);
   logger.info('Server initiated');
 });
