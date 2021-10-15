@@ -44,7 +44,13 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
   // Check the error is a validation error
   if (error instanceof ValidationError) {
     // TODO: Handle error message accordingly
-    response.status(400).send(error.validationErrors.body);
+    let msg: string | undefined;
+    if (error.validationErrors.body && error.validationErrors.body[0]) {
+      msg = error.validationErrors.body[0].message;
+    }
+    if (msg) {
+      response.status(400).send(msg);
+    }
     next();
   } else {
     // Pass error on if not a validation error
