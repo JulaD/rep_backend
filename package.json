@@ -9,6 +9,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-json-validator-middleware": "^2.2.1",
     "gulp-eslint": "^6.0.0",
     "helmet": "^4.6.0",
     "mysql2": "^2.3.0",

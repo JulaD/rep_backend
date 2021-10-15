@@ -1,5 +1,11 @@
 /* eslint-disable no-console */
-import express, { Application } from 'express';
+import { ValidationError } from 'express-json-validator-middleware';
+import express, {
+  Application,
+  NextFunction,
+  Request,
+  Response,
+} from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
@@ -33,6 +39,18 @@ app.use(express.raw({
 }));
 
 app.use(Routes);
+
+app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
+  // Check the error is a validation error
+  if (error instanceof ValidationError) {
+    // TODO: Handle error message accordingly
+    response.status(400).send(error.validationErrors.body);
+    next();
+  } else {
+    // Pass error on if not a validation error
+    next(error);
+  }
+});
 
 ParameterDataBaseLoader.initParameterDataBase();
 
