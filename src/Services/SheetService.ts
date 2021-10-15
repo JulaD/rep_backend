@@ -5,7 +5,6 @@ import Sex from '../Enum/Sex';
 import {
   SheetParserResponse, Menores, Mayores, MenoresSheet, MayoresSheet,
 } from '../Models/SheetParserResponse';
-import ParameterService from './ParameterService';
 
 /* PRIVATE FUNCTIONS */
 // const ec = (r: number, c: number): string => XLSX.utils.encode_cell({ r, c });
@@ -32,7 +31,7 @@ const parseAdults = (worksheet: XLSX.WorkSheet): Mayores[] => {
   range.e.c = 2;
   const newRange = XLSX.utils.encode_range(range);
 
-  const aux = XLSX.utils.sheet_to_json(worksheet, { range: newRange }) as unknown as MayoresSheet[];
+  const aux = XLSX.utils.sheet_to_json(worksheet, { range: newRange, blankrows: false, defval: '' }) as unknown as MayoresSheet[];
 
   aux.forEach((element: MayoresSheet) => {
     res.push(
@@ -48,7 +47,16 @@ const parseAdults = (worksheet: XLSX.WorkSheet): Mayores[] => {
 
 const parseBabies = (worksheet: XLSX.WorkSheet): Menores[] => {
   const res: Menores[] = [];
-  const aux = XLSX.utils.sheet_to_json(worksheet) as unknown as MenoresSheet[];
+  const ref = worksheet['!ref'];
+  if (ref === undefined) throw new Error('An error ocurred');
+  const range = XLSX.utils.decode_range(ref);
+  range.s.c = 0;
+  range.e.c = 1;
+  const newRange = XLSX.utils.encode_range(range);
+  const aux = XLSX.utils.sheet_to_json(worksheet, {
+    range: newRange, blankrows: false,
+  }) as unknown as MenoresSheet[];
+
   aux.forEach((element: MenoresSheet) => {
     res.push(
       {
@@ -78,11 +86,26 @@ const getLiteralGroup = (age: number): string => {
   return `${age}`;
 };
 
+const validator = (instance: any) => {
+  if (typeof instance.edad !== 'number') {
+    throw new Error('Edad should be a number');
+  } else if (instance.peso !== undefined) {
+    if (typeof instance.peso !== 'number') {
+      throw new Error('Peso should be a number');
+    }
+  } else if (instance.talla !== undefined) {
+    if (typeof instance.talla !== 'number') {
+      throw new Error('Talla should be a number');
+    }
+  } else {
+    throw new Error('A row must have either Peso or Talla');
+  }
+};
+
 /* EXPORT FUNCTIONS */
 
 const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
   const workbook: XLSX.WorkBook = XLSX.read(data);
-  const parsed: SheetParserResponse = null;
   let hombresMenores: Menores[] = [];
   let hombres: Mayores[] = [];
   let mujeresMenores: Menores[] = [];
@@ -122,6 +145,10 @@ const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
   // elemnts on auxObj
   hombresMenores.forEach((item) => {
     if (item === null) throw new Error('Item is null');
+    validator(item);
+    if (item.edad > 12) {
+      throw new Error('Edad should be less than 12 months');
+    }
     const bridge: string = (item.edad).toString();
     auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
     (auxObj[bridge]).push(item.peso);
@@ -142,6 +169,10 @@ const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
 
   mujeresMenores.forEach((item) => {
     if (item === null) throw new Error('Item is null');
+    validator(item);
+    if (item.edad > 12) {
+      throw new Error('Edad should be less than 12 months');
+    }
     const bridge: string = (item.edad).toString();
     auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
     (auxObj[bridge]).push(item.peso);
@@ -162,6 +193,8 @@ const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
   auxObj = {};
   hombres.forEach((item) => {
     if (item === null) throw new Error('Item is null');
+    validator(item);
+
     const bridge: string = getLiteralGroup(item.edad);
     auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
     let peso;
@@ -190,6 +223,8 @@ const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
   auxObj = {};
   mujeres.forEach((item) => {
     if (item === null) throw new Error('Item is null');
+    validator(item);
+
     const bridge: string = getLiteralGroup(item.edad);
     auxObj[bridge] = auxObj[bridge] ? auxObj[bridge] : [];
     let peso;
