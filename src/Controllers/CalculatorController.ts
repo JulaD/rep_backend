@@ -1,11 +1,15 @@
 import {
   Handler, Request, Response, Router,
 } from 'express';
+import { Validator } from 'express-json-validator-middleware';
 import CalculatorService from '../Services/CalculatorService';
 import CalculatorResponse from '../DTOs/CalculatorResponseDTO';
 import logger from '../Logger/logger';
+import getRepBody from '../Schemas/getRepBody';
 
 const router = Router();
+
+const { validate } = new Validator({});
 
 const getREP: Handler = async (req: Request, res: Response) => {
   const { groups, extraData } = req.body;
@@ -21,6 +25,6 @@ const getREP: Handler = async (req: Request, res: Response) => {
   }
 };
 
-router.post('/', getREP);
+router.post('/', validate({ body: getRepBody }), getREP);
 
 export default router;

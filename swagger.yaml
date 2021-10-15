@@ -9,6 +9,7 @@ tags:
   - name: Auth
   - name: Parser
   - name: Calculation
+  - name: Parameters
 paths:
 
   /login:
@@ -56,6 +57,60 @@ paths:
             schema:
               $ref: '#/components/schemas/ReqCalculation'
         required: true
+      responses:
+        '200':
+          description: Ok.
+        '400':
+          description: Bad request.
+      security:
+        - BearerAuth: []
+  /parameters:
+    get:
+      tags:
+        - Parameters
+      summary: Get all parameters
+      responses:
+        '200':
+          description: Ok.
+        '400':
+          description: Bad request.
+      security:
+        - BearerAuth: []
+  /parameters/weights:
+    post:
+      tags:
+        - Parameters
+      summary: Get all default weights
+      responses:
+        '200':
+          description: Ok.
+        '400':
+          description: Bad request.
+      security:
+        - BearerAuth: []
+  /parameters/extraData:
+    post:
+      tags:
+        - Parameters
+      summary: Get all extra data
+      responses:
+        '200':
+          description: Ok.
+        '400':
+          description: Bad request.
+      security:
+        - BearerAuth: []
+  /parameters/parameterUpdate:
+    put:
+      tags:
+        - Parameters
+      summary: Update a certain parameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Parameter'
+        required: true 
       responses:
         '200':
           description: Ok.
@@ -114,9 +169,9 @@ components:
         sex:
           type: string
         medianWeight:
-          type: string
+          type: number
         population:
-          type: string
+          type: number
       required:
         - age
         - sex
@@ -198,3 +253,63 @@ components:
       required:
         - groups
         - extraData
+    Parameter:
+      properties:
+        parameter:
+          oneOf:
+            - $ref: '#/components/schemas/WeightParameter'
+            - $ref: '#/components/schemas/ExtraDataParameter'
+            - $ref: '#/components/schemas/EquationConstantParameter'
+    WeightParameter:
+      properties:
+        parameterType:
+          type: string
+        ageRange:
+          type: string
+        sex:
+          type: string
+        value:
+          type: number
+      required:
+        - parameterType
+        - ageRange
+        - sex
+        - value
+    ExtraDataParameter:
+      properties:
+        parameterType:
+          type: string
+        id:
+          type: string
+        value:
+          type: number
+        description:
+          type: string
+      required:
+        - parameterType
+        - id
+        - value
+    EquationConstantParameter:
+      properties:
+        parameterType:
+          type: string
+        ageRange:
+          type: string
+        sex:
+          type: string
+        order:
+          type: number
+        value:
+          type: number
+        description:
+          type: string
+      required:
+        - parameterType
+        - ageRange
+        - sex
+        - order
+        - value
+
+            
+            
+        
