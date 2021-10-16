@@ -140,7 +140,7 @@ const calculate1To5Years = (group: AgeGroup, params: number[]): GroupEnergeticRe
 const calculate6To17Years = (group: AgeGroup, params: number[], data: ExtraData): GroupEnergeticRequirement => {
   let tee: number;
   if (typeof (data.minorPAL) === 'undefined') {
-    throw new Error('Missing data');
+    throw new Error('Missing minors\' physical activity prevalence data');
   } else {
     tee = calculateTEE(group, params, data.minorPAL);
   }
@@ -161,7 +161,7 @@ const calculate18To29Years = (group: AgeGroup, params: number[], data: ExtraData
   let bmr: number;
   let pal: number;
   if (typeof (data.adultPAL) === 'undefined') {
-    throw new Error('Missing data');
+    throw new Error('Missing adults\' physical activity prevalence data');
   } else {
     bmr = calculateBMR(group, params);
     pal = calculatePAL(params, data.adultPAL);
@@ -173,7 +173,7 @@ const calculate18To29Years = (group: AgeGroup, params: number[], data: ExtraData
   // the extra energy required by women that are pregnant or lactating
   if (group.sex === Sex.Female) {
     if (data.maternity18To29 === undefined) {
-      throw new Error('Missing data');
+      throw new Error('Missing maternity data for women aged 18 to 29');
     } else if (isIndividualMaternity(data.maternity18To29)) {
       requirement = calculateERWomenIndividual(group, params, data.maternity18To29, requirement);
     } else {
@@ -195,7 +195,7 @@ const calculate30To59Years = (group: AgeGroup, params: number[], data: ExtraData
   let bmr: number;
   let pal: number;
   if (typeof (data.adultPAL) === 'undefined') {
-    throw new Error('Missing data');
+    throw new Error('Missing adults\' physical activity prevalence data');
   } else {
     bmr = calculateBMR(group, params);
     pal = calculatePAL(params, data.adultPAL);
@@ -207,7 +207,7 @@ const calculate30To59Years = (group: AgeGroup, params: number[], data: ExtraData
   // the extra energy required by women that are pregnant or lactating
   if (group.sex === Sex.Female) {
     if (typeof (data.maternity30To59) === 'undefined') {
-      throw new Error('Missing data');
+      throw new Error('Missing maternity data for women aged 30 to 59');
     } else if (isIndividualMaternity(data.maternity30To59)) {
       requirement = calculateERWomenIndividual(group, params, data.maternity30To59, requirement);
     } else {
@@ -229,7 +229,7 @@ const calculate60PlusYears = (group: AgeGroup, params: number[], data: ExtraData
   let bmr: number;
   let pal: number;
   if (typeof (data.adultPAL) === 'undefined') {
-    throw new Error('Missing data');
+    throw new Error('Missing adults\' physical activity prevalence data');
   } else {
     bmr = calculateBMR(group, params);
     pal = calculatePAL(params, data.adultPAL);
@@ -308,7 +308,7 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
         break;
       }
       default: {
-        throw new Error('Parsing error, attribute edad does not respect format');
+        throw new Error(`Parsing error, attribute edad does not respect format. ${group.age} is not a valid age bracket.`);
       }
     }
     totalRequirement += groupRequirement.total;

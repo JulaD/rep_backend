@@ -9,6 +9,7 @@ import EquationConstant from '../Models/EquationConstant';
 import DefaultWeight from '../Models/DefaultWeight';
 import DefaultWeightDTO from '../DTOs/DefaultWeightDTO';
 import ParameterWrapperDTO from '../DTOs/ParameterWrapperDTO';
+import { extraDataIDs } from '../Config/Constants';
 
 const getEquationValues = async (ageBracket: AgeBracket, sex: Sex): Promise<number[]> => {
   const res: number[] = [];
@@ -75,7 +76,6 @@ const getEquationValues = async (ageBracket: AgeBracket, sex: Sex): Promise<numb
               res.push(constant.value);
             });
           });
-        console.log(res);
       } else {
         await DefaultExtraData.findAll({
           where: {
@@ -117,7 +117,6 @@ const getEquationValues = async (ageBracket: AgeBracket, sex: Sex): Promise<numb
               res.push(constant.value);
             });
           });
-        console.log(res);
       } else {
         await DefaultExtraData.findAll({
           where: {
@@ -208,15 +207,14 @@ const getParameters = async (): Promise<ParameterWrapperDTO> => {
   return res;
 };
 
-const updateEquationConstant = async (age: AgeBracket, s: Sex, ord: number, val: number):
-Promise<void> => {
+const updateEquationConstant = async (parameter: EquationConstantDTO): Promise<void> => {
   await EquationConstant.update(
-    { value: val },
+    { value: parameter.value },
     {
       where: {
-        ageRange: age,
-        sex: s,
-        order: ord,
+        ageRange: parameter.ageRange,
+        sex: parameter.sex,
+        order: parameter.order,
       },
     },
   ).catch((err) => {
@@ -224,13 +222,13 @@ Promise<void> => {
   });
 };
 
-const updateDefaultWeight = async (age: AgeBracket, s: Sex, val: number): Promise<void> => {
+const updateDefaultWeight = async (parameter: DefaultWeightDTO): Promise<void> => {
   await DefaultWeight.update(
-    { value: val },
+    { value: parameter.value },
     {
       where: {
-        ageRange: age,
-        sex: s,
+        ageRange: parameter.ageRange,
+        sex: parameter.sex,
       },
     },
   ).catch((err) => {
@@ -238,17 +236,70 @@ const updateDefaultWeight = async (age: AgeBracket, s: Sex, val: number): Promis
   });
 };
 
-const updateExtraData = async (identifier: string, val: number): Promise<void> => {
-  await DefaultExtraData.update(
-    { value: val },
-    {
-      where: {
-        id: identifier,
-      },
-    },
-  ).catch((err) => {
-    throw err;
+const updatePercentage = async (params: DefaultExtraDataDTO[], total: number): Promise<void> => {
+  if (total === 100) {
+    params.forEach(async (param: DefaultExtraDataDTO) => {
+      await DefaultExtraData.update(
+        { value: param.value },
+        {
+          where: {
+            id: param.id,
+          },
+        },
+      ).catch((err) => {
+        throw err;
+      });
+    });
+  } else {
+    throw new Error('These percentages must add up to 100');
+  }
+};
+
+const updateExtraData = async (parameters: DefaultExtraDataDTO[]): Promise<void> => {
+  const ids: string[] = [];
+  let total = 0;
+
+  parameters.forEach((param: DefaultExtraDataDTO) => {
+    ids.push(param.id);
+    total += param.value;
   });
+
+  if (ids.includes(extraDataIDs.minLowPrev)) {
+    if (ids.includes(extraDataIDs.minModPrev) && ids.includes(extraDataIDs.minIntPrev)) {
+      updatePercentage(parameters, total);
+    } else {
+      throw new Error('Missing parameter for update');
+    }
+  } else if (ids.includes(extraDataIDs.urbPopPerc)) {
+    if (ids.includes(extraDataIDs.rurPopPerc)) {
+      updatePercentage(parameters, total);
+    } else {
+      throw new Error('Missing parameter for update');
+    }
+  } else if (ids.includes(extraDataIDs.urbAdultActPerc)) {
+    if (ids.includes(extraDataIDs.urbAdultLowPerc)) {
+      updatePercentage(parameters, total);
+    } else {
+      throw new Error('Missing parameter for update');
+    }
+  } else if (ids.includes(extraDataIDs.rurAdultActPerc)) {
+    if (ids.includes(extraDataIDs.rurAdultLowPerc)) {
+      updatePercentage(parameters, total);
+    } else {
+      throw new Error('Missing parameter for update');
+    }
+  } else {
+    await DefaultExtraData.update(
+      { value: parameters[0].value },
+      {
+        where: {
+          id: parameters[0].id,
+        },
+      },
+    ).catch((err) => {
+      throw err;
+    });
+  }
 };
 
 export default {
