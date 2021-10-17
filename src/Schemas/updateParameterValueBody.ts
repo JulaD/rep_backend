@@ -1,7 +1,10 @@
 const updateParameterValueBody = {
   type: 'object' as const,
-  required: ['parameters, parameterType'],
+  required: ['parameters', 'parameterType'],
   properties: {
+    parameterType: {
+      type: 'string' as const,
+    },
     parameters: {
       type: 'array' as const,
       items: {
