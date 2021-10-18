@@ -278,22 +278,22 @@ const updateExtraData = async (parameters: DefaultExtraDataDTO[]): Promise<void>
 
   if (ids.includes(extraDataIDs.minLowPrev)) {
     if (ids.includes(extraDataIDs.minModPrev) && ids.includes(extraDataIDs.minIntPrev)) {
-      updatePercentage(parameters, total);
+      await updatePercentage(parameters, total);
     } else {
       throw new Error('Missing parameter for update');
     }
   } else if (ids.includes(extraDataIDs.urbPopPerc)) {
-    updatePair(parameters[0], extraDataIDs.rurPopPerc);
+    await updatePair(parameters[0], extraDataIDs.rurPopPerc);
   } else if (ids.includes(extraDataIDs.rurPopPerc)) {
-    updatePair(parameters[0], extraDataIDs.urbPopPerc);
+    await updatePair(parameters[0], extraDataIDs.urbPopPerc);
   } else if (ids.includes(extraDataIDs.urbAdultActPerc)) {
-    updatePair(parameters[0], extraDataIDs.urbAdultLowPerc);
+    await updatePair(parameters[0], extraDataIDs.urbAdultLowPerc);
   } else if (ids.includes(extraDataIDs.urbAdultLowPerc)) {
-    updatePair(parameters[0], extraDataIDs.urbAdultActPerc);
+    await updatePair(parameters[0], extraDataIDs.urbAdultActPerc);
   } else if (ids.includes(extraDataIDs.rurAdultActPerc)) {
-    updatePair(parameters[0], extraDataIDs.rurAdultLowPerc);
+    await updatePair(parameters[0], extraDataIDs.rurAdultLowPerc);
   } else if (ids.includes(extraDataIDs.rurAdultLowPerc)) {
-    updatePair(parameters[0], extraDataIDs.rurAdultActPerc);
+    await updatePair(parameters[0], extraDataIDs.rurAdultActPerc);
   } else {
     await DefaultExtraData.update(
       { value: parameters[0].value },

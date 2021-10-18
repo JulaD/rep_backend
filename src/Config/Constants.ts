@@ -29,4 +29,4 @@ export const extraDataIDs = {
   extraEnergyLact18to29: 'lactationExtraEnergy18to29',
   extraEnergyPreg30to59: 'pregnancyExtraEnergy30to59',
   extraEnergyLact30to59: 'lactationExtraEnergy30to59',
-}
+};
