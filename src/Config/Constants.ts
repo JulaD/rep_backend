@@ -5,7 +5,7 @@ export const SheetNames = {
   MUJERES_MENORES: 'Mujeres<1',
 };
 
-export const extraDataIDs = {
+export const extraDataIDs: {[key: string]: string} = {
   minLowPrev: 'minorLowPrevalence',
   minModPrev: 'minorModeratePrevalence',
   minIntPrev: 'minorIntensePrevalence',

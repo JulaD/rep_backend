@@ -286,6 +286,16 @@ const updatePair = async (param: DefaultExtraDataDTO, pairID: string): Promise<v
   });
 };
 
+const validateID = (id: string): boolean => {
+  const keys: string[] = Object.keys(extraDataIDs);
+  for (let i = 0; i < keys.length; i + 1) {
+    if (extraDataIDs[keys[i]] === id) {
+      return true;
+    }
+  }
+  return false;
+};
+
 const updateExtraData = async (parameters: DefaultExtraDataDTO[]): Promise<void> => {
   const ids: string[] = [];
   let total = 0;
@@ -313,7 +323,7 @@ const updateExtraData = async (parameters: DefaultExtraDataDTO[]): Promise<void>
     await updatePair(parameters[0], extraDataIDs.rurAdultLowPerc);
   } else if (ids.includes(extraDataIDs.rurAdultLowPerc)) {
     await updatePair(parameters[0], extraDataIDs.rurAdultActPerc);
-  } else {
+  } else if (validateID(parameters[0].id)) {
     await DefaultExtraData.update(
       { value: parameters[0].value },
       {
@@ -324,6 +334,8 @@ const updateExtraData = async (parameters: DefaultExtraDataDTO[]): Promise<void>
     ).catch((err) => {
       throw err;
     });
+  } else {
+    throw new Error('Invalid parameter ID');
   }
 };
 
