@@ -227,17 +227,36 @@ const updateDefaultWeight = async (parameter: DefaultWeightDTO): Promise<void> =
 
 const updatePercentage = async (params: DefaultExtraDataDTO[], total: number): Promise<void> => {
   if (total === 100) {
-    params.forEach(async (param: DefaultExtraDataDTO) => {
-      await DefaultExtraData.update(
-        { value: param.value },
-        {
-          where: {
-            id: param.id,
-          },
+    // No se mete en un for porque hay problemas con el await
+    await DefaultExtraData.update(
+      { value: params[0].value },
+      {
+        where: {
+          id: params[0].id,
         },
-      ).catch((err) => {
-        throw err;
-      });
+      },
+    ).catch((err) => {
+      throw err;
+    });
+    await DefaultExtraData.update(
+      { value: params[1].value },
+      {
+        where: {
+          id: params[1].id,
+        },
+      },
+    ).catch((err) => {
+      throw err;
+    });
+    await DefaultExtraData.update(
+      { value: params[2].value },
+      {
+        where: {
+          id: params[2].id,
+        },
+      },
+    ).catch((err) => {
+      throw err;
     });
   } else {
     throw new Error('These percentages must add up to 100');
