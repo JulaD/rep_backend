@@ -13,12 +13,15 @@ const getRepBody = {
           },
           sex: {
             type: 'string' as const,
+            pattern: '(^Masculino$)|(^Femenino$)',
           },
           medianWeight: {
             type: 'number' as const,
+            minimum: 0,
           },
           population: {
             type: 'number' as const,
+            minumum: 0,
           },
         },
       },
@@ -32,12 +35,18 @@ const getRepBody = {
           properties: {
             lowPALPrevalence: {
               type: 'number' as const,
+              minimum: 0,
+              maximum: 100,
             },
             moderatePALPrevalence: {
               type: 'number' as const,
+              minimum: 0,
+              maximum: 100,
             },
             intensePALPrevalence: {
               type: 'number' as const,
+              minimum: 0,
+              maximum: 100,
             },
           },
         },
@@ -45,22 +54,61 @@ const getRepBody = {
           type: 'object' as const,
           required: ['urbanPercentage', 'activeUrbanPAL', 'lowUrbanPAL', 'ruralPercentage', 'activeRuralPAL', 'lowRuralPAL'],
           properties: {
-            urbanPercentage: { type: 'number' as const },
-            activeUrbanPAL: { type: 'number' as const },
-            lowUrbanPAL: { type: 'number' as const },
-            ruralPercentage: { type: 'number' as const },
-            activeRuralPAL: { type: 'number' as const },
-            lowRuralPAL: { type: 'number' as const },
+            urbanPercentage: {
+              type: 'number' as const,
+              minimum: 0,
+              maximum: 100,
+            },
+            activeUrbanPAL: {
+              type: 'number' as const,
+              minimum: 0,
+              maximum: 100,
+            },
+            lowUrbanPAL: {
+              type: 'number' as const,
+              minimum: 0,
+              maximum: 100,
+            },
+            ruralPercentage: {
+              type: 'number' as const,
+              minimum: 0,
+              maximum: 100,
+            },
+            activeRuralPAL: {
+              type: 'number' as const,
+              minimum: 0,
+              maximum: 100,
+            },
+            lowRuralPAL: {
+              type: 'number' as const,
+              minimum: 0,
+              maximum: 100,
+            },
           },
         },
         maternity18To29: {
           type: 'object' as const,
           properties: {
-            pregnantWomen: { type: 'number' as const },
-            lactatingWomen: { type: 'number' as const },
-            countryBirthRate: { type: 'number' as const },
-            countryWomenInAgeGroup: { type: 'number' as const },
-            countryPopulation: { type: 'number' as const },
+            pregnantWomen: {
+              type: 'number' as const,
+              minimum: 0,
+            },
+            lactatingWomen: {
+              type: 'number' as const,
+              minimum: 0,
+            },
+            countryBirthRate: {
+              type: 'number' as const,
+              minimum: 0,
+            },
+            countryWomenInAgeGroup: {
+              type: 'number' as const,
+              exclusiveMinimum: 0,
+            },
+            countryPopulation: {
+              type: 'number' as const,
+              exclusiveMinimum: 0,
+            },
           },
           oneOf: [
             {
@@ -74,11 +122,26 @@ const getRepBody = {
         maternity30To59: {
           type: 'object' as const,
           properties: {
-            pregnantWomen: { type: 'number' as const },
-            lactatingWomen: { type: 'number' as const },
-            countryBirthRate: { type: 'number' as const },
-            countryWomenInAgeGroup: { type: 'number' as const },
-            countryPopulation: { type: 'number' as const },
+            pregnantWomen: {
+              type: 'number' as const,
+              minimum: 0,
+            },
+            lactatingWomen: {
+              type: 'number' as const,
+              minimum: 0,
+            },
+            countryBirthRate: {
+              type: 'number' as const,
+              minimum: 0,
+            },
+            countryWomenInAgeGroup: {
+              type: 'number' as const,
+              exclusiveMinimum: 0,
+            },
+            countryPopulation: {
+              type: 'number' as const,
+              exclusiveMinimum: 0,
+            },
           },
           oneOf: [
             {

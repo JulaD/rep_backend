@@ -288,7 +288,7 @@ const updatePair = async (param: DefaultExtraDataDTO, pairID: string): Promise<v
 
 const validateID = (id: string): boolean => {
   const keys: string[] = Object.keys(extraDataIDs);
-  for (let i = 0; i < keys.length; i + 1) {
+  for (let i = 0; i < keys.length; i += 1) {
     if (extraDataIDs[keys[i]] === id) {
       return true;
     }

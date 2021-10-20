@@ -45,9 +45,9 @@ const getDefaultExtraData: Handler = async (req: Request, res: Response) => {
 };
 
 const updateParameterValue: Handler = async (req: Request, res: Response) => {
-  const { parameters, parameterType } = req.body;
+  const { parameters } = req.body;
   try {
-    switch (parameterType) {
+    switch (parameters[0].parameterType) {
       case ParameterType.DefaultWeight:
         await ParameterService.updateDefaultWeight(parameters[0]);
         break;

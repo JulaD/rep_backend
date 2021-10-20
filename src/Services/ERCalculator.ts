@@ -24,8 +24,7 @@ const calculateTEE = (group: AgeGroup, params: number[], preval: MinorPAL): numb
   const prevalCheck: number = preval.intensePALPrevalence
   + preval.lowPALPrevalence
   + preval.moderatePALPrevalence;
-  if (prevalCheck !== 100 || preval.intensePALPrevalence < 0
-    || preval.moderatePALPrevalence < 0 || preval.lowPALPrevalence < 0) {
+  if (prevalCheck !== 100) {
     throw new Error('Minor PAL data does not respect format');
   }
 
@@ -52,10 +51,7 @@ const calculatePAL = (params: number[], popData: AdultPAL): number => {
   const popCheck: number = popData.ruralPercentage + popData.urbanPercentage;
   const urbanPALCheck: number = popData.activeUrbanPAL + popData.lowUrbanPAL;
   const ruralPALCheck: number = popData.activeRuralPAL + popData.lowRuralPAL;
-  if (popCheck !== 100 || urbanPALCheck !== 100 || ruralPALCheck !== 100
-  || popData.ruralPercentage < 0 || popData.urbanPercentage < 0
-  || popData.activeUrbanPAL < 0 || popData.lowUrbanPAL < 0
-  || popData.activeRuralPAL < 0 || popData.lowRuralPAL < 0) {
+  if (popCheck !== 100 || urbanPALCheck !== 100 || ruralPALCheck !== 100) {
     throw new Error('Adult PAL data does not respect format');
   }
 
@@ -72,7 +68,7 @@ const calculatePAL = (params: number[], popData: AdultPAL): number => {
 // eslint-disable-next-line max-len
 const calculateERWomenIndividual = (group: AgeGroup, params: number[], popData: IndividualMaternity, req: number): number => {
   const popCheck: number = popData.lactatingWomen + popData.pregnantWomen;
-  if (popCheck > group.population || popData.lactatingWomen < 0 || popData.pregnantWomen < 0) {
+  if (popCheck > group.population) {
     throw new Error('Individual Maternity does not respect format');
   }
 
@@ -88,10 +84,7 @@ const calculateERWomenIndividual = (group: AgeGroup, params: number[], popData: 
 
 // eslint-disable-next-line max-len
 const calculateERWomenPopulation = (params: number[], popData: PopulationMaternity, req: number): number => {
-  if (popData.countryWomenInAgeGroup > popData.countryPopulation
-    || typeof (popData.countryBirthRate) !== 'number' || popData.countryBirthRate < 0
-    || typeof (popData.countryWomenInAgeGroup) !== 'number' || popData.countryWomenInAgeGroup < 0
-    || typeof (popData.countryPopulation) !== 'number' || popData.countryPopulation < 0) {
+  if (popData.countryWomenInAgeGroup > popData.countryPopulation) {
     throw new Error('Population Maternity does not respect format');
   }
 
