@@ -255,8 +255,6 @@ components:
         - extraData
     Parameter:
       properties:
-        parameterType:
-          type: string
         parameters:
           type: array
           items:
