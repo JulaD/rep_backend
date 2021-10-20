@@ -245,7 +245,6 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
   const requirements: GroupEnergeticRequirement[] = [];
 
   groupParameters.forEach((group: AgeGroup, params: number[]) => {
-    totalOfPeople += group.population;
     let groupRequirement: GroupEnergeticRequirement;
     switch (group.age) {
       case AgeBracket.m0:
@@ -253,14 +252,20 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
       case AgeBracket.m2:
       case AgeBracket.m3:
       case AgeBracket.m4:
-      case AgeBracket.m5:
+      case AgeBracket.m5: {
+        groupRequirement = calculateLessThanAYear(group, params);
+        break;
+      }
       case AgeBracket.m6:
       case AgeBracket.m7:
       case AgeBracket.m8:
       case AgeBracket.m9:
       case AgeBracket.m10:
-      case AgeBracket.m11: {
+      case AgeBracket.m11:
+      {
+        totalOfPeople += group.population;
         groupRequirement = calculateLessThanAYear(group, params);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.a1:
@@ -268,7 +273,9 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
       case AgeBracket.a3:
       case AgeBracket.a4:
       case AgeBracket.a5: {
+        totalOfPeople += group.population;
         groupRequirement = calculate1To5Years(group, params);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.a6:
@@ -283,31 +290,38 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
       case AgeBracket.a15:
       case AgeBracket.a16:
       case AgeBracket.a17: {
+        totalOfPeople += group.population;
         groupRequirement = calculate6To17Years(group, params, data);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.a18_29: {
+        totalOfPeople += group.population;
         groupRequirement = calculate18To29Years(group, params, data);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.a30_59: {
+        totalOfPeople += group.population;
         groupRequirement = calculate30To59Years(group, params, data);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.a60: {
+        totalOfPeople += group.population;
         groupRequirement = calculate60PlusYears(group, params, data);
+        totalRequirement += groupRequirement.total;
         break;
       }
       default: {
         throw new Error(`Parsing error, attribute edad does not respect format. ${group.age} is not a valid age bracket.`);
       }
     }
-    totalRequirement += groupRequirement.total;
     requirements.push(groupRequirement);
   });
 
   const totalER: EnergeticRequirement = {
-    perCapita: totalRequirement / totalOfPeople,
+    perCapita: Math.round(totalRequirement / totalOfPeople),
     total: totalRequirement,
     totalPopulation: totalOfPeople,
   };
