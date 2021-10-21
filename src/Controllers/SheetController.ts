@@ -1,7 +1,6 @@
 import {
   Handler, Request, Response, Router,
 } from 'express';
-import { SheetParserResponse } from '../Models/SheetParserResponse';
 import SheetService from '../Services/SheetService';
 import logger from '../Logger/logger';
 import AgeGroupJSON from '../DTOs/AgeGroupJSON';

@@ -1,16 +1,21 @@
 import { Sequelize } from 'sequelize';
-import { DBConfig } from '../Config/DBConfig';
+
+const DB: string = process.env.DB || 'parameter_database';
+const USER: string = process.env.USER || 'root';
+const PASSWORD: string = process.env.PASSWORD || 'password';
+const HOST: string = process.env.HOST || 'localhost';
 
 const sequelize = new Sequelize(
-  DBConfig.DB,
-  DBConfig.USER,
-  DBConfig.PASSWORD,
+  DB,
+  USER,
+  PASSWORD,
   {
-    host: DBConfig.HOST,
+    host: HOST,
     dialect: 'mysql',
     dialectOptions: {
       multipleStatements: true,
     },
+    logging: false,
   },
 );
 

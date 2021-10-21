@@ -45,25 +45,21 @@ const getDefaultExtraData: Handler = async (req: Request, res: Response) => {
 };
 
 const updateParameterValue: Handler = async (req: Request, res: Response) => {
-  const { parameter } = req.body;
+  const { parameters } = req.body;
   try {
-    switch (parameter.parameterType) {
+    switch (parameters[0].parameterType) {
       case ParameterType.DefaultWeight:
-        await ParameterService.updateDefaultWeight(
-          parameter.ageRange, parameter.sex, parameter.value,
-        );
+        await ParameterService.updateDefaultWeight(parameters[0]);
         break;
       case ParameterType.MinorPAL:
       case ParameterType.AdultPAL:
       case ParameterType.Maternity:
-        await ParameterService.updateExtraData(parameter.id, parameter.value);
+        await ParameterService.updateExtraData(parameters);
         break;
       case ParameterType.TEE:
       case ParameterType.BMR:
       case ParameterType.GrowthEnergy:
-        await ParameterService.updateEquationConstant(
-          parameter.ageRange, parameter.sex, parameter.order, parameter.value,
-        );
+        await ParameterService.updateEquationConstant(parameters[0]);
         break;
       default:
         break;

@@ -1,8 +1,8 @@
 type AgeGroupJSON = {
-  age: string; // TODO: check enum
+  age: string;
   sex: string;
-  medianWeight: number; // TODO: check if it can be number again
-  population: number; // TODO: check if it can be number again
+  medianWeight: number;
+  population: number;
 };
 
 export default AgeGroupJSON;

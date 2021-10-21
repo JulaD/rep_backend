@@ -255,11 +255,13 @@ components:
         - extraData
     Parameter:
       properties:
-        parameter:
-          oneOf:
-            - $ref: '#/components/schemas/WeightParameter'
-            - $ref: '#/components/schemas/ExtraDataParameter'
-            - $ref: '#/components/schemas/EquationConstantParameter'
+        parameters:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/WeightParameter'
+              - $ref: '#/components/schemas/ExtraDataParameter'
+              - $ref: '#/components/schemas/EquationConstantParameter'
     WeightParameter:
       properties:
         parameterType:

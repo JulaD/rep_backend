@@ -24,8 +24,7 @@ const calculateTEE = (group: AgeGroup, params: number[], preval: MinorPAL): numb
   const prevalCheck: number = preval.intensePALPrevalence
   + preval.lowPALPrevalence
   + preval.moderatePALPrevalence;
-  if (prevalCheck !== 100 || preval.intensePALPrevalence < 0
-    || preval.moderatePALPrevalence < 0 || preval.lowPALPrevalence < 0) {
+  if (prevalCheck !== 100) {
     throw new Error('Minor PAL data does not respect format');
   }
 
@@ -36,11 +35,9 @@ const calculateTEE = (group: AgeGroup, params: number[], preval: MinorPAL): numb
   const teeLow: number = teeModerate + (teeModerate * params[4]) / 100;
   const teeIntense: number = teeModerate + (teeModerate * params[5]) / 100;
 
-  const ret: number = (teeLow * preval.lowPALPrevalence) / 100
+  return (teeLow * preval.lowPALPrevalence) / 100
   + (teeModerate * preval.moderatePALPrevalence) / 100
   + (teeIntense * preval.intensePALPrevalence) / 100;
-
-  return ret;
 };
 
 // BMR (Basal Metabolic Rate) = TMB (Tasa Metabolica Basal)
@@ -54,10 +51,7 @@ const calculatePAL = (params: number[], popData: AdultPAL): number => {
   const popCheck: number = popData.ruralPercentage + popData.urbanPercentage;
   const urbanPALCheck: number = popData.activeUrbanPAL + popData.lowUrbanPAL;
   const ruralPALCheck: number = popData.activeRuralPAL + popData.lowRuralPAL;
-  if (popCheck !== 100 || urbanPALCheck !== 100 || ruralPALCheck !== 100
-  || popData.ruralPercentage < 0 || popData.urbanPercentage < 0
-  || popData.activeUrbanPAL < 0 || popData.lowUrbanPAL < 0
-  || popData.activeRuralPAL < 0 || popData.lowRuralPAL < 0) {
+  if (popCheck !== 100 || urbanPALCheck !== 100 || ruralPALCheck !== 100) {
     throw new Error('Adult PAL data does not respect format');
   }
 
@@ -74,7 +68,7 @@ const calculatePAL = (params: number[], popData: AdultPAL): number => {
 // eslint-disable-next-line max-len
 const calculateERWomenIndividual = (group: AgeGroup, params: number[], popData: IndividualMaternity, req: number): number => {
   const popCheck: number = popData.lactatingWomen + popData.pregnantWomen;
-  if (popCheck > group.population || popData.lactatingWomen < 0 || popData.pregnantWomen < 0) {
+  if (popCheck > group.population) {
     throw new Error('Individual Maternity does not respect format');
   }
 
@@ -90,10 +84,7 @@ const calculateERWomenIndividual = (group: AgeGroup, params: number[], popData: 
 
 // eslint-disable-next-line max-len
 const calculateERWomenPopulation = (params: number[], popData: PopulationMaternity, req: number): number => {
-  if (popData.countryWomenInAgeGroup > popData.countryPopulation
-    || typeof (popData.countryBirthRate) !== 'number' || popData.countryBirthRate < 0
-    || typeof (popData.countryWomenInAgeGroup) !== 'number' || popData.countryWomenInAgeGroup < 0
-    || typeof (popData.countryPopulation) !== 'number' || popData.countryPopulation < 0) {
+  if (popData.countryWomenInAgeGroup > popData.countryPopulation) {
     throw new Error('Population Maternity does not respect format');
   }
 
@@ -140,7 +131,7 @@ const calculate1To5Years = (group: AgeGroup, params: number[]): GroupEnergeticRe
 const calculate6To17Years = (group: AgeGroup, params: number[], data: ExtraData): GroupEnergeticRequirement => {
   let tee: number;
   if (typeof (data.minorPAL) === 'undefined') {
-    throw new Error('Missing data');
+    throw new Error('Missing minors\' physical activity prevalence data');
   } else {
     tee = calculateTEE(group, params, data.minorPAL);
   }
@@ -161,7 +152,7 @@ const calculate18To29Years = (group: AgeGroup, params: number[], data: ExtraData
   let bmr: number;
   let pal: number;
   if (typeof (data.adultPAL) === 'undefined') {
-    throw new Error('Missing data');
+    throw new Error('Missing adults\' physical activity prevalence data');
   } else {
     bmr = calculateBMR(group, params);
     pal = calculatePAL(params, data.adultPAL);
@@ -173,7 +164,7 @@ const calculate18To29Years = (group: AgeGroup, params: number[], data: ExtraData
   // the extra energy required by women that are pregnant or lactating
   if (group.sex === Sex.Female) {
     if (data.maternity18To29 === undefined) {
-      throw new Error('Missing data');
+      throw new Error('Missing maternity data for women aged 18 to 29');
     } else if (isIndividualMaternity(data.maternity18To29)) {
       requirement = calculateERWomenIndividual(group, params, data.maternity18To29, requirement);
     } else {
@@ -195,7 +186,7 @@ const calculate30To59Years = (group: AgeGroup, params: number[], data: ExtraData
   let bmr: number;
   let pal: number;
   if (typeof (data.adultPAL) === 'undefined') {
-    throw new Error('Missing data');
+    throw new Error('Missing adults\' physical activity prevalence data');
   } else {
     bmr = calculateBMR(group, params);
     pal = calculatePAL(params, data.adultPAL);
@@ -207,7 +198,7 @@ const calculate30To59Years = (group: AgeGroup, params: number[], data: ExtraData
   // the extra energy required by women that are pregnant or lactating
   if (group.sex === Sex.Female) {
     if (typeof (data.maternity30To59) === 'undefined') {
-      throw new Error('Missing data');
+      throw new Error('Missing maternity data for women aged 30 to 59');
     } else if (isIndividualMaternity(data.maternity30To59)) {
       requirement = calculateERWomenIndividual(group, params, data.maternity30To59, requirement);
     } else {
@@ -229,7 +220,7 @@ const calculate60PlusYears = (group: AgeGroup, params: number[], data: ExtraData
   let bmr: number;
   let pal: number;
   if (typeof (data.adultPAL) === 'undefined') {
-    throw new Error('Missing data');
+    throw new Error('Missing adults\' physical activity prevalence data');
   } else {
     bmr = calculateBMR(group, params);
     pal = calculatePAL(params, data.adultPAL);
@@ -254,7 +245,6 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
   const requirements: GroupEnergeticRequirement[] = [];
 
   groupParameters.forEach((group: AgeGroup, params: number[]) => {
-    totalOfPeople += group.population;
     let groupRequirement: GroupEnergeticRequirement;
     switch (group.age) {
       case AgeBracket.m0:
@@ -262,14 +252,20 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
       case AgeBracket.m2:
       case AgeBracket.m3:
       case AgeBracket.m4:
-      case AgeBracket.m5:
+      case AgeBracket.m5: {
+        groupRequirement = calculateLessThanAYear(group, params);
+        break;
+      }
       case AgeBracket.m6:
       case AgeBracket.m7:
       case AgeBracket.m8:
       case AgeBracket.m9:
       case AgeBracket.m10:
-      case AgeBracket.m11: {
+      case AgeBracket.m11:
+      {
+        totalOfPeople += group.population;
         groupRequirement = calculateLessThanAYear(group, params);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.a1:
@@ -277,7 +273,9 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
       case AgeBracket.a3:
       case AgeBracket.a4:
       case AgeBracket.a5: {
+        totalOfPeople += group.population;
         groupRequirement = calculate1To5Years(group, params);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.a6:
@@ -292,31 +290,38 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
       case AgeBracket.a15:
       case AgeBracket.a16:
       case AgeBracket.a17: {
+        totalOfPeople += group.population;
         groupRequirement = calculate6To17Years(group, params, data);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.a18_29: {
+        totalOfPeople += group.population;
         groupRequirement = calculate18To29Years(group, params, data);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.a30_59: {
+        totalOfPeople += group.population;
         groupRequirement = calculate30To59Years(group, params, data);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.a60: {
+        totalOfPeople += group.population;
         groupRequirement = calculate60PlusYears(group, params, data);
+        totalRequirement += groupRequirement.total;
         break;
       }
       default: {
-        throw new Error('Parsing error, attribute edad does not respect format');
+        throw new Error(`Parsing error, attribute edad does not respect format. ${group.age} is not a valid age bracket.`);
       }
     }
-    totalRequirement += groupRequirement.total;
     requirements.push(groupRequirement);
   });
 
   const totalER: EnergeticRequirement = {
-    perCapita: totalRequirement / totalOfPeople,
+    perCapita: Math.round(totalRequirement / totalOfPeople),
     total: totalRequirement,
     totalPopulation: totalOfPeople,
   };
