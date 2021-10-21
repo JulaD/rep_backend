@@ -38,6 +38,12 @@ app.use(express.raw({
   limit: '50mb',
 }));
 
+const auditMiddleware = (req, res, next) => {
+  next();
+};
+app.use(authChecker);
+app.use(auditMiddleware);
+
 app.use(Routes);
 
 app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
