@@ -14,6 +14,7 @@ import YAML from 'yamljs';
 import Routes from './routes';
 import logger from './Logger/logger';
 import ParameterDataBaseLoader from './Loaders/ParameterDataBaseLoader';
+import authChecker from './Middlewares/authChecker';
 
 const app: Application = express();
 const PORT = process.env.PORT || 8000;
@@ -38,11 +39,13 @@ app.use(express.raw({
   limit: '50mb',
 }));
 
-const auditMiddleware = (req, res, next) => {
+// TODO: Set according return type. Plus, 'res is declared but never used'
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const auditMiddleware = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
-app.use(authChecker);
-app.use(auditMiddleware);
+// app.use(authChecker);
+// app.use(auditMiddleware);
 
 app.use(Routes);
 
