@@ -30,69 +30,50 @@ const create = (user: any): any => {
     });
 };
 
-const login = (user: any): any => {
-  instance.post('/login', user)
-    .then((res) => res)
-    .catch((err) => {
-      throw (err);
-    });
+const login = async (user: any) => {
+  const res = await instance.post('/login', user);
+  return res.data;
 };
 
-const listUsers = (requirements: any): any => {
-  instance.get('/', requirements)
-    .then((res) => res)
-    .catch((err) => {
-      throw (err);
-    });
+const listUsers = async (userType: any, token: string) => {
+  const res = await instance.get('/', { headers: { authorization: token }, params: { type: userType } });
+  return res.data;
 };
 
-const update = (user: any, idUser: string) => {
+const update = async (user: any, idUser: string, token: string) => {
   const url = `/${idUser}`;
-  instance.put(url, user)
-    .then((res) => res)
-    .catch((err) => {
-      throw (err);
-    });
+  const res = await instance.put(url, user, { headers: { authorization: token } });
+  return res.data;
 };
 
-const password = (user: any, idUser: string) => {
-  instance.put('/password', user, { params: { id: idUser } })
-    .then((res) => res)
-    .catch((err) => {
-      throw (err);
-    });
+const password = async (user: any, idUser: string, token: string) => {
+  const url = `/${idUser}/password`;
+  const res = await instance.put(url, user, { headers: { authorization: token } });
+  return res.data;
 };
 
-const approve = (idUser: string) => {
-  instance.put('/approve', { params: { id: idUser } })
-    .then((res) => res)
-    .catch((err) => {
-      throw (err);
-    });
+const approve = async (idUser: string, token: string) => {
+  const url = `/${idUser}/approve`;
+  const res = await instance.put(url, {}, { headers: { authorization: token } });
+  return res.data;
 };
 
-const cancel = (idUser: string) => {
-  instance.put('/cancel', { params: { id: idUser } })
-    .then((res) => res)
-    .catch((err) => {
-      throw (err);
-    });
+const cancel = async (idUser: string, token: string) => {
+  const url = `/${idUser}/cancel`;
+  const res = await instance.put(url, {}, { headers: { authorization: token } });
+  return res.data;
 };
 
-const giveAdminPermission = (idUser: string) => {
-  instance.put('/admin', { params: { id: idUser } })
-    .then((res) => res)
-    .catch((err) => {
-      throw (err);
-    });
+const giveAdminPermission = async (idUser: string, token: string) => {
+  const url = `/${idUser}/admin`;
+  const res = await instance.put(url, {}, { headers: { authorization: token } });
+  return res.data;
 };
 
-const removeAdminPermission = (idUser: string) => {
-  instance.put('/client', { params: { id: idUser } })
-    .then((res) => res)
-    .catch((err) => {
-      throw (err);
-    });
+const removeAdminPermission = async (idUser: string, token: string) => {
+  const url = `/${idUser}/client`;
+  const res = await instance.put(url, {}, { headers: { authorization: token } });
+  return res.data;
 };
 
 export default {
