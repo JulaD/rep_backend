@@ -20,7 +20,8 @@ const create: Handler = async (req: Request, res: Response) => {
 
 const listUsers: Handler = async (req: Request, res: Response) => {
   try {
-    const userList: any = await UserAPI.listUsers(req.body);
+    const token: any = req.headers.authorization;
+    const userList: any = await UserAPI.listUsers(req.query.type, token);
     return res.status(200).send(userList);
   } catch (error) {
     const e = error as Error;
@@ -40,7 +41,8 @@ const login: Handler = async (req: Request, res: Response) => {
 
 const update: Handler = async (req: Request, res: Response) => {
   try {
-    const user: any = await UserAPI.update(req.body, req.params.id);
+    const token: any = req.headers.authorization;
+    const user: any = await UserAPI.update(req.body, req.params.id, token);
     return res.status(200).send(user);
   } catch (error) {
     const e = error as Error;
@@ -50,7 +52,8 @@ const update: Handler = async (req: Request, res: Response) => {
 
 const password: Handler = async (req: Request, res: Response) => {
   try {
-    const user: any = await UserAPI.password(req.body, req.params.id);
+    const token: any = req.headers.authorization;
+    const user: any = await UserAPI.password(req.body, req.params.id, token);
     return res.status(200).send(user);
   } catch (error) {
     const e = error as Error;
@@ -60,7 +63,8 @@ const password: Handler = async (req: Request, res: Response) => {
 
 const approve: Handler = async (req: Request, res: Response) => {
   try {
-    const user: any = await UserAPI.approve(req.params.id);
+    const token: any = req.headers.authorization;
+    const user: any = await UserAPI.approve(req.params.id, token);
     return res.status(200).send(user);
   } catch (error) {
     const e = error as Error;
@@ -70,7 +74,8 @@ const approve: Handler = async (req: Request, res: Response) => {
 
 const cancel: Handler = async (req: Request, res: Response) => {
   try {
-    const user: any = await UserAPI.cancel(req.params.id);
+    const token: any = req.headers.authorization;
+    const user: any = await UserAPI.cancel(req.params.id, token);
     return res.status(200).send(user);
   } catch (error) {
     const e = error as Error;
@@ -80,7 +85,8 @@ const cancel: Handler = async (req: Request, res: Response) => {
 
 const giveAdminPermission: Handler = async (req: Request, res: Response) => {
   try {
-    const user: any = await UserAPI.giveAdminPermission(req.params.id);
+    const token: any = req.headers.authorization;
+    const user: any = await UserAPI.giveAdminPermission(req.params.id, token);
     return res.status(200).send(user);
   } catch (error) {
     const e = error as Error;
@@ -90,7 +96,8 @@ const giveAdminPermission: Handler = async (req: Request, res: Response) => {
 
 const removeAdminPermission: Handler = async (req: Request, res: Response) => {
   try {
-    const user: any = await UserAPI.removeAdminPermission(req.params.id);
+    const token: any = req.headers.authorization;
+    const user: any = await UserAPI.removeAdminPermission(req.params.id, token);
     return res.status(200).send(user);
   } catch (error) {
     const e = error as Error;
