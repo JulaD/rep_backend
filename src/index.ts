@@ -40,8 +40,6 @@ app.use(express.raw({
   limit: '50mb',
 }));
 
-app.use(authChecker);
-
 app.use(Routes);
 
 app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
