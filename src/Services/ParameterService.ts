@@ -540,7 +540,6 @@ const updateDefaultWeight = async (parameter: DefaultWeightDTO): Promise<void> =
       where: {
         ageRange: parameter.ageRange,
         sex: parameter.sex,
-        parameterType: parameter.parameterType,
       },
     },
   ).then((result) => {

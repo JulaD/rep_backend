@@ -333,7 +333,7 @@ describe('Verificar si funciona calculo del RE para personas de 6 a 17 años', (
         maternity18To29: undefined,
         maternity30To59: undefined,
       });
-    }).toThrow(Error('Missing data'));
+    }).toThrow(Error('Missing minors\' physical activity prevalence data'));
   });
 });
 
@@ -425,7 +425,7 @@ describe('Verificar si funciona calculo del RE para personas de 18 a 29 años', 
         maternity18To29: undefined,
         maternity30To59: undefined,
       });
-    }).toThrow(Error('Missing data'));
+    }).toThrow(Error('Missing maternity data for women aged 18 to 29'));
   });
   it('Hombres sin pasar data de NAF', () => {
     expect(() => {
@@ -442,7 +442,7 @@ describe('Verificar si funciona calculo del RE para personas de 18 a 29 años', 
         maternity18To29: undefined,
         maternity30To59: undefined,
       });
-    }).toThrow(Error('Missing data'));
+    }).toThrow(Error('Missing adults\' physical activity prevalence data'));
   });
 });
 
@@ -534,7 +534,7 @@ describe('Verificar si funciona calculo del RE para personas de 30 a 59 años', 
         maternity18To29: undefined,
         maternity30To59: undefined,
       });
-    }).toThrow(Error('Missing data'));
+    }).toThrow(Error('Missing maternity data for women aged 30 to 59'));
   });
   it('Hombres sin pasar data de NAF', () => {
     expect(() => {
@@ -551,7 +551,7 @@ describe('Verificar si funciona calculo del RE para personas de 30 a 59 años', 
         maternity18To29: undefined,
         maternity30To59: undefined,
       });
-    }).toThrow(Error('Missing data'));
+    }).toThrow(Error('Missing adults\' physical activity prevalence data'));
   });
 });
 
@@ -633,6 +633,6 @@ describe('Verificar si funciona calculo del RE para personas de mas de 60 años'
         maternity18To29: undefined,
         maternity30To59: undefined,
       });
-    }).toThrow(Error('Missing data'));
+    }).toThrow(Error('Missing adults\' physical activity prevalence data'));
   });
 });
