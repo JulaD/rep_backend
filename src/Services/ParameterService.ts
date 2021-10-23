@@ -307,7 +307,11 @@ const updateExtraData = async (parameters: DefaultExtraDataDTO[]): Promise<void>
 
   if (ids.includes(extraDataIDs.minLowPrev)) {
     if (ids.includes(extraDataIDs.minModPrev) && ids.includes(extraDataIDs.minIntPrev)) {
-      await updatePercentage(parameters, total);
+      if (ids.length === 3) {
+        await updatePercentage(parameters, total);
+      } else {
+        throw new Error('Too many parameters sent');
+      }
     } else {
       throw new Error('Missing parameter for update');
     }

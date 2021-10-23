@@ -104,7 +104,7 @@ paths:
     put:
       tags:
         - Parameters
-      summary: Update a certain parameter
+      summary: Update a certain parameter. The array should contain exactly one item, unless the parameters to be updated are a trio, in which case all three parameters should be included.
       requestBody:
         content:
           application/json:
