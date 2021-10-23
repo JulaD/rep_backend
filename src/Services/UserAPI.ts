@@ -24,12 +24,9 @@ export const validate = (token: string): number => {
   return id;
 };
 
-const create = (user: any): any => {
-  instance.post('/', user)
-    .then((res) => res)
-    .catch((err) => {
-      throw (err);
-    });
+const create = async (user: any) => {
+  const res = await instance.post('/', user);
+  return res.data;
 };
 
 const login = async (user: any) => {
