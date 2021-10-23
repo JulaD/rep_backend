@@ -104,7 +104,7 @@ paths:
     put:
       tags:
         - Parameters
-      summary: Update a certain parameter
+      summary: Update a certain parameter. The array contains exactly one item, unless the parameters to be updated are a trio, in which case all three parameters must be included, or have the TEE/BMR parameter type in which case all equation constants must be included.
       requestBody:
         content:
           application/json:
