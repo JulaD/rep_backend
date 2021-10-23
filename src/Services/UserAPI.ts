@@ -5,6 +5,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 
+require('dotenv').config();
+
 const instance = axios.create({
   baseURL: process.env.AUTH_BASE_URL,
 });
