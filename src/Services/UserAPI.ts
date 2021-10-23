@@ -34,8 +34,17 @@ const login = async (user: any) => {
   return res.data;
 };
 
-const listUsers = async (userType: any, token: string) => {
-  const res = await instance.get('/', { headers: { authorization: token }, params: { type: userType } });
+const listUsers = async (userType: any, givenLimit: any, givenOffset: any,
+  givenSearch: any, token: string) => {
+  const res = await instance.get('/', {
+    headers: { authorization: token },
+    params: {
+      type: userType,
+      limit: givenLimit,
+      offset: givenOffset,
+      search: givenSearch,
+    },
+  });
   return res.data;
 };
 
