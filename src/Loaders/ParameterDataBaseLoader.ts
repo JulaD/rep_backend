@@ -6,6 +6,7 @@ import EquationConstantDTO from '../DTOs/EquationConstantDTO';
 import DefaultExtraData from '../Models/DefaultExtraData';
 import DefaultWeight from '../Models/DefaultWeight';
 import EquationConstant from '../Models/EquationConstant';
+import FAQ from '../Models/FAQ';
 import CSVParser from './CSVParser';
 
 function initParameterDataBase(): void {
@@ -48,6 +49,7 @@ function initParameterDataBase(): void {
         console.log(err);
       });
   });
+  FAQ.sync();
 }
 
 export default { initParameterDataBase };

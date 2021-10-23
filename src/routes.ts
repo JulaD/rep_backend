@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import SheetController from './Controllers/SheetController';
 import CalculatorController from './Controllers/CalculatorController';
 import ParameterController from './Controllers/ParameterController';
+import FAQController from './Controllers/FAQController';
 
 const router = Router();
 
@@ -14,5 +15,7 @@ router.use('/sheetParser', SheetController);
 router.use('/repCalculator', CalculatorController);
 
 router.use('/parameters', ParameterController);
+
+router.use('/faqs', FAQController);
 
 export default router;
