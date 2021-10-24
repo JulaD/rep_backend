@@ -49,7 +49,7 @@ function initParameterDataBase(): void {
         console.log(err);
       });
   });
-  FAQ.sync();
+  FAQ.sync({ force: true });
 }
 
 export default { initParameterDataBase };

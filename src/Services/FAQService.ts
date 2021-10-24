@@ -1,11 +1,13 @@
-import FAQ from '../Models/FAQ';
+import { Op } from 'sequelize';
 import { FAQDTO } from '../DTOs/FAQDTO';
+import FAQ from '../Models/FAQ';
 
 const list = (): Promise<FAQ[]> => FAQ.findAll({
-  attributes: ['id', 'question', 'answer', 'createdAt'],
+  attributes: ['id', 'question', 'answer', 'position', 'createdAt'],
   where: {
     deletedAt: null,
   },
+  order: ['position'],
 });
 
 const create = (createDto: FAQDTO): Promise<FAQ> => FAQ.create(createDto);
@@ -20,9 +22,21 @@ const update = async (id: number, createDto: FAQDTO): Promise<FAQ | null> => {
   if (!faq) {
     return null;
   }
-  const { question, answer } = createDto;
+  const { question, answer, position } = createDto;
+  const positionFaq: FAQ | null = await FAQ.findOne({
+    where: {
+      id: {
+        [Op.ne]: id,
+      },
+      position,
+      deletedAt: null,
+    },
+  });
+  if (positionFaq) {
+    return null;
+  }
   return faq.update({
-    question, answer,
+    question, answer, position,
   });
 };
 

@@ -16,6 +16,10 @@ FAQ.init({
   answer: {
     type: DataTypes.STRING,
   },
+  position: {
+    type: DataTypes.INTEGER,
+    unique: true,
+  },
   createdBy: {
     type: DataTypes.INTEGER,
   },
