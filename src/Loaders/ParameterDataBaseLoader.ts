@@ -50,7 +50,7 @@ function initParameterDataBase(): void {
         console.log(err);
       });
   });
-  Auditor.sync({ force: true });
+  Auditor.sync({ force: false });
 }
 
 export default { initParameterDataBase };

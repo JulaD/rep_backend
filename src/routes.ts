@@ -14,7 +14,7 @@ router.get('/', (req: Request, res: Response): void => {
 
 router.use('/users', UserController);
 // From this line on a auth verification will be taken
-router.use(authChecker);
+// router.use(authChecker);
 
 router.use('/sheetParser', SheetController);
 

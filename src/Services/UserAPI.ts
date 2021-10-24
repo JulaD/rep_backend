@@ -84,6 +84,12 @@ const removeAdminPermission = async (idUser: string, token: string) => {
   return res.data;
 };
 
+const listUsersById = async (userIds: any) => {
+  const url = '/usersById';
+  const res = await instance.post(url, userIds);
+  return res.data;
+};
+
 export default {
   create,
   login,
@@ -94,4 +100,5 @@ export default {
   cancel,
   giveAdminPermission,
   removeAdminPermission,
+  listUsersById,
 };
