@@ -3,6 +3,7 @@ import SheetController from './Controllers/SheetController';
 import CalculatorController from './Controllers/CalculatorController';
 import ParameterController from './Controllers/ParameterController';
 import UserController from './Controllers/UserController';
+import AuditorController from './Controllers/AuditorController';
 import authChecker from './Middlewares/authChecker';
 
 const router = Router();
@@ -20,5 +21,7 @@ router.use('/sheetParser', SheetController);
 router.use('/repCalculator', CalculatorController);
 
 router.use('/parameters', ParameterController);
+
+router.use('/audit', AuditorController);
 
 export default router;

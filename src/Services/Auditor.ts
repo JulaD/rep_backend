@@ -6,4 +6,16 @@ export const audit = (request: any, action: string): void => {
   Auditor.create({ user_id: userId, action });
 };
 
+// export const getAudit = (cant: number, page: number) => {
+//   const init = (cant * page) - cant;
+//   const end = cant * page;
+//   Auditor.findAll({
+//     where: {
+//       ageRange: ageBracket as string,
+//       sex: sex as string,
+//     },
+//     order: [['order', 'ASC']],
+//   })
+// };
+
 // BD: UUID // USER ID // ACTION // TIME

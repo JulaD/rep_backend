@@ -19,8 +19,6 @@ Auditor.init({
   },
   user_id: DataTypes.INTEGER,
   action: DataTypes.STRING,
-  time: DataTypes.DATE,
-
 },
 {
   sequelize,

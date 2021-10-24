@@ -1,4 +1,7 @@
+/* eslint-disable import/first */
 /* eslint-disable no-console */
+require('dotenv').config();
+
 import { ValidationError } from 'express-json-validator-middleware';
 import express, {
   Application,
@@ -13,9 +16,6 @@ import YAML from 'yamljs';
 import Routes from './routes';
 import logger from './Logger/logger';
 import ParameterDataBaseLoader from './Loaders/ParameterDataBaseLoader';
-import authChecker from './Middlewares/authChecker';
-
-require('dotenv').config();
 
 const app: Application = express();
 const PORT = process.env.PORT || 8000;

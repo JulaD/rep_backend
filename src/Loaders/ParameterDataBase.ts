@@ -1,8 +1,10 @@
 import { Sequelize } from 'sequelize';
 
+require('dotenv').config();
+
 const DB: string = process.env.DB || 'parameter_database';
 const USER: string = process.env.USER || 'root';
-const PASSWORD: string = process.env.PASSWORD || 'Comfortablynumb.07';
+const PASSWORD: string = process.env.PASSWORD || '';
 const HOST: string = process.env.HOST || 'localhost';
 
 const sequelize = new Sequelize(
