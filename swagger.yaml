@@ -77,7 +77,7 @@ paths:
       security:
         - BearerAuth: []
   /parameters/weights:
-    post:
+    get:
       tags:
         - Parameters
       summary: Get all default weights
@@ -89,7 +89,7 @@ paths:
       security:
         - BearerAuth: []
   /parameters/extraData:
-    post:
+    get:
       tags:
         - Parameters
       summary: Get all extra data
