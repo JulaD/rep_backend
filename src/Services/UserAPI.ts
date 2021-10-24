@@ -84,9 +84,9 @@ const removeAdminPermission = async (idUser: string, token: string) => {
   return res.data;
 };
 
-const listUsersById = async (userIds: any) => {
+const listUsersById = async (userIds: any, token: any) => {
   const url = '/usersById';
-  const res = await instance.post(url, userIds);
+  const res = await instance.post(url, userIds, { headers: { authorization: token } });
   return res.data;
 };
 

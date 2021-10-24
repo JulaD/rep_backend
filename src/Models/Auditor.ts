@@ -8,7 +8,7 @@ class Auditor extends Model {
 
   action!: string;
 
-  time!: string;
+  createdAt!: string;
 }
 
 Auditor.init({
