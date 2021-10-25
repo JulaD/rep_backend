@@ -2,7 +2,7 @@ import { Response, NextFunction } from 'express';
 import { validate } from '../Services/UserAPI';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const authChecker = async (req: any, res: Response, next: NextFunction): void => {
+const authChecker = async (req: any, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization;
     const userId = await validate(token);
