@@ -1,4 +1,7 @@
+/* eslint-disable import/first */
 /* eslint-disable no-console */
+require('dotenv').config();
+
 import { ValidationError } from 'express-json-validator-middleware';
 import express, {
   Application,
@@ -6,7 +9,6 @@ import express, {
   Request,
   Response,
 } from 'express';
-import 'dotenv/config';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import helmet from 'helmet';

@@ -1,1 +1,0 @@
-Aca van los DAOs, los daos son los archivos que tienen comunicacion directa con la BD. Ningun otro archivo que no sea un dao puede tener acceso directo a la BD

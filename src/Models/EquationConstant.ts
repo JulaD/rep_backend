@@ -20,11 +20,11 @@ class EquationConstant extends Parameter {
 EquationConstant.init(
   {
     ageRange: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(128),
       primaryKey: true,
     },
     sex: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       primaryKey: true,
     },
     order: {

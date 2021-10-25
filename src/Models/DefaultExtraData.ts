@@ -20,7 +20,7 @@ DefaultExtraData.init(
       primaryKey: true,
     },
     parameterType: DataTypes.STRING,
-    value: DataTypes.FLOAT,
+    value: DataTypes.FLOAT(25),
     order: DataTypes.INTEGER,
     description: DataTypes.STRING,
   },

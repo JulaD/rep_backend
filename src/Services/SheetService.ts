@@ -3,24 +3,8 @@ import { SheetNames } from '../Config/Constants';
 import AgeGroupJSON from '../DTOs/AgeGroupJSON';
 import Sex from '../Enum/Sex';
 import {
-  SheetParserResponse, Menores, Mayores, MenoresSheet, MayoresSheet,
+  Menores, Mayores, MenoresSheet, MayoresSheet,
 } from '../Models/SheetParserResponse';
-
-/* PRIVATE FUNCTIONS */
-// const ec = (r: number, c: number): string => XLSX.utils.encode_cell({ r, c });
-// const deleteRow = (ws: XLSX.WorkSheet, rowIndex: number): XLSX.WorkSheet => {
-//   const work = ws;
-//   if (work['!ref'] === undefined) throw new Error('An error has ocurred in deleteRow');
-//   const variable = XLSX.utils.decode_range(work['!ref']);
-//   for (let R = rowIndex; R < variable.e.r; R += 1) {
-//     for (let C = variable.s.c; C <= variable.e.c; C += 1) {
-//       work[ec(R, C)] = work[ec(R + 1, C)];
-//     }
-//   }
-//   variable.e.r -= 1;
-//   work['!ref'] = XLSX.utils.encode_range(variable.s, variable.e);
-//   return work;
-// };
 
 const parseAdults = (worksheet: XLSX.WorkSheet): Mayores[] => {
   const res: Mayores[] = [];
@@ -200,8 +184,7 @@ const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
     let peso;
     if (!item.peso) {
       if (!item.talla) { throw new Error('Talla and Peso not defined'); }
-      // ParameterService. TODO:
-      peso = 0;
+      peso = 22 * (item.talla / 100) ** 2;
     } else {
       peso = item.peso;
     }
@@ -230,8 +213,7 @@ const parseSheetService = (data: Buffer): AgeGroupJSON[] => {
     let peso;
     if (!item.peso) {
       if (!item.talla) { throw new Error('Talla and Peso not defined'); }
-      // ParameterService. TODO:
-      peso = 0;
+      peso = 22 * (item.talla / 100) ** 2;
     } else {
       peso = item.peso;
     }

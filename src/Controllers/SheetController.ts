@@ -1,10 +1,10 @@
 import {
   Handler, Request, Response, Router,
 } from 'express';
-import { SheetParserResponse } from '../Models/SheetParserResponse';
 import SheetService from '../Services/SheetService';
 import logger from '../Logger/logger';
 import AgeGroupJSON from '../DTOs/AgeGroupJSON';
+import { audit } from '../Services/Auditor';
 
 const router = Router();
 
@@ -12,6 +12,7 @@ const parseSheet: Handler = async (req: Request, res: Response) => {
   const sheet: Buffer = req.body;
   try {
     const parsedSheet: AgeGroupJSON[] = SheetService.parseSheetService(sheet);
+    audit(req, 'Usó una planilla para ingresar datos');
     return res.status(200).send(parsedSheet);
   } catch (error) {
     const e = error as Error;
