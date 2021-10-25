@@ -13,7 +13,7 @@ const instance = axios.create({
 
 export const validate = async (token: string) => {
   const id = await instance.post('/validate', { token });
-  return id;
+  return id.data;
 };
 
 const create = async (user: any) => {

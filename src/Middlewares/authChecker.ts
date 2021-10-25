@@ -5,7 +5,7 @@ import { validate } from '../Services/UserAPI';
 const authChecker = async (req: any, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization;
-    const userId = await validate(token);
+    const { userId } = await validate(token) as { userId: number };
     req.user_id = userId;
     next();
   } catch (error) {
