@@ -21,7 +21,8 @@ const create: Handler = async (req: Request, res: Response) => {
 const listUsers: Handler = async (req: Request, res: Response) => {
   try {
     const token: any = req.headers.authorization;
-    const userList: any = await UserAPI.listUsers(req.query.type, token);
+    const userList: any = await
+    UserAPI.listUsers(req.query.type, req.query.limit, req.query.offset, req.query.search, token);
     return res.status(200).send(userList);
   } catch (error) {
     const e = error as Error;

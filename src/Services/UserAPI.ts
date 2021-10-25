@@ -5,29 +5,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 
+require('dotenv').config();
+
 const instance = axios.create({
   baseURL: process.env.AUTH_BASE_URL,
 });
 
-export const validate = (token: string): number => {
-  let id = -1;
-  instance.post('/validate', { token })
-    .then((res) => {
-      id = (res.data as any).userId as number;
-    })
-    .catch((err) => {
-      throw (err);
-      // if needed implement later
-    });
-  return id;
+export const validate = async (token: string) => {
+  const id = await instance.post('/validate', { token });
+  return id.data;
 };
 
-const create = (user: any): any => {
-  instance.post('/', user)
-    .then((res) => res)
-    .catch((err) => {
-      throw (err);
-    });
+const create = async (user: any) => {
+  const res = await instance.post('/', user);
+  return res.data;
 };
 
 const login = async (user: any) => {
@@ -35,8 +26,17 @@ const login = async (user: any) => {
   return res.data;
 };
 
-const listUsers = async (userType: any, token: string) => {
-  const res = await instance.get('/', { headers: { authorization: token }, params: { type: userType } });
+const listUsers = async (userType: any, givenLimit: any, givenOffset: any,
+  givenSearch: any, token: string) => {
+  const res = await instance.get('/', {
+    headers: { authorization: token },
+    params: {
+      type: userType,
+      limit: givenLimit,
+      offset: givenOffset,
+      search: givenSearch,
+    },
+  });
   return res.data;
 };
 
@@ -76,6 +76,12 @@ const removeAdminPermission = async (idUser: string, token: string) => {
   return res.data;
 };
 
+const listUsersById = async (userIds: any, token: any) => {
+  const url = '/usersById';
+  const res = await instance.post(url, userIds, { headers: { authorization: token } });
+  return res.data;
+};
+
 export default {
   create,
   login,
@@ -86,4 +92,5 @@ export default {
   cancel,
   giveAdminPermission,
   removeAdminPermission,
+  listUsersById,
 };

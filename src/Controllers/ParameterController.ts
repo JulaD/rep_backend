@@ -5,6 +5,7 @@ import { Validator } from 'express-json-validator-middleware';
 import ParameterType from '../Enum/ParameterType';
 import logger from '../Logger/logger';
 import updateParameterValueBody from '../Schemas/updateParameterValueBody';
+import { audit } from '../Services/Auditor';
 import ParameterService from '../Services/ParameterService';
 
 const router = Router();
@@ -35,8 +36,8 @@ const getDefaultWeights: Handler = async (req: Request, res: Response) => {
 
 const getDefaultExtraData: Handler = async (req: Request, res: Response) => {
   try {
-    const weights = await ParameterService.getDefaultExtraData();
-    return res.status(200).send(weights);
+    const extraData = await ParameterService.getDefaultExtraData();
+    return res.status(200).send(extraData);
   } catch (error) {
     const e = error as Error;
     logger.info(e.message);
@@ -57,13 +58,18 @@ const updateParameterValue: Handler = async (req: Request, res: Response) => {
         await ParameterService.updateExtraData(parameters);
         break;
       case ParameterType.TEE:
+        await ParameterService.updateTEE(parameters);
+        break;
       case ParameterType.BMR:
+        await ParameterService.updateBMR(parameters);
+        break;
       case ParameterType.GrowthEnergy:
-        await ParameterService.updateEquationConstant(parameters[0]);
+        await ParameterService.updateGrowthEnergy(parameters[0]);
         break;
       default:
         break;
     }
+    audit(req, `Cambió el parametro ${parameters[0].parameterType} a ${parameters[0].value} para ${parameters[0].sex} ${parameters[0].ageRang} `);
     return res.status(200).send();
   } catch (error) {
     const e = error as Error;
@@ -73,8 +79,8 @@ const updateParameterValue: Handler = async (req: Request, res: Response) => {
 };
 
 router.get('/', getParameters);
-router.post('/weights/', getDefaultWeights);
-router.post('/extraData/', getDefaultExtraData);
+router.get('/weights/', getDefaultWeights);
+router.get('/extraData/', getDefaultExtraData);
 router.put('/parameterUpdate/', validate({ body: updateParameterValueBody }), updateParameterValue);
 
 export default router;

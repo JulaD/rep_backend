@@ -1,4 +1,7 @@
+/* eslint-disable import/first */
 /* eslint-disable no-console */
+require('dotenv').config();
+
 import { ValidationError } from 'express-json-validator-middleware';
 import express, {
   Application,
@@ -6,7 +9,6 @@ import express, {
   Request,
   Response,
 } from 'express';
-import 'dotenv/config';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import helmet from 'helmet';
@@ -14,7 +16,6 @@ import YAML from 'yamljs';
 import Routes from './routes';
 import logger from './Logger/logger';
 import ParameterDataBaseLoader from './Loaders/ParameterDataBaseLoader';
-import authChecker from './Middlewares/authChecker';
 
 const app: Application = express();
 const PORT = process.env.PORT || 8000;
@@ -38,14 +39,6 @@ app.use(cors({
 app.use(express.raw({
   limit: '50mb',
 }));
-
-// TODO: Set according return type. Plus, 'res is declared but never used'
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const auditMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  next();
-};
-// app.use(authChecker);
-// app.use(auditMiddleware);
 
 app.use(Routes);
 

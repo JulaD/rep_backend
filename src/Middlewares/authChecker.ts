@@ -1,14 +1,16 @@
-import express, { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import { validate } from '../Services/UserAPI';
 
-const authChecker = (req: any, res: Response, next: NextFunction): void => {
-  const token = req.headers.authorization;
-  const userId = validate(token);
-  if (userId === -1) {
-    res.status(401).send('auth failed');
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const authChecker = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const token = req.headers.authorization;
+    const { userId } = await validate(token) as { userId: number };
+    req.user_id = userId;
+    next();
+  } catch (error) {
+    res.status(401).send({ message: 'auth failed' });
   }
-  req.user_id = userId;
-  next();
 };
 
 export default authChecker;
