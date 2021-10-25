@@ -5,6 +5,7 @@ import { Validator } from 'express-json-validator-middleware';
 import ParameterType from '../Enum/ParameterType';
 import logger from '../Logger/logger';
 import updateParameterValueBody from '../Schemas/updateParameterValueBody';
+import { audit } from '../Services/Auditor';
 import ParameterService from '../Services/ParameterService';
 
 const router = Router();
@@ -68,6 +69,7 @@ const updateParameterValue: Handler = async (req: Request, res: Response) => {
       default:
         break;
     }
+    audit(req, `Cambió el parametro ${parameters[0].parameterType} a ${parameters[0].value} para ${parameters[0].sex} ${parameters[0].ageRang} `);
     return res.status(200).send();
   } catch (error) {
     const e = error as Error;

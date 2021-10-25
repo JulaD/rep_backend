@@ -6,6 +6,7 @@ import CalculatorService from '../Services/CalculatorService';
 import CalculatorResponse from '../DTOs/CalculatorResponseDTO';
 import logger from '../Logger/logger';
 import getRepBody from '../Schemas/getRepBody';
+import { audit } from '../Services/Auditor';
 
 const router = Router();
 
@@ -16,6 +17,7 @@ const getREP: Handler = async (req: Request, res: Response) => {
   try {
     const EnergyReq: CalculatorResponse = await CalculatorService
       .calculateEnergeticRequirement(groups, extraData);
+    audit(req, 'Calculó el REP');
     return res.status(200).send(EnergyReq);
   } catch (error) {
     const e = error as Error;
