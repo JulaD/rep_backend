@@ -322,7 +322,7 @@ const updateTEE = async (parameters: EquationConstantDTO[]): Promise<void> => {
       for (let i = 1; i <= 17; i += 1) {
         parameters.forEach((param: EquationConstantDTO) => {
           paramsToUpdate.push({
-            ageRange: `${i} meses` as AgeBracket,
+            ageRange: `${i} años` as AgeBracket,
             order: param.order,
             sex: param.sex,
             value: param.value,
