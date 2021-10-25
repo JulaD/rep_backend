@@ -224,130 +224,19 @@ const updateBMR = async (parameters: EquationConstantDTO[]): Promise<void> => {
     if (parameter.sex !== sexo || parameter.ageRange !== edad) {
       throw new Error('Parameters sex and age must be the same for all array items.');
     }
+    if (parameter.ageRange !== AgeBracket.a18_29
+      && parameter.ageRange !== AgeBracket.a30_59
+      && parameter.ageRange !== AgeBracket.a60) {
+      throw new Error(`Age range ${parameters[0].ageRange} does not have BMR constants.`);
+    }
     if (orders.includes(parameter.order)) {
       throw new Error('Order must be different for all array items.');
     }
     orders.push(parameter.order);
   });
-  switch (parameters[0].ageRange) {
-    case AgeBracket.a18_29: {
-      await EquationConstant.update(
-        { value: parameters[0].value },
-        {
-          where: {
-            ageRange: parameters[0].ageRange,
-            sex: parameters[0].sex,
-            order: parameters[0].order,
-            parameterType: parameters[0].parameterType,
-          },
-        },
-      ).then((result) => {
-        if (result[0] === 0) {
-          throw new Error('No rows were updated.');
-        }
-      }).catch((err) => {
-        throw err;
-      });
-      // eslint-disable-next-line no-await-in-loop
-      await EquationConstant.update(
-        { value: parameters[1].value },
-        {
-          where: {
-            ageRange: parameters[1].ageRange,
-            sex: parameters[1].sex,
-            order: parameters[1].order,
-            parameterType: parameters[1].parameterType,
-          },
-        },
-      ).then((result) => {
-        if (result[0] === 0) {
-          throw new Error('No rows were updated.');
-        }
-      }).catch((err) => {
-        throw err;
-      });
-      break;
-    }
-    case AgeBracket.a30_59: {
-      await EquationConstant.update(
-        { value: parameters[0].value },
-        {
-          where: {
-            ageRange: parameters[0].ageRange,
-            sex: parameters[0].sex,
-            order: parameters[0].order,
-            parameterType: parameters[0].parameterType,
-          },
-        },
-      ).then((result) => {
-        if (result[0] === 0) {
-          throw new Error('No rows were updated.');
-        }
-      }).catch((err) => {
-        throw err;
-      });
-      // eslint-disable-next-line no-await-in-loop
-      await EquationConstant.update(
-        { value: parameters[1].value },
-        {
-          where: {
-            ageRange: parameters[1].ageRange,
-            sex: parameters[1].sex,
-            order: parameters[1].order,
-            parameterType: parameters[1].parameterType,
-          },
-        },
-      ).then((result) => {
-        if (result[0] === 0) {
-          throw new Error('No rows were updated.');
-        }
-      }).catch((err) => {
-        throw err;
-      });
-      break;
-    }
-    case AgeBracket.a60: {
-      await EquationConstant.update(
-        { value: parameters[0].value },
-        {
-          where: {
-            ageRange: parameters[0].ageRange,
-            sex: parameters[0].sex,
-            order: parameters[0].order,
-            parameterType: parameters[0].parameterType,
-          },
-        },
-      ).then((result) => {
-        if (result[0] === 0) {
-          throw new Error('No rows were updated.');
-        }
-      }).catch((err) => {
-        throw err;
-      });
-      // eslint-disable-next-line no-await-in-loop
-      await EquationConstant.update(
-        { value: parameters[1].value },
-        {
-          where: {
-            ageRange: parameters[1].ageRange,
-            sex: parameters[1].sex,
-            order: parameters[1].order,
-            parameterType: parameters[1].parameterType,
-          },
-        },
-      ).then((result) => {
-        if (result[0] === 0) {
-          throw new Error('No rows were updated.');
-        }
-      }).catch((err) => {
-        throw err;
-      });
-      break;
-    }
-    default: {
-      throw new Error(`Age range ${parameters[0].ageRange} does not have BMR constants.`);
-    }
-  }
+  await EquationConstant.bulkCreate(parameters, {
+    updateOnDuplicate: ['value'],
+  });
 };
 
 const updateTEE = async (parameters: EquationConstantDTO[]): Promise<void> => {
@@ -370,42 +259,22 @@ const updateTEE = async (parameters: EquationConstantDTO[]): Promise<void> => {
     case AgeBracket.m3:
     case AgeBracket.m4:
     case AgeBracket.m5: {
+      const paramsToUpdate: EquationConstantDTO[] = [];
       for (let i = 0; i <= 5; i += 1) {
-        // eslint-disable-next-line no-await-in-loop
-        await EquationConstant.update(
-          { value: parameters[0].value },
-          {
-            where: {
-              ageRange: `${i} meses`,
-              order: parameters[0].order,
-              parameterType: parameters[0].parameterType,
-            },
-          },
-        ).then((result) => {
-          if (result[0] === 0) {
-            throw new Error('No rows were updated.');
-          }
-        }).catch((err) => {
-          throw err;
-        });
-        // eslint-disable-next-line no-await-in-loop
-        await EquationConstant.update(
-          { value: parameters[1].value },
-          {
-            where: {
-              ageRange: `${i} meses`,
-              order: parameters[1].order,
-              parameterType: parameters[1].parameterType,
-            },
-          },
-        ).then((result) => {
-          if (result[0] === 0) {
-            throw new Error('No rows were updated.');
-          }
-        }).catch((err) => {
-          throw err;
+        parameters.forEach((param: EquationConstantDTO) => {
+          paramsToUpdate.push({
+            ageRange: `${i} meses` as AgeBracket,
+            order: param.order,
+            sex: param.sex,
+            value: param.value,
+            description: param.description,
+            parameterType: param.parameterType,
+          });
         });
       }
+      await EquationConstant.bulkCreate(paramsToUpdate, {
+        updateOnDuplicate: ['value'],
+      });
       break;
     }
     case AgeBracket.m6:
@@ -414,42 +283,22 @@ const updateTEE = async (parameters: EquationConstantDTO[]): Promise<void> => {
     case AgeBracket.m9:
     case AgeBracket.m10:
     case AgeBracket.m11: {
+      const paramsToUpdate: EquationConstantDTO[] = [];
       for (let i = 6; i <= 11; i += 1) {
-        // eslint-disable-next-line no-await-in-loop
-        await EquationConstant.update(
-          { value: parameters[0].value },
-          {
-            where: {
-              ageRange: `${i} meses`,
-              order: parameters[0].order,
-              parameterType: parameters[0].parameterType,
-            },
-          },
-        ).then((result) => {
-          if (result[0] === 0) {
-            throw new Error('No rows were updated.');
-          }
-        }).catch((err) => {
-          throw err;
-        });
-        // eslint-disable-next-line no-await-in-loop
-        await EquationConstant.update(
-          { value: parameters[1].value },
-          {
-            where: {
-              ageRange: `${i} meses`,
-              order: parameters[1].order,
-              parameterType: parameters[1].parameterType,
-            },
-          },
-        ).then((result) => {
-          if (result[0] === 0) {
-            throw new Error('No rows were updated.');
-          }
-        }).catch((err) => {
-          throw err;
+        parameters.forEach((param: EquationConstantDTO) => {
+          paramsToUpdate.push({
+            ageRange: `${i} meses` as AgeBracket,
+            order: param.order,
+            sex: param.sex,
+            value: param.value,
+            description: param.description,
+            parameterType: param.parameterType,
+          });
         });
       }
+      await EquationConstant.bulkCreate(paramsToUpdate, {
+        updateOnDuplicate: ['value'],
+      });
       break;
     }
     case AgeBracket.a1:
@@ -469,62 +318,22 @@ const updateTEE = async (parameters: EquationConstantDTO[]): Promise<void> => {
     case AgeBracket.a15:
     case AgeBracket.a16:
     case AgeBracket.a17: {
+      const paramsToUpdate: EquationConstantDTO[] = [];
       for (let i = 1; i <= 17; i += 1) {
-        // eslint-disable-next-line no-await-in-loop
-        await EquationConstant.update(
-          { value: parameters[0].value },
-          {
-            where: {
-              ageRange: `${i} años`,
-              sex: parameters[0].sex,
-              order: parameters[0].order,
-              parameterType: parameters[0].parameterType,
-            },
-          },
-        ).then((result) => {
-          if (result[0] === 0) {
-            throw new Error('No rows were updated.');
-          }
-        }).catch((err) => {
-          throw err;
-        });
-        // eslint-disable-next-line no-await-in-loop
-        await EquationConstant.update(
-          { value: parameters[1].value },
-          {
-            where: {
-              ageRange: `${i} años`,
-              sex: parameters[1].sex,
-              order: parameters[1].order,
-              parameterType: parameters[1].parameterType,
-            },
-          },
-        ).then((result) => {
-          if (result[0] === 0) {
-            throw new Error('No rows were updated.');
-          }
-        }).catch((err) => {
-          throw err;
-        });
-        // eslint-disable-next-line no-await-in-loop
-        await EquationConstant.update(
-          { value: parameters[2].value },
-          {
-            where: {
-              ageRange: `${i} años`,
-              sex: parameters[2].sex,
-              order: parameters[2].order,
-              parameterType: parameters[2].parameterType,
-            },
-          },
-        ).then((result) => {
-          if (result[0] === 0) {
-            throw new Error('No rows were updated.');
-          }
-        }).catch((err) => {
-          throw err;
+        parameters.forEach((param: EquationConstantDTO) => {
+          paramsToUpdate.push({
+            ageRange: `${i} años` as AgeBracket,
+            order: param.order,
+            sex: param.sex,
+            value: param.value,
+            description: param.description,
+            parameterType: param.parameterType,
+          });
         });
       }
+      await EquationConstant.bulkCreate(paramsToUpdate, {
+        updateOnDuplicate: ['value'],
+      });
       break;
     }
     default: {
@@ -540,7 +349,6 @@ const updateDefaultWeight = async (parameter: DefaultWeightDTO): Promise<void> =
       where: {
         ageRange: parameter.ageRange,
         sex: parameter.sex,
-        parameterType: parameter.parameterType,
       },
     },
   ).then((result) => {
