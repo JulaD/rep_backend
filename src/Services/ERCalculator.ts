@@ -321,11 +321,13 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
   });
 
   const totalER: EnergeticRequirement = {
-    perCapita: Math.round(totalRequirement / totalOfPeople),
+    perCapita: 0,
     total: totalRequirement,
     totalPopulation: totalOfPeople,
   };
-
+  if (totalOfPeople > 0) {
+    totalER.perCapita = Math.round(totalRequirement / totalOfPeople);
+  }
   const result: CalculatorResponse = {
     groupsRequirements: requirements,
     totalRequirement: totalER,
