@@ -24,6 +24,7 @@ router.use('/repCalculator', CalculatorController);
 router.use('/parameters', ParameterController);
 
 router.use('/faqs', FAQController);
+
 router.use('/auditory', AuditorController);
 
 export default router;

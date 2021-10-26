@@ -82,6 +82,18 @@ const listUsersById = async (userIds: any, token: any) => {
   return res.data;
 };
 
+const checkUser = async (token: string) => {
+  const url = '/check-user';
+  const res = await instance.post(url, {}, { headers: { authorization: token } });
+  return res.data;
+};
+
+const getUser = async (userId: number, token: string) => {
+  const url = `/${userId}`;
+  const res = await instance.get(url, { headers: { authorization: token } });
+  return res.data;
+};
+
 export default {
   create,
   login,
@@ -93,4 +105,6 @@ export default {
   giveAdminPermission,
   removeAdminPermission,
   listUsersById,
+  checkUser,
+  getUser,
 };
