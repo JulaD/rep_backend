@@ -55,7 +55,7 @@ const getAudit = async (cant: number, page: number, token: any) => {
     userAudits.push(userAudit);
   });
   return {
-    count: audits.rows.length,
+    count: audits.count,
     list: userAudits,
   };
 };
