@@ -253,7 +253,9 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
       case AgeBracket.m3:
       case AgeBracket.m4:
       case AgeBracket.m5: {
+        totalOfPeople += group.population;
         groupRequirement = calculateLessThanAYear(group, params);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.m6:
