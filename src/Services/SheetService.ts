@@ -73,11 +73,11 @@ const getLiteralGroup = (age: number): string => {
 const validator = (instance: any) => {
   if (typeof instance.edad !== 'number') {
     throw new Error('Edad should be a number');
-  } else if (instance.peso !== undefined) {
+  } else if (instance.peso !== '') {
     if (typeof instance.peso !== 'number') {
       throw new Error('Peso should be a number');
     }
-  } else if (instance.talla !== undefined) {
+  } else if (instance.talla !== '') {
     if (typeof instance.talla !== 'number') {
       throw new Error('Talla should be a number');
     }

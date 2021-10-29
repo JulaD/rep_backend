@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import SheetController from './Controllers/SheetController';
 import CalculatorController from './Controllers/CalculatorController';
 import ParameterController from './Controllers/ParameterController';
+import FAQController from './Controllers/FAQController';
 import UserController from './Controllers/UserController';
 import AuditorController from './Controllers/AuditorController';
 import authChecker from './Middlewares/authChecker';
@@ -21,6 +22,8 @@ router.use('/sheetParser', SheetController);
 router.use('/repCalculator', CalculatorController);
 
 router.use('/parameters', ParameterController);
+
+router.use('/faqs', FAQController);
 
 router.use('/auditory', AuditorController);
 

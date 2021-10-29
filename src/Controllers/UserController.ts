@@ -106,6 +106,28 @@ const removeAdminPermission: Handler = async (req: Request, res: Response) => {
   }
 };
 
+const checkUser: Handler = async (req: Request, res: Response) => {
+  try {
+    const token: any = req.headers.authorization;
+    const user: any = await UserAPI.checkUser(token);
+    return res.status(200).send(user);
+  } catch (error) {
+    const e = error as Error;
+    return res.status(400).json({ error: e.message });
+  }
+};
+
+const getUser: Handler = async (req: Request, res: Response) => {
+  try {
+    const token: any = req.headers.authorization;
+    const user: any = await UserAPI.getUser(Number(req.params.id), token);
+    return res.status(200).send(user);
+  } catch (error) {
+    const e = error as Error;
+    return res.status(400).json({ error: e.message });
+  }
+};
+
 router.post('/', create);
 router.get('/', listUsers);
 router.post('/login', login);
@@ -115,5 +137,7 @@ router.put('/:id/approve', approve);
 router.put('/:id/cancel', cancel);
 router.put('/:id/admin', giveAdminPermission);
 router.put('/:id/client', removeAdminPermission);
+router.post('/check-user', checkUser);
+router.get('/:id', getUser);
 
 export default router;

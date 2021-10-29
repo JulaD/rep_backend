@@ -8,6 +8,7 @@ import Auditor from '../Models/Auditor';
 import DefaultExtraData from '../Models/DefaultExtraData';
 import DefaultWeight from '../Models/DefaultWeight';
 import EquationConstant from '../Models/EquationConstant';
+import FAQ from '../Models/FAQ';
 import CSVParser from './CSVParser';
 
 async function initParameterDataBase(): Promise<void> {
@@ -50,6 +51,7 @@ async function initParameterDataBase(): Promise<void> {
         console.log(err);
       });
   });
+  FAQ.sync({ force: true });
   Auditor.sync({ force: false });
 }
 
