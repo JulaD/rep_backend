@@ -7,6 +7,7 @@ import logger from '../Logger/logger';
 import updateParameterValueBody from '../Schemas/updateParameterValueBody';
 import { audit } from '../Services/Auditor';
 import ParameterService from '../Services/ParameterService';
+import { logAndRespond } from './Utils';
 
 const router = Router();
 
@@ -15,33 +16,30 @@ const { validate } = new Validator({});
 const getParameters: Handler = async (req: Request, res: Response) => {
   try {
     const parameters = await ParameterService.getParameters();
-    return res.status(200).send(parameters);
+    logAndRespond(res, 200, 'send', parameters, 'info', null, null);
   } catch (error) {
     const e = error as Error;
-    logger.info(e.message);
-    return res.status(400).json({ error: e.message });
+    logAndRespond(res, 400, 'json', { error: e.message }, 'info', null, null);
   }
 };
 
 const getDefaultWeights: Handler = async (req: Request, res: Response) => {
   try {
     const weights = await ParameterService.getDefaultWeights();
-    return res.status(200).send(weights);
+    logAndRespond(res, 200, 'send', weights, 'info', null, null);
   } catch (error) {
     const e = error as Error;
-    logger.info(e.message);
-    return res.status(400).json({ error: e.message });
+    logAndRespond(res, 400, 'json', { error: e.message }, 'info', null, null);
   }
 };
 
 const getDefaultExtraData: Handler = async (req: Request, res: Response) => {
   try {
     const extraData = await ParameterService.getDefaultExtraData();
-    return res.status(200).send(extraData);
+    logAndRespond(res, 200, 'send', extraData, 'info', null, null);
   } catch (error) {
     const e = error as Error;
-    logger.info(e.message);
-    return res.status(400).json({ error: e.message });
+    logAndRespond(res, 400, 'json', { error: e.message }, 'info', null, null);
   }
 };
 
@@ -70,11 +68,10 @@ const updateParameterValue: Handler = async (req: Request, res: Response) => {
         break;
     }
     audit(req, `Cambió el parametro ${parameters[0].parameterType} a ${parameters[0].value} para ${parameters[0].sex} ${parameters[0].ageRang} `);
-    return res.status(200).send();
+    logAndRespond(res, 200, 'send', 'Parameter changed', 'info', null, null);
   } catch (error) {
     const e = error as Error;
-    logger.info(e.message);
-    return res.status(400).json({ error: e.message });
+    logAndRespond(res, 400, 'json', { error: e.message }, 'info', null, null);
   }
 };
 
