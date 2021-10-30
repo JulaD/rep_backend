@@ -68,7 +68,7 @@ const updateParameterValue: Handler = async (req: Request, res: Response) => {
         break;
     }
     audit(req, `Cambió el parametro ${parameters[0].parameterType} a ${parameters[0].value} para ${parameters[0].sex} ${parameters[0].ageRang} `);
-    logAndRespond(res, 200, 'send', 'Parameter changed', 'info', null, null);
+    logAndRespond(res, 200, 'json', { message: 'Parameter changed' }, 'info', null, null);
   } catch (error) {
     const e = error as Error;
     logAndRespond(res, 400, 'json', { error: e.message }, 'info', null, null);
