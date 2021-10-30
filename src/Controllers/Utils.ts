@@ -4,7 +4,9 @@ import logger from '../Logger/logger';
 
 // eslint-disable-next-line max-len
 export const logAndRespond = (response: any, statusCode: number, method: string, responseBody: any, logLevel: string, error: any, keysToHide: string[]|null): Promise<Response> => {
-  const responseBodyToLog = responseBody;
+  const responseBodyToLog = {
+    ...responseBody,
+  };
   if (keysToHide !== null) {
     for (let i = 0; i < keysToHide.length; i += 1) {
       if (typeof responseBodyToLog[keysToHide[i]] !== 'undefined') {
