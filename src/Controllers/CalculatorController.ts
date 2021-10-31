@@ -13,11 +13,11 @@ const router = Router();
 const { validate } = new Validator({});
 
 const getREP: Handler = async (req: Request, res: Response) => {
-  const { groups, extraData, isTemplateUsed } = req.body;
+  const { groups, extraData, fromTemplate } = req.body;
   try {
     const EnergyReq: CalculatorResponse = await CalculatorService
       .calculateEnergeticRequirement(groups, extraData);
-    calculationAudit(req, isTemplateUsed);
+    calculationAudit(req, fromTemplate);
     return logAndRespond(res, 200, 'send', EnergyReq, 'info', null, null);
   } catch (error) {
     const e = error as Error;
