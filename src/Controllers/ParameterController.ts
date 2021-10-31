@@ -45,27 +45,28 @@ const getDefaultExtraData: Handler = async (req: Request, res: Response) => {
 
 const updateParameterValue: Handler = async (req: Request, res: Response) => {
   const { parameters } = req.body;
+  let auditoria: string;
   try {
     switch (parameters[0].parameterType) {
       case ParameterType.DefaultWeight:
-        await ParameterService.updateDefaultWeight(parameters[0]);
+        auditoria = await ParameterService.updateDefaultWeight(parameters[0]);
         break;
       case ParameterType.MinorPAL:
       case ParameterType.AdultPAL:
       case ParameterType.Maternity:
-        await ParameterService.updateExtraData(parameters);
+        auditoria = await ParameterService.updateExtraData(parameters);
         break;
       case ParameterType.TEE:
-        await ParameterService.updateTEE(parameters);
+        auditoria = await ParameterService.updateTEE(parameters);
         break;
       case ParameterType.BMR:
-        await ParameterService.updateBMR(parameters);
+        auditoria = await ParameterService.updateBMR(parameters);
         break;
       case ParameterType.GrowthEnergy:
-        await ParameterService.updateGrowthEnergy(parameters[0]);
+        auditoria = await ParameterService.updateGrowthEnergy(parameters[0]);
         break;
       default:
-        break;
+        throw new Error('Invalid parameter type');
     }
     audit(req, `Cambió el parametro ${parameters[0].parameterType} a ${parameters[0].value} para ${parameters[0].sex} ${parameters[0].ageRang} `);
     logAndRespond(res, 200, 'json', { message: 'Parameter changed' }, 'info', null, null);

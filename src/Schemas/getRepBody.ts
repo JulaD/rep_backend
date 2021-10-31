@@ -130,27 +130,7 @@ const getRepBody = {
               type: 'number' as const,
               minimum: 0,
             },
-            countryBirthRate: {
-              type: 'number' as const,
-              minimum: 0,
-            },
-            countryWomenInAgeGroup: {
-              type: 'number' as const,
-              exclusiveMinimum: 0,
-            },
-            countryPopulation: {
-              type: 'number' as const,
-              exclusiveMinimum: 0,
-            },
           },
-          oneOf: [
-            {
-              required: ['pregnantWomen', 'lactatingWomen'],
-            },
-            {
-              required: ['countryBirthRate', 'countryWomenInAgeGroup', 'countryPopulation'],
-            },
-          ],
         },
       },
     },
