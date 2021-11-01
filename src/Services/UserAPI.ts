@@ -82,7 +82,7 @@ const listUsersById = async (userIds: any, token: any) => {
   return res.data;
 };
 
-const checkUser = async (token: string) => {
+export const checkUser = async (token: string) => {
   const url = '/check-user';
   const res = await instance.post(url, {}, { headers: { authorization: token } });
   return res.data;
@@ -105,6 +105,5 @@ export default {
   giveAdminPermission,
   removeAdminPermission,
   listUsersById,
-  checkUser,
   getUser,
 };

@@ -4,7 +4,7 @@
 import {
   Handler, Request, Response, Router,
 } from 'express';
-import UserAPI from '../Services/UserAPI';
+import UserAPI, { checkUser as checkUserFromAPI } from '../Services/UserAPI';
 
 const router = Router();
 
@@ -109,7 +109,7 @@ const removeAdminPermission: Handler = async (req: Request, res: Response) => {
 const checkUser: Handler = async (req: Request, res: Response) => {
   try {
     const token: any = req.headers.authorization;
-    const user: any = await UserAPI.checkUser(token);
+    const user: any = await checkUserFromAPI(token);
     return res.status(200).send(user);
   } catch (error) {
     const e = error as Error;

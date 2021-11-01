@@ -25,7 +25,13 @@ const correctFAQs = async (faqs: FAQ[]): Promise<void> => new Promise((resolve, 
     .catch(() => reject());
 });
 
-const create = async (createDto: FAQDTO): Promise<FAQ> => {
+const checkFAQFormat = (dto: FAQDTO): boolean => !!dto.answer
+  && !!dto.question && (dto.position) >= 1;
+
+const create = async (createDto: FAQDTO): Promise<FAQ | null> => {
+  if (!checkFAQFormat(createDto)) {
+    return null;
+  }
   const faqs: FAQ[] = await FAQ.findAll({
     where: {
       deletedAt: null,
@@ -46,6 +52,9 @@ const create = async (createDto: FAQDTO): Promise<FAQ> => {
 };
 
 const update = async (id: number, createDto: FAQDTO): Promise<FAQ | null> => {
+  if (!checkFAQFormat(createDto)) {
+    return null;
+  }
   const toUpdate: FAQ | null = await FAQ.findOne({
     where: {
       id,
