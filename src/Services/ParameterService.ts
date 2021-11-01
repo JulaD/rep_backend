@@ -10,6 +10,7 @@ import DefaultWeight from '../Models/DefaultWeight';
 import DefaultWeightDTO from '../DTOs/DefaultWeightDTO';
 import ParameterWrapperDTO from '../DTOs/ParameterWrapperDTO';
 import { extraDataIDs } from '../Config/Constants';
+import ParameterType from '../Enum/ParameterType';
 
 const pushExtraData = (rows: DefaultExtraData[], arr: number[]): void => {
   rows.forEach((row: DefaultExtraData) => {
@@ -196,7 +197,7 @@ const getParameters = async (): Promise<ParameterWrapperDTO> => {
   return res;
 };
 
-const updateGrowthEnergy = async (parameter: EquationConstantDTO): Promise<void> => {
+const updateGrowthEnergy = async (parameter: EquationConstantDTO): Promise<string> => {
   await EquationConstant.update(
     { value: parameter.value },
     {
@@ -214,9 +215,10 @@ const updateGrowthEnergy = async (parameter: EquationConstantDTO): Promise<void>
   }).catch((err) => {
     throw err;
   });
+  return `Cambió la energia de crecimiento a "${parameter.value}" para individuos de sexo ${parameter.sex} de ${parameter.ageRange}`;
 };
 
-const updateBMR = async (parameters: EquationConstantDTO[]): Promise<void> => {
+const updateBMR = async (parameters: EquationConstantDTO[]): Promise<string> => {
   const sexo: string = parameters[0].sex;
   const edad: string = parameters[0].ageRange;
   const orders: number[] = [];
@@ -237,9 +239,10 @@ const updateBMR = async (parameters: EquationConstantDTO[]): Promise<void> => {
   await EquationConstant.bulkCreate(parameters, {
     updateOnDuplicate: ['value'],
   });
+  return `Cambió la ecuacion TMB a "${parameters[orders.indexOf(0)].value} + ${parameters[orders.indexOf(1)].value}*MP" para individuos de sexo ${parameters[0].sex} de edades en el rango ${parameters[0].ageRange}`;
 };
 
-const updateTEE = async (parameters: EquationConstantDTO[]): Promise<void> => {
+const updateTEE = async (parameters: EquationConstantDTO[]): Promise<string> => {
   const sexo: string = parameters[0].sex;
   const edad: string = parameters[0].ageRange;
   const orders: number[] = [];
@@ -250,8 +253,16 @@ const updateTEE = async (parameters: EquationConstantDTO[]): Promise<void> => {
     if (orders.includes(parameter.order)) {
       throw new Error('Order must be different for all array items.');
     }
+    if (!(parameter.order >= 0 && parameter.order <= 3)) {
+      throw new Error('Order must be between 0 and 3.');
+    }
     orders.push(parameter.order);
   });
+
+  // build audit message
+  let auditMessage = `Cambió la ecuacion GET a "${parameters[orders.indexOf(0)].value} + ${parameters[orders.indexOf(1)].value}*MP`;
+
+  // TEE parameters update
   switch (parameters[0].ageRange) {
     case AgeBracket.m0:
     case AgeBracket.m1:
@@ -275,6 +286,7 @@ const updateTEE = async (parameters: EquationConstantDTO[]): Promise<void> => {
       await EquationConstant.bulkCreate(paramsToUpdate, {
         updateOnDuplicate: ['value'],
       });
+      auditMessage += `" para los individuos de sexo ${parameters[0].sex} de entre 0 a 5 meses`;
       break;
     }
     case AgeBracket.m6:
@@ -299,6 +311,7 @@ const updateTEE = async (parameters: EquationConstantDTO[]): Promise<void> => {
       await EquationConstant.bulkCreate(paramsToUpdate, {
         updateOnDuplicate: ['value'],
       });
+      auditMessage += `" para los individuos de sexo ${parameters[0].sex} de entre 6 a 11 meses`;
       break;
     }
     case AgeBracket.a1:
@@ -334,15 +347,17 @@ const updateTEE = async (parameters: EquationConstantDTO[]): Promise<void> => {
       await EquationConstant.bulkCreate(paramsToUpdate, {
         updateOnDuplicate: ['value'],
       });
+      auditMessage += ` + ${parameters[orders.indexOf(2)].value}*MP^2" para los individuos de sexo ${parameters[0].sex} de entre 1 a 17 años`;
       break;
     }
     default: {
       throw new Error(`Age range ${parameters[0].ageRange} does not have TEE constants.`);
     }
   }
+  return auditMessage;
 };
 
-const updateDefaultWeight = async (parameter: DefaultWeightDTO): Promise<void> => {
+const updateDefaultWeight = async (parameter: DefaultWeightDTO): Promise<string> => {
   await DefaultWeight.update(
     { value: parameter.value },
     {
@@ -358,12 +373,13 @@ const updateDefaultWeight = async (parameter: DefaultWeightDTO): Promise<void> =
   }).catch((err) => {
     throw err;
   });
+  return `Cambió el peso a ${parameter.value} para ${parameter.sex} ${parameter.ageRange}`;
 };
 
-const updatePercentage = async (params: DefaultExtraDataDTO[], total: number): Promise<void> => {
+const updatePercentage = async (params: DefaultExtraDataDTO[], total: number): Promise<string> => {
   if (total === 100) {
     // No se mete en un for porque hay problemas con el await
-    await DefaultExtraData.update(
+    /* await DefaultExtraData.update(
       { value: params[0].value },
       {
         where: {
@@ -413,10 +429,17 @@ const updatePercentage = async (params: DefaultExtraDataDTO[], total: number): P
     });
   } else {
     throw new Error('These percentages must add up to 100.');
+   */
+    DefaultExtraData.bulkCreate(params, {
+      updateOnDuplicate: ['value'],
+    }).catch((err) => {
+      throw err;
+    });
   }
+  return `Cambió los parametros prevalencia de actividad fisica liviana menores a ${params[0].value}, moderada a ${params[1].value} e intensa a ${params[2].value} para menores de entre 6 y 17 años `;
 };
 
-const updatePair = async (param: DefaultExtraDataDTO, pairID: string): Promise<void> => {
+const updatePair = async (param: DefaultExtraDataDTO, pairID: string): Promise<string> => {
   await DefaultExtraData.update(
     { value: param.value },
     {
@@ -447,6 +470,7 @@ const updatePair = async (param: DefaultExtraDataDTO, pairID: string): Promise<v
   }).catch((err) => {
     throw err;
   });
+  return `Cambió los parametros porcentuales ${param.id} y ${pairID} a ${param.value}% y ${100 - param.value}% respectivamente, para adultos`;
 };
 
 const validateID = (id: string): boolean => {
@@ -459,9 +483,10 @@ const validateID = (id: string): boolean => {
   return false;
 };
 
-const updateExtraData = async (parameters: DefaultExtraDataDTO[]): Promise<void> => {
+const updateExtraData = async (parameters: DefaultExtraDataDTO[]): Promise<string> => {
   const ids: string[] = [];
   let total = 0;
+  let auditMessage = '';
 
   parameters.forEach((param: DefaultExtraDataDTO) => {
     ids.push(param.id);
@@ -471,7 +496,7 @@ const updateExtraData = async (parameters: DefaultExtraDataDTO[]): Promise<void>
   if (ids.includes(extraDataIDs.minLowPrev)) {
     if (ids.includes(extraDataIDs.minModPrev) && ids.includes(extraDataIDs.minIntPrev)) {
       if (ids.length === 3) {
-        await updatePercentage(parameters, total);
+        auditMessage = await updatePercentage(parameters, total);
       } else {
         throw new Error('Too many parameters sent.');
       }
@@ -479,17 +504,17 @@ const updateExtraData = async (parameters: DefaultExtraDataDTO[]): Promise<void>
       throw new Error('Missing parameter for update.');
     }
   } else if (ids.includes(extraDataIDs.urbPopPerc)) {
-    await updatePair(parameters[0], extraDataIDs.rurPopPerc);
+    auditMessage = await updatePair(parameters[0], extraDataIDs.rurPopPerc);
   } else if (ids.includes(extraDataIDs.rurPopPerc)) {
-    await updatePair(parameters[0], extraDataIDs.urbPopPerc);
+    auditMessage = await updatePair(parameters[0], extraDataIDs.urbPopPerc);
   } else if (ids.includes(extraDataIDs.urbAdultActPerc)) {
-    await updatePair(parameters[0], extraDataIDs.urbAdultLowPerc);
+    auditMessage = await updatePair(parameters[0], extraDataIDs.urbAdultLowPerc);
   } else if (ids.includes(extraDataIDs.urbAdultLowPerc)) {
-    await updatePair(parameters[0], extraDataIDs.urbAdultActPerc);
+    auditMessage = await updatePair(parameters[0], extraDataIDs.urbAdultActPerc);
   } else if (ids.includes(extraDataIDs.rurAdultActPerc)) {
-    await updatePair(parameters[0], extraDataIDs.rurAdultLowPerc);
+    auditMessage = await updatePair(parameters[0], extraDataIDs.rurAdultLowPerc);
   } else if (ids.includes(extraDataIDs.rurAdultLowPerc)) {
-    await updatePair(parameters[0], extraDataIDs.rurAdultActPerc);
+    auditMessage = await updatePair(parameters[0], extraDataIDs.rurAdultActPerc);
   } else if (validateID(parameters[0].id)) {
     await DefaultExtraData.update(
       { value: parameters[0].value },
@@ -504,12 +529,26 @@ const updateExtraData = async (parameters: DefaultExtraDataDTO[]): Promise<void>
       if (result[0] === 0) {
         throw new Error('No rows were updated.');
       }
+      auditMessage = `Cambió el parametro ${parameters[0].id} a ${parameters[0].value}`;
+      if (parameters[0].parameterType === ParameterType.MinorPAL) {
+        auditMessage += ' para menores de 6 a 17 años';
+      } else if (parameters[0].parameterType === ParameterType.AdultPAL) {
+        auditMessage += ' para mayores';
+      } else if (parameters[0].parameterType === ParameterType.Maternity) {
+        auditMessage += ' para mujeres mayores';
+        if (parameters[0].id === 'pregnancyExtraEnergy18to29' || parameters[0].id === 'lactationExtraEnergy18to29') {
+          auditMessage += ' de 18 a 29 años';
+        } else {
+          auditMessage += ' de 30 a 59 años';
+        }
+      }
     }).catch((err) => {
       throw err;
     });
   } else {
     throw new Error('Invalid parameter ID.');
   }
+  return auditMessage;
 };
 
 export default {
