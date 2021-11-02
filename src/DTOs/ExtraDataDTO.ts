@@ -7,7 +7,7 @@ type ExtraData = {
   minorPAL: MinorPAL | undefined;
   adultPAL: AdultPAL | undefined;
   maternity18To29: IndividualMaternity | PopulationMaternity | undefined;
-  maternity30To59: IndividualMaternity | PopulationMaternity | undefined;
+  maternity30To59: IndividualMaternity | undefined;
 };
 
 export default ExtraData;
