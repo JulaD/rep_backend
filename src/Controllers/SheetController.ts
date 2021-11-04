@@ -2,9 +2,8 @@ import {
   Handler, Request, Response, Router,
 } from 'express';
 import SheetService from '../Services/SheetService';
-import logger from '../Logger/logger';
 import AgeGroupJSON from '../DTOs/AgeGroupJSON';
-import { audit } from '../Services/Auditor';
+import { audit } from '../Services/AuditorService';
 import { logAndRespond } from './Utils';
 
 const router = Router();

@@ -5,6 +5,7 @@ import DefaultExtraDataDTO from '../DTOs/DefaultExtraDataDTO';
 import DefaultWeightDTO from '../DTOs/DefaultWeightDTO';
 import EquationConstantDTO from '../DTOs/EquationConstantDTO';
 import Auditor from '../Models/Auditor';
+import CalculationAuditor from '../Models/CalculationAuditor';
 import DefaultExtraData from '../Models/DefaultExtraData';
 import DefaultWeight from '../Models/DefaultWeight';
 import EquationConstant from '../Models/EquationConstant';
@@ -53,6 +54,7 @@ async function initParameterDataBase(): Promise<void> {
   });
   FAQ.sync({ force: true });
   Auditor.sync({ force: false });
+  CalculationAuditor.sync({ force: false });
 }
 
 export default { initParameterDataBase };

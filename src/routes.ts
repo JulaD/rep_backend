@@ -5,7 +5,7 @@ import ParameterController from './Controllers/ParameterController';
 import FAQController from './Controllers/FAQController';
 import UserController from './Controllers/UserController';
 import AuditorController from './Controllers/AuditorController';
-import authChecker from './Middlewares/authChecker';
+import AuthMiddleware from './Middlewares/authChecker';
 
 const router = Router();
 
@@ -14,16 +14,18 @@ router.get('/', (req: Request, res: Response): void => {
 });
 
 router.use('/users', UserController);
+
+// FAQs have authentication on some endpoints
+router.use('/faqs', FAQController);
 // From this line on a auth verification will be taken
-router.use(authChecker);
+
+router.use(AuthMiddleware.authChecker);
 
 router.use('/sheetParser', SheetController);
 
 router.use('/repCalculator', CalculatorController);
 
 router.use('/parameters', ParameterController);
-
-router.use('/faqs', FAQController);
 
 router.use('/auditory', AuditorController);
 

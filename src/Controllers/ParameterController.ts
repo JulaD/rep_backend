@@ -5,7 +5,7 @@ import { Validator } from 'express-json-validator-middleware';
 import ParameterType from '../Enum/ParameterType';
 import logger from '../Logger/logger';
 import updateParameterValueBody from '../Schemas/updateParameterValueBody';
-import { audit } from '../Services/Auditor';
+import { audit } from '../Services/AuditorService';
 import ParameterService from '../Services/ParameterService';
 import { logAndRespond } from './Utils';
 

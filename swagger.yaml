@@ -250,9 +250,12 @@ components:
             $ref: '#/components/schemas/AgeGroupJSON'
         extraData:
           $ref: '#/components/schemas/ExtraData'
+        fromTemplate:
+          type: boolean
       required:
         - groups
         - extraData
+        - fromTemplate
     Parameter:
       properties:
         parameters:

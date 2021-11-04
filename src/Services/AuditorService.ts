@@ -1,12 +1,22 @@
+// TODO: Get rid of all the 'any' mentions
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Op } from 'sequelize';
 import AuditDTO from '../DTOs/AuditDTO';
 import Paginator from '../interfaces/paginator.interface';
 import Auditor from '../Models/Auditor';
+import CalculationAuditor from '../Models/CalculationAuditor';
 import UserAPI from './UserAPI';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const audit = (request: any, action: string): void => {
   const userId = request.user_id;
   Auditor.create({ user_id: userId, action });
+};
+
+export const calculationAudit = (request: any, templateUsed: boolean): void => {
+  const userId = request.user_id;
+  CalculationAuditor.create({ user_id: userId, isTemplateUsed: templateUsed });
 };
 
 const listAudits = async (limit: number, offset: number): Promise<Paginator<Auditor>> => {
@@ -23,6 +33,37 @@ const listAudits = async (limit: number, offset: number): Promise<Paginator<Audi
     ],
     ...options,
   });
+  return res;
+};
+
+const calculationAudits = async (userIds: number[], dateFrom: string,
+  dateTo: string, isTemplateUsed: boolean) => {
+  const whereStatement: any = {};
+
+  if (userIds.length > 0) {
+    whereStatement.user_id = userIds;
+  }
+
+  if (dateFrom !== '' && dateTo !== '') {
+    try {
+      const from = new Date(dateFrom);
+      const to = new Date(dateTo);
+      whereStatement.createdAt = { [Op.between]: [from, to] };
+    } catch (error) {
+      const e = error as Error;
+      throw e;
+    }
+  }
+
+  whereStatement.isTemplateUsed = isTemplateUsed;
+
+  const res = await CalculationAuditor.count({
+    attributes: [
+      'id', 'user_id', 'isTemplateUsed', 'createdAt',
+    ],
+    where: whereStatement,
+  });
+
   return res;
 };
 
@@ -60,6 +101,28 @@ const getAudit = async (cant: number, page: number, token: any) => {
   };
 };
 
+const getCalculationsAudit = async (userIds: number[], dateFrom: string, dateTo: string) => {
+  const calculationsByHand: number = await calculationAudits(userIds, dateFrom, dateTo, false);
+  const calculationsWithTemplate: number = await calculationAudits(userIds, dateFrom, dateTo, true);
+
+  return [
+    {
+      name: 'Cálculos a mano',
+      value: calculationsByHand,
+      extra: {
+        code: 'cam',
+      },
+    },
+    {
+      name: 'Cálculos usando plantilla',
+      value: calculationsWithTemplate,
+      extra: {
+        code: 'cup',
+      },
+    },
+  ];
+};
+
 // {
 // count:number,
 // list:[{id,user_name,full_name, organization_name, date, action}]
@@ -81,4 +144,5 @@ const getAudit = async (cant: number, page: number, token: any) => {
 
 export default {
   getAudit,
+  getCalculationsAudit,
 };
