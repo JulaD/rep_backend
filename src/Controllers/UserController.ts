@@ -8,6 +8,7 @@ import {
 import { audit } from '../Services/AuditorService';
 import UserAPI, { checkUser as checkUserFromAPI } from '../Services/UserAPI';
 import { logAndRespond } from './Utils';
+import AuthMiddleware from '../Middlewares/authChecker';
 
 const router = Router();
 
@@ -140,11 +141,12 @@ router.get('/', listUsers);
 router.post('/login', login);
 router.put('/:id', update);
 router.put('/:id/password', password);
+router.post('/check-user', checkUser);
+router.get('/:id', getUser);
+router.use(AuthMiddleware.authChecker);
 router.put('/:id/approve', approve);
 router.put('/:id/cancel', cancel);
 router.put('/:id/admin', giveAdminPermission);
 router.put('/:id/client', removeAdminPermission);
-router.post('/check-user', checkUser);
-router.get('/:id', getUser);
 
 export default router;
