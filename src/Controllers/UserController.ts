@@ -53,16 +53,17 @@ const update: Handler = async (req: Request, res: Response) => {
   }
 };
 
-const password: Handler = async (req: Request, res: Response) => {
-  try {
-    const token: any = req.headers.authorization;
-    const user: any = await UserAPI.password(req.body, req.params.id, token);
-    return logAndRespond(res, 200, 'send', user, 'info', null, null);
-  } catch (error) {
-    const e = error as AxiosError;
-    return logAndRespond(res, e.response ? e.response.status : 400, 'json', e.response ? e.response.data : { error: e.message }, 'info', null, null);
-  }
-};
+// const password: Handler = async (req: Request, res: Response) => {
+//   try {
+//     const token: any = req.headers.authorization;
+//     const user: any = await UserAPI.password(req.body, req.params.id, token);
+//     return logAndRespond(res, 200, 'send', user, 'info', null, null);
+//   } catch (error) {
+//     const e = error as AxiosError;
+//     return logAndRespond(res, e.response ? e.response.status : 400, 'json',
+//     e.response ? e.response.data : { error: e.message }, 'info', null, null);
+//   }
+// };
 
 const approve: Handler = async (req: Request, res: Response) => {
   try {
@@ -130,16 +131,64 @@ const getUser: Handler = async (req: Request, res: Response) => {
   }
 };
 
+const verifyEmail: Handler = async (req: Request, res: Response) => {
+  try {
+    const token = String(req.query.token);
+    const response: any = await UserAPI.verifyEmail(token);
+    return logAndRespond(res, 200, 'send', response, 'info', null, null);
+  } catch (error) {
+    const e = error as AxiosError;
+    return logAndRespond(res, e.response ? e.response.status : 400, 'json', e.response ? e.response.data : { error: e.message }, 'info', null, null);
+  }
+};
+
+const recoveryPasswordChange: Handler = async (req: Request, res: Response) => {
+  try {
+    const { token, password, repeat } = req.body;
+    const response: any = await UserAPI.recoveryPasswordChange(token, password, repeat);
+    return logAndRespond(res, 200, 'send', response, 'info', null, null);
+  } catch (error) {
+    const e = error as AxiosError;
+    return logAndRespond(res, e.response ? e.response.status : 400, 'json', e.response ? e.response.data : { error: e.message }, 'info', null, null);
+  }
+};
+
+const resendVerification: Handler = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+    const response: any = await UserAPI.resendVerification(email);
+    return logAndRespond(res, 200, 'send', response, 'info', null, null);
+  } catch (error) {
+    const e = error as AxiosError;
+    return logAndRespond(res, e.response ? e.response.status : 400, 'json', e.response ? e.response.data : { error: e.message }, 'info', null, null);
+  }
+};
+
+const recoverPassword: Handler = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+    const response: any = await UserAPI.recoverPassword(email);
+    return logAndRespond(res, 200, 'send', response, 'info', null, null);
+  } catch (error) {
+    const e = error as AxiosError;
+    return logAndRespond(res, e.response ? e.response.status : 400, 'json', e.response ? e.response.data : { error: e.message }, 'info', null, null);
+  }
+};
+
 router.post('/', create);
 router.get('/', listUsers);
 router.post('/login', login);
+router.put('/verify-email', verifyEmail);
+router.put('/password', recoveryPasswordChange);
 router.put('/:id', update);
-router.put('/:id/password', password);
+// router.put('/:id/password', password);
 router.put('/:id/approve', approve);
 router.put('/:id/cancel', cancel);
 router.put('/:id/admin', giveAdminPermission);
 router.put('/:id/client', removeAdminPermission);
 router.post('/check-user', checkUser);
 router.get('/:id', getUser);
+router.post('/resend-verification', resendVerification);
+router.post('/recover-password', recoverPassword);
 
 export default router;
