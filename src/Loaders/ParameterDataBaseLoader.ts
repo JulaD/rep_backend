@@ -23,7 +23,7 @@ async function initParameterDataBase(): Promise<void> {
       console.log('Default Weight table loading success');
     })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   });
   pathToFile = path.join(__dirname, 'DefaultExtraDataLoader.csv');
@@ -36,7 +36,7 @@ async function initParameterDataBase(): Promise<void> {
       console.log('Extra Data table loading success');
     })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   });
   pathToFile = path.join(__dirname, 'EquationConstantLoader.csv');
@@ -49,7 +49,7 @@ async function initParameterDataBase(): Promise<void> {
       console.log('Equation Constant table loading success');
     })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   });
   FAQ.sync({ force: true });
