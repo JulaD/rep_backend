@@ -57,14 +57,14 @@ const calculationAudits = async (userIds: number[], dateFrom: string,
 
   whereStatement.isTemplateUsed = isTemplateUsed;
 
-  const res = await CalculationAuditor.count({
+  const res = await CalculationAuditor.findAndCountAll({
     attributes: [
       'id', 'user_id', 'isTemplateUsed', 'createdAt',
     ],
     where: whereStatement,
   });
 
-  return res;
+  return res.count;
 };
 
 const getAudit = async (cant: number, page: number, token: any) => {
