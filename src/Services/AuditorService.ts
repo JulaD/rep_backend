@@ -19,25 +19,8 @@ export const calculationAudit = (request: any, templateUsed: boolean): void => {
   CalculationAuditor.create({ user_id: userId, isTemplateUsed: templateUsed });
 };
 
-const listAudits = async (limit: number, offset: number): Promise<Paginator<Auditor>> => {
-  let options = {};
-  if (limit >= 1 && offset >= 0) {
-    options = {
-      limit,
-      offset,
-    };
-  }
-  const res = await Auditor.findAndCountAll({
-    attributes: [
-      'id', 'user_id', 'action', 'createdAt',
-    ],
-    ...options,
-  });
-  return res;
-};
-
 const calculationAudits = async (userIds: number[], dateFrom: string,
-  dateTo: string, isTemplateUsed: boolean) => {
+  dateTo: string, isTemplateUsed: boolean): Promise<number> => {
   const whereStatement: any = {};
 
   if (userIds.length > 0) {
@@ -46,9 +29,27 @@ const calculationAudits = async (userIds: number[], dateFrom: string,
 
   if (dateFrom !== '' && dateTo !== '') {
     try {
-      const from = new Date(dateFrom);
+      // this expression gets the day before the "from" date
+      const dayBefore = new Date(new Date(dateFrom).valueOf() - 24 * 60 * 60 * 1000);
       const to = new Date(dateTo);
-      whereStatement.createdAt = { [Op.between]: [from, to] };
+      whereStatement.createdAt = { [Op.between]: [dayBefore, to] };
+    } catch (error) {
+      const e = error as Error;
+      throw e;
+    }
+  } else if (dateFrom !== '') {
+    try {
+      // this expression gets the day before the "from" date
+      const dayBefore = new Date(new Date(dateFrom).valueOf() - 24 * 60 * 60 * 1000);
+      whereStatement.createdAt = { [Op.gt]: dayBefore };
+    } catch (error) {
+      const e = error as Error;
+      throw e;
+    }
+  } else if (dateTo !== '') {
+    try {
+      const to = new Date(dateTo);
+      whereStatement.createdAt = { [Op.lte]: to };
     } catch (error) {
       const e = error as Error;
       throw e;
@@ -67,9 +68,74 @@ const calculationAudits = async (userIds: number[], dateFrom: string,
   return res.count;
 };
 
-const getAudit = async (cant: number, page: number, token: any) => {
+const listAudits = async (limit: number, offset: number, filters: string[]):
+Promise<Paginator<Auditor>> => {
+  let options = {};
+  if (limit >= 1 && offset >= 0) {
+    options = {
+      limit,
+      offset,
+    };
+  }
+
+  let res: any;
+  if (filters.length !== 0) {
+    res = await Auditor.findAndCountAll({
+      attributes: [
+        'id', 'user_id', 'action', 'createdAt',
+      ],
+      where: {
+        [Op.or]: filters,
+      },
+      ...options,
+    });
+  } else {
+    res = await Auditor.findAndCountAll({
+      attributes: [
+        'id', 'user_id', 'action', 'createdAt',
+      ],
+      ...options,
+    });
+  }
+
+  return res;
+};
+
+const getAudit = async (cant: number, page: number, token: any, filters: string[]) => {
   const offset = cant * (page - 1);
-  const audits: Paginator<Auditor> = await listAudits(cant, offset);
+  // filters
+  let filterArray: string[] = [];
+  const actionFilters: any[] = [];
+  if (filters) {
+    if (typeof filters === 'string') {
+      filterArray.push(filters);
+    } else {
+      filterArray = filters;
+    }
+  }
+  filterArray.forEach((filter) => {
+    switch (filter) {
+      case ('Cambio de datos por defecto'):
+        actionFilters.push({ action: { [Op.startsWith]: 'Cambió' } });
+        break;
+      case ('Modificación de constantes'):
+        actionFilters.push({ action: { [Op.startsWith]: 'Modificó' } });
+        break;
+      case ('Manejo de acceso a la aplicación'):
+        actionFilters.push({ action: { [Op.startsWith]: 'Aceptó' } });
+        actionFilters.push({ action: { [Op.startsWith]: 'Rechazó' } });
+        break;
+      case ('Manejo de permisos de administrador'):
+        actionFilters.push({ action: { [Op.startsWith]: 'Otorogó' } });
+        actionFilters.push({ action: { [Op.startsWith]: 'Quitó' } });
+        break;
+      default:
+        throw new Error('Invalid filter');
+    }
+  });
+
+  // audits query
+  const audits: Paginator<Auditor> = await listAudits(cant, offset, actionFilters);
   const ids: number[] = [];
   audits.rows.forEach((auditor: Auditor) => {
     if (!ids.includes(auditor.user_id)) {
@@ -122,23 +188,6 @@ const getCalculationsAudit = async (userIds: number[], dateFrom: string, dateTo:
     },
   ];
 };
-
-// {
-// count:number,
-// list:[{id,user_name,full_name, organization_name, date, action}]
-// }
-
-// export const getAudit = (cant: number, page: number) => {
-//   const init = (cant * page) - cant;
-//   const end = cant * page;
-//   Auditor.findAll({
-//     where: {
-//       ageRange: ageBracket as string,
-//       sex: sex as string,
-//     },
-//     order: [['order', 'ASC']],
-//   })
-// };
 
 // BD: UUID // USER ID // ACTION // TIME
 

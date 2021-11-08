@@ -143,7 +143,7 @@ router.put('/:id', update);
 router.put('/:id/password', password);
 router.post('/check-user', checkUser);
 router.get('/:id', getUser);
-router.use(AuthMiddleware.authChecker);
+router.use(AuthMiddleware.adminChecker);
 router.put('/:id/approve', approve);
 router.put('/:id/cancel', cancel);
 router.put('/:id/admin', giveAdminPermission);
