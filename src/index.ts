@@ -1,29 +1,32 @@
-/* eslint-disable import/first */
 /* eslint-disable no-console */
-require('dotenv').config();
-
-import { ValidationError } from 'express-json-validator-middleware';
-import express, {
-  Application,
-  NextFunction,
-  Request,
-  Response,
-} from 'express';
+import express, { Application } from 'express';
+import 'dotenv/config';
 import cors from 'cors';
+import swaggerJsDoc, { Options } from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import helmet from 'helmet';
-import YAML from 'yamljs';
 import Routes from './routes';
-import logger from './Logger/logger';
-import ParameterDataBaseLoader from './Loaders/ParameterDataBaseLoader';
+import { User } from './models/users.model';
 
 const app: Application = express();
-const PORT = process.env.PORT || 8000;
-app.use(helmet.hidePoweredBy());
+const PORT = process.env.PORT || 3000;
+
 // swagger init
-const swaggerDocument = YAML.load('./swagger.yaml');
+const swaggerOptions: Options = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'REPP Rest API',
+      version: '1.0.0',
+      description: '',
+      servers: ['http://localhost:3000'],
+    },
+  },
+  apis: ['src/routes.ts'],
+};
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
 // middlewares
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(express.json({
   limit: '50mb',
@@ -40,51 +43,10 @@ app.use(express.raw({
   limit: '50mb',
 }));
 
-app.use((req, res, next) => {
-  const reqToLog = {
-    body: { ...req.body },
-    hostname: req.hostname,
-    ip: req.ip,
-    method: req.method,
-    params: { ...req.params },
-    path: req.path,
-    protocol: req.protocol,
-    query: { ...req.query },
-    secure: req.secure,
-  };
-
-  // before logging the request, we have to hide sensitive information
-  if (typeof reqToLog.body.password !== 'undefined') {
-    reqToLog.body.password = '__HIDDEN__';
-  }
-
-  logger.info('Request received', { request: reqToLog });
-  next();
-});
+User.sync();
 
 app.use(Routes);
 
-app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
-  // Check the error is a validation error
-  if (error instanceof ValidationError) {
-    // TODO: Handle error message accordingly
-    let msg: string | undefined;
-    if (error.validationErrors.body && error.validationErrors.body[0]) {
-      msg = error.validationErrors.body[0].message;
-    }
-    if (msg) {
-      response.status(400).send(msg);
-    }
-    next();
-  } else {
-    // Pass error on if not a validation error
-    next(error);
-  }
-});
-
-ParameterDataBaseLoader.initParameterDataBase();
-
 app.listen(PORT, (): void => {
-  console.log(`REPP Backend running here 👉 http://localhost:${PORT}`);
-  logger.info('Server initiated');
+  console.log(`REPP Backend running here 👉 https://localhost:${PORT}`);
 });
