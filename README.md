@@ -1,3 +1,3 @@
-# repp_backend_users
+# repp_backend
 
-Herramienta de calculo de requerimiento energetico ponderado para una poblacion. Este repositorio contiene la parte del backend especifica al manejo de usuarios.
+Herramienta de calculo de requerimiento energetico ponderado para una poblacion. Este repositorio contiene el backend.

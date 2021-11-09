@@ -5,8 +5,10 @@ import { AxiosError } from 'axios';
 import {
   Handler, Request, Response, Router,
 } from 'express';
+import { audit } from '../Services/AuditorService';
 import UserAPI, { checkUser as checkUserFromAPI } from '../Services/UserAPI';
 import { logAndRespond } from './Utils';
+import AuthMiddleware from '../Middlewares/authChecker';
 
 const router = Router();
 
@@ -68,6 +70,7 @@ const approve: Handler = async (req: Request, res: Response) => {
   try {
     const token: any = req.headers.authorization;
     const user: any = await UserAPI.approve(req.params.id, token);
+    audit(req, `Aceptó a ${user.email}`);
     return logAndRespond(res, 200, 'send', user, 'info', null, null);
   } catch (error) {
     const e = error as AxiosError;
@@ -79,6 +82,7 @@ const cancel: Handler = async (req: Request, res: Response) => {
   try {
     const token: any = req.headers.authorization;
     const user: any = await UserAPI.cancel(req.params.id, token);
+    audit(req, `Rechazó a ${user.email}`);
     return logAndRespond(res, 200, 'send', user, 'info', null, null);
   } catch (error) {
     const e = error as AxiosError;
@@ -90,6 +94,7 @@ const giveAdminPermission: Handler = async (req: Request, res: Response) => {
   try {
     const token: any = req.headers.authorization;
     const user: any = await UserAPI.giveAdminPermission(req.params.id, token);
+    audit(req, `Otorgó permisos de administrador a ${user.email}`);
     return logAndRespond(res, 200, 'send', user, 'info', null, null);
   } catch (error) {
     const e = error as AxiosError;
@@ -101,6 +106,7 @@ const removeAdminPermission: Handler = async (req: Request, res: Response) => {
   try {
     const token: any = req.headers.authorization;
     const user: any = await UserAPI.removeAdminPermission(req.params.id, token);
+    audit(req, `Quitó permisos de administrador a ${user.email}`);
     return logAndRespond(res, 200, 'send', user, 'info', null, null);
   } catch (error) {
     const e = error as AxiosError;
@@ -135,11 +141,12 @@ router.get('/', listUsers);
 router.post('/login', login);
 router.put('/:id', update);
 router.put('/:id/password', password);
+router.post('/check-user', checkUser);
+router.get('/:id', getUser);
+router.use(AuthMiddleware.authChecker);
 router.put('/:id/approve', approve);
 router.put('/:id/cancel', cancel);
 router.put('/:id/admin', giveAdminPermission);
 router.put('/:id/client', removeAdminPermission);
-router.post('/check-user', checkUser);
-router.get('/:id', getUser);
 
 export default router;
