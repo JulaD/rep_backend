@@ -48,7 +48,7 @@ const deleteFAQ = async (req: Request, res: Response): Promise<Response> => {
     const faqId = Number(req.params.id);
     const success: boolean = await FAQService.deleteFAQ(faqId);
     if (success) {
-      logAndRespond(res, 200, 'send', success, 'info', null, null);
+      return logAndRespond(res, 200, 'send', success, 'info', null, null);
     }
     return logAndRespond(res, 404, 'send', 'id not found', 'info', null, null);
   } catch (error) {
