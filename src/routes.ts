@@ -19,7 +19,7 @@ router.use('/users', UserController);
 router.use('/faqs', FAQController);
 // From this line on a auth verification will be taken
 
-// router.use(AuthMiddleware.authChecker);
+router.use(AuthMiddleware.authChecker);
 
 router.use('/sheetParser', SheetController);
 
