@@ -68,7 +68,7 @@ const updateParameterValue: Handler = async (req: Request, res: Response) => {
       default:
         throw new Error('Invalid parameter type');
     }
-    audit(req, `Cambió el parametro ${parameters[0].parameterType} a ${parameters[0].value} para ${parameters[0].sex} ${parameters[0].ageRang} `);
+    audit(req, auditoria);
     logAndRespond(res, 200, 'json', { message: 'Parameter changed' }, 'info', null, null);
   } catch (error) {
     const e = error as Error;

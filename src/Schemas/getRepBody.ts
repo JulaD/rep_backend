@@ -1,7 +1,10 @@
 const getRepBody = {
   type: 'object' as const,
-  required: ['groups', 'extraData'],
+  required: ['groups', 'extraData', 'fromTemplate'],
   properties: {
+    fromTemplate: {
+      type: 'boolean' as const,
+    },
     groups: {
       type: 'array' as const,
       items: {

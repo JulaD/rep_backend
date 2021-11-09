@@ -12,7 +12,6 @@ const parseSheet: Handler = async (req: Request, res: Response) => {
   const sheet: Buffer = req.body;
   try {
     const parsedSheet: AgeGroupJSON[] = SheetService.parseSheetService(sheet);
-    audit(req, 'Usó una planilla para ingresar datos');
     logAndRespond(res, 200, 'send', parsedSheet, 'info', null, null);
   } catch (error) {
     const e = error as Error;
