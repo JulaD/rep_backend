@@ -46,11 +46,11 @@ const update = async (user: any, idUser: string, token: string) => {
   return res.data;
 };
 
-const password = async (user: any, idUser: string, token: string) => {
-  const url = `/${idUser}/password`;
-  const res = await instance.put(url, user, { headers: { authorization: token } });
-  return res.data;
-};
+// const password = async (user: any, idUser: string, token: string) => {
+//   const url = `/${idUser}/password`;
+//   const res = await instance.put(url, user, { headers: { authorization: token } });
+//   return res.data;
+// };
 
 const approve = async (idUser: string, token: string) => {
   const url = `/${idUser}/approve`;
@@ -82,7 +82,7 @@ const listUsersById = async (userIds: any, token: any) => {
   return res.data;
 };
 
-const checkUser = async (token: string) => {
+export const checkUser = async (token: string) => {
   const url = '/check-user';
   const res = await instance.post(url, {}, { headers: { authorization: token } });
   return res.data;
@@ -94,17 +94,46 @@ const getUser = async (userId: number, token: string) => {
   return res.data;
 };
 
+const verifyEmail = async (userToken: string) => {
+  const url = '/verify-email';
+  const res = await instance.put(url, {}, { params: { token: userToken } });
+  return res.data;
+};
+
+const resendVerification = async (userEmail: string) => {
+  const url = '/resend-verification';
+  const res = await instance.post(url, { email: userEmail });
+  return res.data;
+};
+
+const recoverPassword = async (userEmail: string) => {
+  const url = '/recover-password';
+  const res = await instance.post(url, { email: userEmail });
+  return res.data;
+};
+
+const recoveryPasswordChange = async (userToken: string, userPassword: string,
+  userRepeat: string) => {
+  const url = '/password';
+  const res = await instance.put(url,
+    { token: userToken, password: userPassword, repeat: userRepeat });
+  return res.data;
+};
+
 export default {
   create,
   login,
   listUsers,
   update,
-  password,
+  // password,
   approve,
   cancel,
   giveAdminPermission,
   removeAdminPermission,
   listUsersById,
-  checkUser,
   getUser,
+  verifyEmail,
+  resendVerification,
+  recoverPassword,
+  recoveryPasswordChange,
 };

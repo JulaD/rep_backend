@@ -5,6 +5,7 @@ import DefaultExtraDataDTO from '../DTOs/DefaultExtraDataDTO';
 import DefaultWeightDTO from '../DTOs/DefaultWeightDTO';
 import EquationConstantDTO from '../DTOs/EquationConstantDTO';
 import Auditor from '../Models/Auditor';
+import CalculationAuditor from '../Models/CalculationAuditor';
 import DefaultExtraData from '../Models/DefaultExtraData';
 import DefaultWeight from '../Models/DefaultWeight';
 import EquationConstant from '../Models/EquationConstant';
@@ -22,7 +23,7 @@ async function initParameterDataBase(): Promise<void> {
       console.log('Default Weight table loading success');
     })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   });
   pathToFile = path.join(__dirname, 'DefaultExtraDataLoader.csv');
@@ -35,7 +36,7 @@ async function initParameterDataBase(): Promise<void> {
       console.log('Extra Data table loading success');
     })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   });
   pathToFile = path.join(__dirname, 'EquationConstantLoader.csv');
@@ -48,11 +49,12 @@ async function initParameterDataBase(): Promise<void> {
       console.log('Equation Constant table loading success');
     })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   });
   FAQ.sync({ force: true });
   Auditor.sync({ force: false });
+  CalculationAuditor.sync({ force: false });
 }
 
 export default { initParameterDataBase };

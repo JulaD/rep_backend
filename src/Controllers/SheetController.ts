@@ -2,9 +2,9 @@ import {
   Handler, Request, Response, Router,
 } from 'express';
 import SheetService from '../Services/SheetService';
-import logger from '../Logger/logger';
 import AgeGroupJSON from '../DTOs/AgeGroupJSON';
-import { audit } from '../Services/Auditor';
+import { audit } from '../Services/AuditorService';
+import { logAndRespond } from './Utils';
 
 const router = Router();
 
@@ -12,12 +12,10 @@ const parseSheet: Handler = async (req: Request, res: Response) => {
   const sheet: Buffer = req.body;
   try {
     const parsedSheet: AgeGroupJSON[] = SheetService.parseSheetService(sheet);
-    audit(req, 'Usó una planilla para ingresar datos');
-    return res.status(200).send(parsedSheet);
+    logAndRespond(res, 200, 'send', parsedSheet, 'info', null, null);
   } catch (error) {
     const e = error as Error;
-    logger.info(e.message);
-    return res.status(400).json({ error: e.message });
+    logAndRespond(res, 400, 'json', { error: e.message }, 'info', null, null);
   }
 };
 

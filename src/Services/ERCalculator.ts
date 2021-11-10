@@ -196,13 +196,11 @@ const calculate30To59Years = (group: AgeGroup, params: number[], data: ExtraData
 
   // If the group's sex is Female, then you have to take into account
   // the extra energy required by women that are pregnant or lactating
-  if (group.sex === Sex.Female) {
-    if (typeof (data.maternity30To59) === 'undefined') {
-      throw new Error('Missing maternity data for women aged 30 to 59');
-    } else if (isIndividualMaternity(data.maternity30To59)) {
+  if (group.sex === Sex.Female && data.maternity30To59 !== undefined) {
+    if (isIndividualMaternity(data.maternity30To59)) {
       requirement = calculateERWomenIndividual(group, params, data.maternity30To59, requirement);
     } else {
-      requirement = calculateERWomenPopulation(params, data.maternity30To59, requirement);
+      throw new Error('Invalid maternity data for 30 to 59 years old women group');
     }
   }
 
@@ -253,7 +251,9 @@ const calculateER = (groupParameters: Map<number[], AgeGroup>, data: ExtraData):
       case AgeBracket.m3:
       case AgeBracket.m4:
       case AgeBracket.m5: {
+        totalOfPeople += group.population;
         groupRequirement = calculateLessThanAYear(group, params);
+        totalRequirement += groupRequirement.total;
         break;
       }
       case AgeBracket.m6:

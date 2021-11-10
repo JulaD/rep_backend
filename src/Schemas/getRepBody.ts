@@ -1,7 +1,10 @@
 const getRepBody = {
   type: 'object' as const,
-  required: ['groups', 'extraData'],
+  required: ['groups', 'extraData', 'fromTemplate'],
   properties: {
+    fromTemplate: {
+      type: 'boolean' as const,
+    },
     groups: {
       type: 'array' as const,
       items: {
@@ -130,27 +133,7 @@ const getRepBody = {
               type: 'number' as const,
               minimum: 0,
             },
-            countryBirthRate: {
-              type: 'number' as const,
-              minimum: 0,
-            },
-            countryWomenInAgeGroup: {
-              type: 'number' as const,
-              exclusiveMinimum: 0,
-            },
-            countryPopulation: {
-              type: 'number' as const,
-              exclusiveMinimum: 0,
-            },
           },
-          oneOf: [
-            {
-              required: ['pregnantWomen', 'lactatingWomen'],
-            },
-            {
-              required: ['countryBirthRate', 'countryWomenInAgeGroup', 'countryPopulation'],
-            },
-          ],
         },
       },
     },

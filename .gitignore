@@ -1,5 +1,7 @@
 node_modules
-build
-npm-debug.log
-.DS_Store
-logs/
+
+dist/
+
+.env
+
+package-lock.json

@@ -40,6 +40,28 @@ app.use(express.raw({
   limit: '50mb',
 }));
 
+app.use((req, res, next) => {
+  const reqToLog = {
+    body: { ...req.body },
+    hostname: req.hostname,
+    ip: req.ip,
+    method: req.method,
+    params: { ...req.params },
+    path: req.path,
+    protocol: req.protocol,
+    query: { ...req.query },
+    secure: req.secure,
+  };
+
+  // before logging the request, we have to hide sensitive information
+  if (typeof reqToLog.body.password !== 'undefined') {
+    reqToLog.body.password = '__HIDDEN__';
+  }
+
+  logger.info('Request received', { request: reqToLog });
+  next();
+});
+
 app.use(Routes);
 
 app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
