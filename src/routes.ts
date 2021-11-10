@@ -8,9 +8,11 @@ import AuditorController from './Controllers/AuditorController';
 import AuthMiddleware from './Middlewares/authChecker';
 
 const router = Router();
+export const contextPath = '/backend';
 
+// Unknown URL redirection.
 router.get('/', (req: Request, res: Response): void => {
-  res.send('Hey! This is REPP API, you can go to /api-docs to learn more!');
+  res.redirect(`${contextPath}/api-docs`);
 });
 
 router.use('/users', UserController);

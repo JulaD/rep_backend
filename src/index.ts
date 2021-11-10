@@ -7,13 +7,13 @@ import express, {
   Application,
   NextFunction,
   Request,
-  Response,
+  Response, Router,
 } from 'express';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import helmet from 'helmet';
 import YAML from 'yamljs';
-import Routes from './routes';
+import Routes, { contextPath } from './routes';
 import logger from './Logger/logger';
 import ParameterDataBaseLoader from './Loaders/ParameterDataBaseLoader';
 
@@ -22,8 +22,14 @@ const PORT = process.env.PORT || 8000;
 app.use(helmet.hidePoweredBy());
 // swagger init
 const swaggerDocument = YAML.load('./swagger.yaml');
-// middlewares
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const rootRouterRedirect = Router().get('/', (req: Request, res: Response): void => {
+  res.redirect(contextPath);
+});
+
+// Routing
+app.use(rootRouterRedirect);
+app.use(`${contextPath}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(contextPath, Routes);
 
 app.use(express.json({
   limit: '50mb',
@@ -61,8 +67,6 @@ app.use((req, res, next) => {
   logger.info('Request received', { request: reqToLog });
   next();
 });
-
-app.use(Routes);
 
 app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
   // Check the error is a validation error
