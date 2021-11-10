@@ -64,6 +64,7 @@ const update = async (id: number, createDto: FAQDTO): Promise<FAQ | null> => {
   if (!toUpdate) {
     return null;
   }
+  const oldPosition = Number(toUpdate.get('position'));
   const { question, answer, position } = createDto;
   await toUpdate.update({
     question, answer, position,
@@ -81,6 +82,14 @@ const update = async (id: number, createDto: FAQDTO): Promise<FAQ | null> => {
 
   if (faqs.length + 1 === Number(toUpdate.get('position'))) {
     toUpdate.set('position', Number(toUpdate.get('position')) + 0.5);
+  } else if (oldPosition + 1 === Number(toUpdate.get('position'))) {
+    toUpdate.set('position', Number(toUpdate.get('position')) + 0.5);
+  } else if (faqs.length + 1 > Number(toUpdate.get('position'))) {
+    if (oldPosition > Number(toUpdate.get('position'))) {
+      toUpdate.set('position', Number(toUpdate.get('position')) - 0.5);
+    } else {
+      toUpdate.set('position', Number(toUpdate.get('position')) + 0.5);
+    }
   } else {
     toUpdate.set('position', Number(toUpdate.get('position')) - 0.5);
   }
