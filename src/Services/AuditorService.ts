@@ -30,8 +30,8 @@ const calculationAudits = async (userIds: number[], dateFrom: string,
   if (dateFrom !== '' && dateTo !== '') {
     try {
       // this expression gets the day before the "from" date
-      const dayBefore = new Date(new Date(dateFrom).valueOf() - 24 * 60 * 60 * 1000);
-      const to = new Date(dateTo);
+      const dayBefore = new Date(dateFrom);
+      const to = new Date(new Date(dateTo).valueOf() + 24 * 60 * 60 * 1000);
       whereStatement.createdAt = { [Op.between]: [dayBefore, to] };
     } catch (error) {
       const e = error as Error;
@@ -40,15 +40,15 @@ const calculationAudits = async (userIds: number[], dateFrom: string,
   } else if (dateFrom !== '') {
     try {
       // this expression gets the day before the "from" date
-      const dayBefore = new Date(new Date(dateFrom).valueOf() - 24 * 60 * 60 * 1000);
-      whereStatement.createdAt = { [Op.gt]: dayBefore };
+      const dayBefore = new Date(dateFrom);
+      whereStatement.createdAt = { [Op.gte]: dayBefore };
     } catch (error) {
       const e = error as Error;
       throw e;
     }
   } else if (dateTo !== '') {
     try {
-      const to = new Date(dateTo);
+      const to = new Date(new Date(dateTo).valueOf() + 24 * 60 * 60 * 1000);
       whereStatement.createdAt = { [Op.lte]: to };
     } catch (error) {
       const e = error as Error;
@@ -87,6 +87,7 @@ Promise<Paginator<Auditor>> => {
       where: {
         [Op.or]: filters,
       },
+      order: [['createdAt', 'DESC']],
       ...options,
     });
   } else {
@@ -94,6 +95,7 @@ Promise<Paginator<Auditor>> => {
       attributes: [
         'id', 'user_id', 'action', 'createdAt',
       ],
+      order: [['createdAt', 'DESC']],
       ...options,
     });
   }
