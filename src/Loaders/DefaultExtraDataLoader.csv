@@ -1,23 +1,23 @@
 id,value,parameterType,order,description
-minorLowPrevalence,0,NAF Menores,0,a
-minorModeratePrevalence,100,NAF Menores,0,a
-minorIntensePrevalence,0,NAF Menores,0,a
-lowPercentageDifference,-15,NAF Menores,1,a
-intensePercentageDifference,15,NAF Menores,2,a
-urbanPopulation,94.7,NAF Adultos,0,a
-urbanActivePALPercentage,10,NAF Adultos,0,a
-urbanLowPALPercentage,90,NAF Adultos,0,a
-ruralPopulation,5.3,NAF Adultos,0,a
-ruralActivePALPercentage,50,NAF Adultos,0,a
-ruralLowPALPercentage,50,NAF Adultos,0,a
-ruralActivePALValue,1.95,NAF Adultos,1,a
-ruralLowPALValue,1.65,NAF Adultos,2,a
-urbanActivePALValue,1.85,NAF Adultos,3,a
-urbanLowPALValue,1.55,NAF Adultos,4,a
-countryPopulation,3453691,Embarazo y lactancia,0,a
-18to29FemaleCountryPopulation,315790,Embarazo y lactancia,0,a
-birthRate,14,Embarazo y lactancia,0,a
-pregnancyExtraEnergy18to29,208,Embarazo y lactancia,5,a
-lactationExtraEnergy18to29,251,Embarazo y lactancia,6,a
-pregnancyExtraEnergy30to59,208,Embarazo y lactancia,5,a
-lactationExtraEnergy30to59,251,Embarazo y lactancia,6,a
+minorLowPrevalence,0,NAF Menores,0,Porcentaje de prevalencia de NAF ligera para menores
+minorModeratePrevalence,100,NAF Menores,0,Porcentaje de prevalencia de NAF moderada para menores
+minorIntensePrevalence,0,NAF Menores,0,Porcentaje de prevalencia de NAF intensa para menores
+lowPercentageDifference,-15,NAF Menores,1,Porcentaje de modificación del GET para menores con NAF ligero
+intensePercentageDifference,15,NAF Menores,2,Porcentaje de modificación del GET para menores con NAF intenso
+urbanPopulation,94.7,NAF Adultos,0,Porcentaje de población urbana
+urbanActivePALPercentage,10,NAF Adultos,0,Porcentaje de población urbana con NAF moderado/alto
+urbanLowPALPercentage,90,NAF Adultos,0,Porcentaje de población urbana con NAF ligero
+ruralPopulation,5.3,NAF Adultos,0,Porcentaje de población rural
+ruralActivePALPercentage,50,NAF Adultos,0,Porcentaje de población rural con NAF moderado/alto
+ruralLowPALPercentage,50,NAF Adultos,0,Porcentaje de población rural con NAF ligero
+ruralActivePALValue,1.95,NAF Adultos,1,Valor NAF para población rural con NAF moderado/alto
+ruralLowPALValue,1.65,NAF Adultos,2,Valor NAF para población rural con NAF ligero
+urbanActivePALValue,1.85,NAF Adultos,3,Valor de NAF para población urbana con NAF moderado/alto
+urbanLowPALValue,1.55,NAF Adultos,4,Valor de NAF para población urbana con NAF ligero
+countryPopulation,3453691,Embarazo y lactancia,0,Población del país
+18to29FemaleCountryPopulation,315790,Embarazo y lactancia,0,Población femenina de entre 18 a 29 años del país
+birthRate,14,Embarazo y lactancia,0,Tasa de nacimiento
+pregnancyExtraEnergy18to29,208,Embarazo y lactancia,5,Energía adicional para mujeres embarazadas de entre 18 y 29 años
+lactationExtraEnergy18to29,251,Embarazo y lactancia,6,Energía adicional para mujeres lactando de entre 18 y 29 años
+pregnancyExtraEnergy30to59,208,Embarazo y lactancia,5,Energía adicional para mujeres embarazadas de entre 30 y 59 años
+lactationExtraEnergy30to59,251,Embarazo y lactancia,6,Energía adicional para mujeres embarazadas de entre 18 y 29 años
