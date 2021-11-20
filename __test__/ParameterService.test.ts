@@ -7,6 +7,7 @@ import ParameterService from '../src/Services/ParameterService';
 import ParameterDataBaseLoader from '../src/Loaders/ParameterDataBaseLoader';
 import DefaultExtraData from '../src/Models/DefaultExtraData';
 import EquationConstant from '../src/Models/EquationConstant';
+import ParameterWrapperDTO from '../src/DTOs/ParameterWrapperDTO';
 
 describe('Verificar si devuelve los parametros correctamente', () => {
   it('init database', async () => {
@@ -37,6 +38,12 @@ describe('Verificar si devuelve los parametros correctamente', () => {
   it('Constantes de ecuacion hombres de 7 meses', async () => {
     expect(new Set(await ParameterService.getEquationValues(AgeBracket.m7, Sex.Male)))
       .toEqual(new Set([-99.4, 88.6, 16]));
+  });
+  it('Todo junto', async () => {
+    const datos: ParameterWrapperDTO = await ParameterService.getParameters();
+    expect(datos.defaultExtraData.length).toBe(22);
+    expect(datos.defaultWeights.length).toBe(64);
+    expect(datos.equationConstants.length).toBe(220);
   });
 });
 
@@ -124,22 +131,25 @@ describe('Verificar si actualiza los datos extra correctamente', () => {
       value: 45,
       description: 'epa',
       order: 0,
-    }]);
-    expect((await DefaultExtraData.findOne({
-      where: {
-        id: 'minorLowPrevalence',
-      },
-    }))?.getDataValue('value')).toEqual(20);
-    expect((await DefaultExtraData.findOne({
-      where: {
-        id: 'minorModeratePrevalence',
-      },
-    }))?.getDataValue('value')).toEqual(35);
-    expect((await DefaultExtraData.findOne({
-      where: {
-        id: 'minorIntensePrevalence',
-      },
-    }))?.getDataValue('value')).toEqual(45);
+    }]).then(() => {
+      setTimeout(async () => {
+        expect((await DefaultExtraData.findOne({
+          where: {
+            id: 'minorLowPrevalence',
+          },
+        }))?.getDataValue('value')).toEqual(20);
+        expect((await DefaultExtraData.findOne({
+          where: {
+            id: 'minorModeratePrevalence',
+          },
+        }))?.getDataValue('value')).toEqual(35);
+        expect((await DefaultExtraData.findOne({
+          where: {
+            id: 'minorIntensePrevalence',
+          },
+        }))?.getDataValue('value')).toEqual(45);
+      }, 10);
+    });
   });
   it('Actualizacion porcentaje de poblacion rural y urbana', async () => {
     await ParameterService.updateExtraData([{
