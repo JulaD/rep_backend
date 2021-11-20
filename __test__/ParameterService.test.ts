@@ -16,7 +16,7 @@ describe('Verificar si devuelve los parametros correctamente', () => {
     expect((await ParameterService.getDefaultWeights()).length).toBe(64);
   });
   it('Datos Extra', async () => {
-    expect((await ParameterService.getDefaultExtraData()).length).toBe(13);
+    expect((await ParameterService.getDefaultExtraData()).length).toBe(12);
   });
   it('Constantes de ecuacion varones de 1 año', async () => {
     expect(new Set(await ParameterService.getEquationValues(AgeBracket.a1, Sex.Male)))

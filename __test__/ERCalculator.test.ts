@@ -514,8 +514,8 @@ describe('Verificar si funciona calculo del RE para personas de 30 a 59 años', 
   });
   it('Mujeres sin pasar data de maternidad', () => {
     expect(() => {
-      ERCalculator.calculate30To59Years({
-        age: age.a30_59,
+      ERCalculator.calculate18To29Years({
+        age: age.a18_29,
         sex: sex.Female,
         medianWeight: 70,
         population: 10,
@@ -534,7 +534,7 @@ describe('Verificar si funciona calculo del RE para personas de 30 a 59 años', 
         maternity18To29: undefined,
         maternity30To59: undefined,
       });
-    }).toThrow(Error('Missing maternity data for women aged 30 to 59'));
+    }).toThrow(Error('Missing maternity data for women aged 18 to 29'));
   });
   it('Hombres sin pasar data de NAF', () => {
     expect(() => {
