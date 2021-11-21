@@ -4,7 +4,7 @@ import AgeGroupJSON from '../DTOs/AgeGroupJSON';
 import Sex from '../Enum/Sex';
 import {
   Menores, Mayores, MenoresSheet, MayoresSheet,
-} from '../Models/SheetParserResponse';
+} from '../DTOs/SheetParserResponse';
 
 const parseAdults = (worksheet: XLSX.WorkSheet): Mayores[] => {
   const res: Mayores[] = [];
