@@ -128,7 +128,7 @@ const getAudit = async (cant: number, page: number, token: any, filters: string[
         actionFilters.push({ action: { [Op.startsWith]: 'Rechazó' } });
         break;
       case ('Manejo de permisos de administrador'):
-        actionFilters.push({ action: { [Op.startsWith]: 'Otorogó' } });
+        actionFilters.push({ action: { [Op.startsWith]: 'Otorgó' } });
         actionFilters.push({ action: { [Op.startsWith]: 'Quitó' } });
         break;
       default:
