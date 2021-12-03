@@ -58,6 +58,9 @@ app.use((req, res, next) => {
   if (typeof reqToLog.body.password !== 'undefined') {
     reqToLog.body.password = '__HIDDEN__';
   }
+  if (typeof reqToLog.body.passwordConf !== 'undefined') {
+    reqToLog.body.passwordConf = '__HIDDEN__';
+  }
 
   logger.info('Request received', { request: reqToLog });
   next();
